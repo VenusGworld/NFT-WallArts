@@ -1,83 +1,18 @@
 import React, { useState, useEffect, useRef } from "react";
-import { useLocation } from "react-router-dom";
-import { routes } from "../App";
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
+
+import { main_routes } from "../App";
+import { RoundedButtonMD, RoundedButtonSM, SearchBar } from "./Input";
 
 const Header = () => {
-  const [sidevar,openSidevar] = useState(false);
-  const [timer, setTimer] = useState('00:00:00');
+  const [sidevar, openSidevar] = useState(false);
   const location = useLocation();
-  const Ref = useRef(null);
-  
-    const getTimeRemaining = (e) => {
-        const total = Date.parse(e) - Date.parse(new Date());
-        const seconds = Math.floor((total / 1000) % 60);
-        const minutes = Math.floor((total / 1000 / 60) % 60);
-        const hours = Math.floor((total / 1000 / 60 / 60) % 24);
-        return {
-            total, hours, minutes, seconds
-        };
-    }
-  
-  
-    const startTimer = (e) => {
-        let { total, hours, minutes, seconds } 
-                    = getTimeRemaining(e);
-        if (total >= 0) {
-  
-            // update the timer
-            // check if less than 10 then we need to 
-            // add '0' at the beginning of the variable
-            setTimer(
-                (hours > 9 ? hours : '0' + hours) + ':' +
-                (minutes > 9 ? minutes : '0' + minutes) + ':'
-                + (seconds > 9 ? seconds : '0' + seconds)
-            )
-        }
-    }
-  
-  
-    const clearTimer = (e) => {
-  
-        // If you adjust it you should also need to
-        // adjust the Endtime formula we are about
-        // to code next    
-        setTimer('24:00:00');
-  
-        // If you try to remove this line the 
-        // updating of timer Variable will be
-        // after 1000ms or 1sec
-        if (Ref.current) clearInterval(Ref.current);
-        const id = setInterval(() => {
-            startTimer(e);
-        }, 1000)
-        Ref.current = id;
-    }
-  
-    const getDeadTime = () => {
-        let deadline = new Date();
-  
-        // This is where you need to adjust if 
-        // you entend to add more time
-        deadline.setSeconds(deadline.getSeconds() + 3600*24*40);
-        return deadline;
-    }
-  
-    // We can use useEffect so that when the component
-    // mount the timer will start as soon as possible
-  
-    // We put empty array to act as componentDid
-    // mount only
-    useEffect(() => {
-        clearTimer(getDeadTime());
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
-
+  const navigate = useNavigate();
   return (
-    <div className=" fixed z-[1001] w-full">
-      <div className=" border-none bg-[#262935] hd-nm border-theme-24 -mx-3 sm:-mx-8 px-3 sm:px-8 p-0">
+    <div className=" fixed z-[1001] w-full top-0">
+      <div className=" border-none bg-[#363F54] hd-nm border-theme-24 -mx-3 sm:-mx-8 px-3 sm:px-8 p-0">
         <div
-          className="top-bar-boxed flex items-center h-16 p-1"
+          className="flex items-center h-20 p-1 justify-center"
           style={{
             boxShadow: "0px 4px 6px #3e46725e",
             background: "linear-gradient(to right, #515874 0%, #363945 100%)",
@@ -85,71 +20,88 @@ const Header = () => {
         >
           <div className="-intro-x">
             <img
-              href={process.env.PUBLIC_URL + "/avarice_logo_1.png"}
-              alt="AVC Tokens"
-              className=" w-44 h-10"
-              src={process.env.PUBLIC_URL + "/avarice_logo_1.png"}
-              style={{ filter: "drop-shadow(0px 0px 3px #120f275e)" }}
+              href={process.env.PUBLIC_URL + "/img/New-Logo 1.png"}
+              alt="logo"
+              className=" w-48 mt-4"
+              src={process.env.PUBLIC_URL + "/img/New-Logo 1.png"}
             />
           </div>
-          <div className=" w-full items-center justify-between">
-            <div className="flex md:justify-between items-center w-full px-8 justify-end">
-              <div className="p-[7px 0px 0 40px] font-medium text-lg text-center md:flex hidden">
-                {routes.map((r) => (
-                  <Link key={r.key} className={`t-pp pg_tt_auction ${location.pathname === r.path?' text-white':' text-[#ececec99]'}`} to={r.path}>
-                  { r.title }
+          <div className="items-center justify-center">
+            <div className="flex items-center w-full px-8 justify-center space-x-7">
+              <div className="p-[7px 0px 0 40px] font-medium text-lg text-center md:flex hidden mx-2">
+                {main_routes.map((r) => (
+                  <Link
+                    key={r.key}
+                    className={`t-pp pg_tt_auction ${
+                      location.pathname === r.path
+                        ? " text-white"
+                        : " text-[#ececec99]"
+                    }`}
+                    to={r.path}
+                  >
+                    {r.title}
                   </Link>
-                  ))}
-                {/* <a
-                  className="t-pp pg_tt_staking"
-                  href="staking"
-                  style={{ color: 'white'}}
-                >
-                  Staking
-                </a>
-                <a className="t-pp pg_tt_auction" href="lobby">
-                  Lobby
-                </a>
-                <a className="t-pp pg_tt_buyandsell" href="buyandsell">
-                  Buy & Sell
-                </a>
-                <a className="t-pp pg_tt_faq" href="faq">
-                  FAQ
-                </a>
-                <a className="t-pp pg_tt_faq" href="tokentranfer">
-                  Tokens Transfer
-                </a> */}
-                {/* <div className="pg_sl_r h-1 w-16 bg-[#00dfb2] mt-2 opacity-0">
-                  
-                </div> */}
+                ))}
+              </div>
+              <div>
+                <SearchBar
+                  placeholder={"Search items, collections and accounts"}
+                />
+              </div>
+              <div>
+                <RoundedButtonMD text="List" onButtonClick={() => {}} active />
+              </div>
+              <div>
+                <img
+                  src={process.env.PUBLIC_URL + "/img/globe_icon.svg"}
+                  className="w-5 h-5 mr-2 text-white inline-block"
+                  alt="globe"
+                />
+                <p className=" inline-block text-white">En</p>
+              </div>
+              <div>
+                <RoundedButtonSM
+                  icon={
+                    <img
+                      src={process.env.PUBLIC_URL + "/img/wallet.svg"}
+                      className="w-3 h-3 text-black inline-block"
+                      alt="globe"
+                    />
+                  }
+                  onButtonClick={() => {
+                    navigate("/profile")
+                  }}
+                  active
+                />
               </div>
               <div className="flex justify-center items-center">
-              <div
-                style={{
-                  background: "#2c303d",
-                  height: "38px",
-                  borderRadius: "6px",
-                  padding: "2px 0px 0px 10px",
-                  border: "3px solid #42527178",
-                  color: "#c5d6f3",
-                  fontSize: "18px",
-                  fontWeight: "500",
-                }}
-              >
-                <span className="day-end-in pr-2 flex space-x-1">
-                  <span className="md:flex hidden">Ends In 40Days</span> 
-                  <span>{timer}</span>
+                <span
+                  className="md:hidden p-1 border-slate-500 border rounded"
+                  onClick={() => openSidevar(!sidevar)}
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    className="feather feather-bar-chart-2 w-6 h-6 text-white transform -rotate-90"
+                  >
+                    <line x1="18" y1="20" x2="18" y2="10"></line>
+                    <line x1="12" y1="20" x2="12" y2="4"></line>
+                    <line x1="6" y1="20" x2="6" y2="14"></line>
+                  </svg>
                 </span>
               </div>
-              <span className="md:hidden p-1 border-slate-500 border rounded" onClick={() => openSidevar(!sidevar)}>
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="feather feather-bar-chart-2 w-6 h-6 text-white transform -rotate-90"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
-              </span>
-            </div>
             </div>
           </div>
         </div>
       </div>
-      {sidevar?
+      {/* {sidevar?
         <div className=" z-[100000] absolute w-full items-center shadow-lg bg-[#3c3c63] md:hidden"
           style={{boxShadow: 'rgb(18 20 32) 0px 0px 10px'}}
         >
@@ -170,7 +122,7 @@ const Header = () => {
             <span>FAQ</span> 
           </div>
         </div>:<></>
-      }
+      } */}
     </div>
   );
 };

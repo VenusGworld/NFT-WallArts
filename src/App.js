@@ -5,59 +5,31 @@ import {  Route, Routes, Navigate } from 'react-router-dom';
 import './App.css';
 import './custom.css';
 import Header from './components/header';
-import Sidebar from './components/sidebar';
 import Staking from './pages/staking';
 import Lobby from './pages/lobby';
-import BuyandSell from './pages/buy&sell';
 import 'react-toastify/dist/ReactToastify.css';
 import { connect, isConnected, setChain } from "./store/accountReducer";
+import Profile from './pages/Profile';
 
-export const routes = [
+export const main_routes = [
   {
-    key: "router-staking",
-    title: "Staking",
-    description: "Staking",
+    key: "explore",
+    title: "Explore",
+    description: "Explore",
     component: <Staking/>,
     path: "/staking",
     isEnabled: true,
     appendDivider: true,
   },
   {
-    key: "router-lobby",
-    title: "Lobby",
-    description: "Lobby",
+    key: "topsold",
+    title: "Top Sold",
+    description: "Top Sold",
     component: <Lobby/>,
-    path: "/lobby",
+    path: "/topsold",
     isEnabled: true,
     appendDivider: true,
   },
-  {
-    key: "buyandsell",
-    title: "Buy & Sell",
-    description: "Buy & Sell",
-    component: <BuyandSell/>,
-    path: "/buyandsell",
-    isEnabled: true,
-    appendDivider: true,
-  },
-  {
-    key: "faq",
-    title: "FAQ",
-    description: "FAQ",
-    component: <></>,
-    path: "/faq",
-    isEnabled: true,
-    appendDivider: true,
-  },
-  {
-    key: "tokentransfer",
-    title: "Tokens Transfer",
-    description: "Tokens Transfer",
-    component: <></>,
-    path: "/tokentransfer",
-    isEnabled: true,
-    appendDivider: true,
-  }
 ];
 
 function App() {
@@ -88,16 +60,17 @@ function App() {
   return (
     <div className="App">
         <Header/>
-        <Sidebar/>
         <Routes>
           {/* <Layout> */}
           <Route
               path="/"
-              element={<Navigate to="/staking" replace />}
+              element={<Navigate to="/profile" replace />}
           />
-          {routes.map(route =>
+          {main_routes.map(route =>
             <Route key={route.key} path={route.path} element={route.component} />
           )}
+          <Route key='profile' path='profile' element={<Profile/>}/>
+
           {/* </Layout> */}
         </Routes>
     </div>

@@ -1,7 +1,6 @@
 import React from "react";
 
 import MainTop from "./top";
-import MainBottom from "./Bottom/bottom";
 
 const Main = () => {
   return (
@@ -16,7 +15,6 @@ const Main = () => {
         paddingTop: "38px",
       }}>
       <MainTop />
-      <MainBottom/>
     </div>
   );
 };
