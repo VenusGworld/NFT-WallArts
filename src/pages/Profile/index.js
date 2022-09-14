@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { RoundedButtonMD, RoundedButtonSM } from '../../components/Input';
+import ProfileNFTCard from '../../components/NFTCard/ProfileNFTCard';
+import FilterPart from './FilterPart';
 
 const Items = [
   {img:'image 4.png', name: 'Aui dolorem eum', like: '243', auction: true, highestBid: 2.5, endsIn: '02:23:49:01'},
@@ -14,6 +16,8 @@ const Items = [
 ]
 
 const Profile = () => {
+
+  const[filterExpanded,expandFilter] = useState(false);
   return (
     <div className='h-full relative mt-20 bg-[#363F54]'>
       <img src={process.env.PUBLIC_URL + "/img/img1 1.png"} alt="profile_banner" width='100%'/>
@@ -23,29 +27,29 @@ const Profile = () => {
         </div>
         <div className='relative my-5'>
           <div className=' text-white text-4xl'>The Sandbox</div>
-          <img src={process.env.PUBLIC_URL + "/img/verified_icon.svg"} alt='' className=' absolute w-9 h-9 top-0 left-64'/>
+          <img src={process.env.PUBLIC_URL + "/img/verified_icon.svg"} alt='' className=' absolute w-9 h-9 top-0 sm:-right-24 -right-10'/>
         </div>
         <div className=' text-gray-400'>
           Wallet link : 1GVY5eZvtc5bA6EFEGnpq
         </div>
-        <div className=' w-3/5 my-6 text-gray-400 text-sm'>
+        <div className=' w-3/5 my-6 text-gray-400 text-sm break-words'>
           Sandbox LAND is currently undergoing a migration to a new contract. In order to benefit from all future LAND features, please migrate to the new contract. How to do it and to learn more, please visit: https://www.sandbox.game/en/me/migration/
         </div>
-        <div className=' w-4/12 bg-[#313949] flex text-white rounded-full px-16 py-2'>
-          <div className='flex flex-col flex-1'>
+        <div className=' w-fit bg-[#313949] flex text-white rounded-full md:px-16 py-2 px-10'>
+          <div className='flex flex-col flex-1 items-center justify-center'>
             <div className=' text-3xl text-white'>4,870</div>
             <div className='text-gray-400'>Items</div>
           </div>
           <div className='mx-6 border bg-white border-white flex justify-center items-center'></div>
-          <div className='flex flex-col flex-1'>
-            <div className=' text-3xl text-white'><img src={process.env.PUBLIC_URL + "/img/eth_icon.svg"} alt='' className=' inline-block w-8 h-8'/>110.3K</div>
+          <div className='flex flex-col flex-1 items-center justify-center'>
+            <div className='flex text-3xl text-white'><img src={process.env.PUBLIC_URL + "/img/eth_icon.svg"} alt='' className=' inline-block w-8 h-8'/>110.3K</div>
             <div className='text-gray-400'>Total Volume</div>
           </div>
         </div>
         <div className='relative my-10 flex space-x-5'>
           <RoundedButtonMD text="Items" onButtonClick={() => {}} active />
           <RoundedButtonMD text="Activity" onButtonClick={() => {}}/>
-          <div className=' absolute left-96'>
+          <div className=' absolute md:-right-24 -right-10'>
             <RoundedButtonSM
               icon={
                 <img
@@ -55,10 +59,27 @@ const Profile = () => {
                 />
               }
               onButtonClick={() => {
+                expandFilter(!filterExpanded)
               }}
-              active
+              active={filterExpanded}
             />
           </div>
+        </div>
+        {
+          filterExpanded && <FilterPart/>
+        }
+        <div className='flex flex-wrap justify-between w-[90%]'>
+          {Items.map((item, i) => (
+            <ProfileNFTCard item={item} key={i}/>
+          ))}
+        </div>
+        <div className='flex space-x-1 my-3 items-center'>
+          <RoundedButtonSM text={1} active/>
+          <RoundedButtonSM text={2}/>
+          <RoundedButtonSM text={3}/>
+          <RoundedButtonSM text={4}/>
+          <RoundedButtonSM text={5}/>
+          <div className=' text-[#D3B789] mx-3 cursor-pointer'>Next</div>
         </div>
       </div>
     </div>
