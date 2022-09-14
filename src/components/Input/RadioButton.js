@@ -1,6 +1,6 @@
 const RadioButton = ({status}) => {
   return (
-    <input type='radio' className=""/>
+    <input type='radio' className=" "/>
   )
 }
 
