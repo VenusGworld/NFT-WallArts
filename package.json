@@ -11,6 +11,7 @@
     "@testing-library/jest-dom": "^5.16.1",
     "@testing-library/react": "^12.1.2",
     "@testing-library/user-event": "^13.5.0",
+    "@trendyol-js/react-carousel": "^3.0.0",
     "apexcharts": "^3.35.3",
     "axios": "^0.27.2",
     "react": "^17.0.2",
@@ -22,6 +23,7 @@
     "react-slidedown": "^2.4.7",
     "react-toastify": "^9.0.5",
     "react-transition-group": "^4.4.2",
+    "recharts": "^2.1.14",
     "web-vitals": "^2.1.4"
   },
   "scripts": {

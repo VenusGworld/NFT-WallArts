@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { RoundedButtonMD, RoundedButtonSM } from '../../components/Input';
-import ProfileNFTCard from '../../components/NFTCard/ProfileNFTCard';
+import ActivityPart from './ActivityPart';
 import FilterPart from './FilterPart';
+import ItemsPart from './ItemsPart';
 
-const Items = [
+export const Items = [
   {img:'image 4.png', name: 'Aui dolorem eum', like: '243', auction: true, highestBid: 2.5, endsIn: '02:23:49:01'},
   {img:'image 16.png', name: 'Annoyances accepted', like: '79', sale: true, price: 3, sold: '3/5'},
   {img:'image 19.png', name: 'Facere possimus', like: '320'},
@@ -18,6 +19,8 @@ const Items = [
 const Profile = () => {
 
   const[filterExpanded,expandFilter] = useState(false);
+  const[itemsExpanded,expandItems] = useState(false);
+
   return (
     <div className='h-full relative mt-20 bg-[#363F54]'>
       <img src={process.env.PUBLIC_URL + "/img/img1 1.png"} alt="profile_banner" width='100%'/>
@@ -47,15 +50,15 @@ const Profile = () => {
           </div>
         </div>
         <div className='relative my-10 flex space-x-5'>
-          <RoundedButtonMD text="Items" onButtonClick={() => {}} active />
-          <RoundedButtonMD text="Activity" onButtonClick={() => {}}/>
+          <RoundedButtonMD text="Items" onButtonClick={() => {expandItems(true)}} active={itemsExpanded}/>
+          <RoundedButtonMD text="Activity" onButtonClick={() => {expandItems(false)}} active={!itemsExpanded}/>
           <div className=' absolute md:-right-24 -right-10'>
             <RoundedButtonSM
               icon={
                 <img
                   src={process.env.PUBLIC_URL + "/img/filter_icon.svg"}
                   className="w-3 h-3 text-black inline-block"
-                  alt="globe"
+                  alt="filter"
                 />
               }
               onButtonClick={() => {
@@ -68,19 +71,12 @@ const Profile = () => {
         {
           filterExpanded && <FilterPart/>
         }
-        <div className='flex flex-wrap justify-between w-[90%]'>
-          {Items.map((item, i) => (
-            <ProfileNFTCard item={item} key={i}/>
-          ))}
-        </div>
-        <div className='flex space-x-1 my-3 items-center'>
-          <RoundedButtonSM text={1} active/>
-          <RoundedButtonSM text={2}/>
-          <RoundedButtonSM text={3}/>
-          <RoundedButtonSM text={4}/>
-          <RoundedButtonSM text={5}/>
-          <div className=' text-[#D3B789] mx-3 cursor-pointer'>Next</div>
-        </div>
+        {
+          itemsExpanded && <ItemsPart Items={Items}/>
+        }
+        {
+          !itemsExpanded && <ActivityPart/>
+        }
       </div>
     </div>
   )
