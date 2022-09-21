@@ -5,21 +5,22 @@ import {  Route, Routes, Navigate } from 'react-router-dom';
 import './App.css';
 import './custom.css';
 import Header from './components/header';
-import Staking from './pages/staking';
+import Explorer from './pages/explorer';
 import Lobby from './pages/lobby';
 import 'react-toastify/dist/ReactToastify.css';
 import { connect, isConnected, setChain } from "./store/accountReducer";
 import Profile from './pages/Profile';
 import "@fontsource/inter";
 import Category from './pages/Category';
+import Footer from './components/footer';
 
 export const main_routes = [
   {
     key: "explore",
     title: "Explore",
     description: "Explore",
-    component: <Staking/>,
-    path: "/staking",
+    component: <Explorer/>,
+    path: "/explorer",
     isEnabled: true,
     appendDivider: true,
   },
@@ -66,7 +67,7 @@ function App() {
           {/* <Layout> */}
           <Route
               path="/"
-              element={<Navigate to="/category" replace />}
+              element={<Navigate to="/profile" replace />}
           />
           {main_routes.map(route =>
             <Route key={route.key} path={route.path} element={route.component} />
@@ -75,6 +76,7 @@ function App() {
           <Route key='category' path='category' element={<Category/>}/>
           {/* </Layout> */}
         </Routes>
+        <Footer/>
     </div>
   );
 }

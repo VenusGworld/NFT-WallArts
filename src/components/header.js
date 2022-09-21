@@ -18,7 +18,7 @@ const Header = () => {
             background: "linear-gradient(to right, #515874 0%, #363945 100%)",
           }}
         >
-          <div className="-intro-x">
+          <div className="">
             <img
               href={process.env.PUBLIC_URL + "/img/New-Logo 1.png"}
               alt="logo"
@@ -28,11 +28,11 @@ const Header = () => {
           </div>
           <div className="items-center justify-center">
             <div className="flex items-center w-full px-8 justify-center space-x-7">
-              <div className="p-[7px 0px 0 40px] font-medium text-lg text-center md:flex hidden mx-2">
+              <div className="p-[7px 0px 0 40px] font-medium text-lg text-center md:flex hidden mx-2 space-x-4">
                 {main_routes.map((r) => (
                   <Link
                     key={r.key}
-                    className={`t-pp pg_tt_auction ${
+                    className={` ${
                       location.pathname === r.path
                         ? " text-white"
                         : " text-[#ececec99]"
@@ -43,7 +43,7 @@ const Header = () => {
                   </Link>
                 ))}
               </div>
-              <div className="sm:inline-block hidden">
+              <div className="lg:inline-block hidden">
                 <SearchBar
                   placeholder={"Search items, collections and accounts"}
                 />
