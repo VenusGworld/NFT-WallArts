@@ -13,6 +13,7 @@ import Profile from './pages/Profile';
 import "@fontsource/inter";
 import Category from './pages/Category';
 import Footer from './components/footer';
+import CustomizedArt from './pages/CustomizedArt';
 
 export const main_routes = [
   {
@@ -67,13 +68,14 @@ function App() {
           {/* <Layout> */}
           <Route
               path="/"
-              element={<Navigate to="/profile" replace />}
+              element={<Navigate to="/category" replace />}
           />
           {main_routes.map(route =>
             <Route key={route.key} path={route.path} element={route.component} />
           )}
           <Route key='profile' path='profile' element={<Profile/>}/>
           <Route key='category' path='category' element={<Category/>}/>
+          <Route key='customizedArt' path='customizedArt' element={<CustomizedArt/>}/>
           {/* </Layout> */}
         </Routes>
         <Footer/>
