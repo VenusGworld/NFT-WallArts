@@ -11,10 +11,10 @@ const NumberInput = ({list, onChangeHandle}) => {
       <input className=' border-none w-auto bg-[#4a5367] text-white mr-2' value={number} onChange={(e) => {
         setNumber(e.value)
       }}/>
-        <img src={process.env.PUBLIC_URL + "/img/triangle.svg"} alt='' className={`absolute w-5 h-5 right-3 top-3`}
+        <img loading='lazy' src={process.env.PUBLIC_URL + "/img/triangle.svg"} alt='' className={`absolute w-5 h-5 right-3 top-3`}
           onClick={() => {setNumber(number+1)}}
         />
-        <img src={process.env.PUBLIC_URL + "/img/triangle.svg"} alt='' className={`absolute w-5 h-5 right-3 bottom-3 rotate-180`}
+        <img loading='lazy' src={process.env.PUBLIC_URL + "/img/triangle.svg"} alt='' className={`absolute w-5 h-5 right-3 bottom-3 rotate-180`}
           onClick={() => {setNumber(number-1)}}
         />
       </div>

@@ -13,7 +13,7 @@ const CustomizedArtCard = ({item}) => {
       }}
     >
       <div className='relative box-border border-white border-2'>
-        <img src={process.env.PUBLIC_URL + "/img/image41.png"} alt='' className='w-full '/>
+        <img loading='lazy' src={process.env.PUBLIC_URL + "/img/image41.png"} alt='' className='w-full '/>
         <div className='absolute bg-white shadow-lg top-10 left-1/2 -translate-x-1/2'
           style={{'width': width+'px', 'height': height+'px'}}
         >
@@ -45,10 +45,10 @@ const CustomizedArtCard = ({item}) => {
           </div>
           <div className='flex items-center space-x-3'>
             <div className={`relative bg-black p-3 rounded-full border ${color===1?' border-green-500 ': ' border-gray-400 '} cursor-pointer inline-block`} onClick={() => {color===1?setColor(0):setColor(1)}}>
-              {color===1 && <img src={process.env.PUBLIC_URL + "/img/check-green.svg"} alt='check' className='w-2 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2'/> }
+              {color===1 && <img loading='lazy' src={process.env.PUBLIC_URL + "/img/check-green.svg"} alt='check' className='w-2 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2'/> }
             </div>
             <div className={`relative bg-white p-3 rounded-full border  ${color===2?' border-green-500 ': ' border-gray-400 '} cursor-pointer inline-block`} onClick={() => {color===2?setColor(0):setColor(2)}}>
-              {color===2 && <img src={process.env.PUBLIC_URL + "/img/check-green.svg"} alt='check' className='w-2 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2'/> }
+              {color===2 && <img loading='lazy' src={process.env.PUBLIC_URL + "/img/check-green.svg"} alt='check' className='w-2 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2'/> }
             </div>
           </div>
 

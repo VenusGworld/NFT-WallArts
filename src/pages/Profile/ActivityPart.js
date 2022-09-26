@@ -132,13 +132,13 @@ const ActivityPart = () => {
             <Board key={i}>
               <div className='flex w-full text-xl'>
                 <div className=' flex justify-start items-center w-3/12'>
-                  <img src={process.env.PUBLIC_URL + "/img/" + item.img} alt='' className='w-12 h-12 rounded-full'/>
+                  <img loading='lazy' src={process.env.PUBLIC_URL + "/img/" + item.img} alt='' className='w-12 h-12 rounded-full'/>
                   <div className=' ml-3'>{item.name}</div>
                 </div>
                 <div className=' flex justify-end w-2/12 flex-col items-start'>
                   <div className='flex flex-col justify-end'>
                     <div className='flex justify-end text-xl'>
-                      <img src={process.env.PUBLIC_URL + "/img/eth_icon.svg"} alt='' className=' inline-block w-7 h-7'/>
+                      <img loading='lazy' src={process.env.PUBLIC_URL + "/img/eth_icon.svg"} alt='' className=' inline-block w-7 h-7'/>
                       {item.price}
                     </div>
                     <div className=' text-[#b6b3e0] text-2xl'>${Number(item.price * 1459)}</div>

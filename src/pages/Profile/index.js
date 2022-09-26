@@ -23,14 +23,14 @@ const Profile = () => {
 
   return (
     <div className='h-full relative mt-20 bg-[#363F54]'>
-      <img src={process.env.PUBLIC_URL + "/img/img1 1.png"} alt="profile_banner" width='100%'/>
+      <img loading='lazy' src={process.env.PUBLIC_URL + "/img/img1 1.png"} alt="profile_banner" width='100%'/>
       <div className=' p-20 flex flex-col justify-center items-center'>
         <div className=' rounded-full bg-[#00AEEF] border-4 border-white p-10 -mt-36'>
-          <img src={process.env.PUBLIC_URL + "/img/sandbox_mark.svg"} alt='' className=' w-16 h-16'/>
+          <img loading='lazy' src={process.env.PUBLIC_URL + "/img/sandbox_mark.svg"} alt='' className=' w-16 h-16'/>
         </div>
         <div className='relative my-5'>
           <div className=' text-white text-4xl'>The Sandbox</div>
-          <img src={process.env.PUBLIC_URL + "/img/verified_icon.svg"} alt='' className=' absolute w-9 h-9 top-0 sm:-right-24 -right-10'/>
+          <img loading='lazy' src={process.env.PUBLIC_URL + "/img/verified_icon.svg"} alt='' className=' absolute w-9 h-9 top-0 sm:-right-24 -right-10'/>
         </div>
         <div className=' text-gray-400'>
           Wallet link : 1GVY5eZvtc5bA6EFEGnpq
@@ -45,7 +45,7 @@ const Profile = () => {
           </div>
           <div className='mx-6 border bg-white border-white flex justify-center items-center'></div>
           <div className='flex flex-col flex-1 items-center justify-center'>
-            <div className='flex text-3xl text-white'><img src={process.env.PUBLIC_URL + "/img/eth_icon.svg"} alt='' className=' inline-block w-8 h-8'/>110.3K</div>
+            <div className='flex text-3xl text-white'><img loading='lazy' src={process.env.PUBLIC_URL + "/img/eth_icon.svg"} alt='' className=' inline-block w-8 h-8'/>110.3K</div>
             <div className='text-gray-400'>Total Volume</div>
           </div>
         </div>
@@ -55,7 +55,7 @@ const Profile = () => {
           <div className=' absolute md:-right-24 -right-10'>
             <RoundedButtonSM
               icon={
-                <img
+                <img loading='lazy'
                   src={process.env.PUBLIC_URL + "/img/filter_icon.svg"}
                   className="w-3 h-3 text-black inline-block"
                   alt="filter"

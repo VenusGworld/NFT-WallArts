@@ -5,13 +5,13 @@ const ProfileNFTCard = ({item}) => {
   const {img, name, like, auction, sale, price, sold, highestBid, endsIn} = item;
   return (
     <div className='md:w-[48%] xl:w-[30%] w-[90%] shadow-2xl flex flex-col my-4'>
-      <img src={process.env.PUBLIC_URL + "/img/" + img} alt='' className='w-full'/>
+      <img loading='lazy' src={process.env.PUBLIC_URL + "/img/" + img} alt='' className='w-full'/>
       <div className='flex p-5 bg-white text-[#313949] justify-between w-full h-full'>
         <div className='flex flex-col justify-between text-sm w-full'>
           <div className='flex justify-between'>
             <div>Name</div>
             <div className='flex items-center'>
-              <img src={process.env.PUBLIC_URL + "/img/heart_icon.svg"} alt='' className='w-5 h-5 mr-1 inline-block'/> 
+              <img loading='lazy' src={process.env.PUBLIC_URL + "/img/heart_icon.svg"} alt='' className='w-5 h-5 mr-1 inline-block'/> 
               <div className=' inline-block'>{like}</div>
             </div>
           </div>

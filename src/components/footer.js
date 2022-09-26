@@ -11,7 +11,7 @@ const Footer = () => {
           <div className="md:w-[40%] w-[80%] flex flex-col justify-start flex-1">
             <div className="flex flex-col justify-start">
               <div className="flex flex-col justify-center">
-                <img
+                <img loading='lazy'
                   href={process.env.PUBLIC_URL + "/img/New-Logo 1.png"}
                   alt="logo"
                   className=" inline-block w-80"

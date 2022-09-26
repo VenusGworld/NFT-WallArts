@@ -40,15 +40,15 @@ const CalendarInput = ({list, onChangeHandle}) => {
         }}
       >
       {formatDate(date)}
-        <img src={process.env.PUBLIC_URL + "/img/calendar.svg"} alt='' className={`absolute w-5 h-5 right-3 top-1/2 -translate-y-1/2`}/>
+        <img loading='lazy' src={process.env.PUBLIC_URL + "/img/calendar.svg"} alt='' className={`absolute w-5 h-5 right-3 top-1/2 -translate-y-1/2`}/>
       </div>
       {expanded && (<div className='absolute z-10'>
         <Calendar defaultValue={date} onChange={(date) => {
           setDate(date);
           expand(false);
         }}
-          nextLabel={(<img src={process.env.PUBLIC_URL + "/img/triangle.svg"} alt='' className={`w-5 h-5 -my-1 mx-2 rotate-90`}/>)}
-          prevLabel={<img src={process.env.PUBLIC_URL + "/img/triangle.svg"} alt='' className={`w-5 h-5 -my-1 mx-2 -rotate-90`}/>}
+          nextLabel={(<img loading='lazy' src={process.env.PUBLIC_URL + "/img/triangle.svg"} alt='' className={`w-5 h-5 -my-1 mx-2 rotate-90`}/>)}
+          prevLabel={<img loading='lazy' src={process.env.PUBLIC_URL + "/img/triangle.svg"} alt='' className={`w-5 h-5 -my-1 mx-2 -rotate-90`}/>}
           prev2Label={false}
           next2Label={false}
         />

@@ -12,7 +12,7 @@ const DropDownSelect = ({list, onChangeHandle}) => {
     >
       <div className='flex'>
       {list[selectedItem]['text']&&list[selectedItem]['text']}
-      <img src={process.env.PUBLIC_URL + "/img/triangle.svg"} alt='' className={`absolute w-5 h-5 right-3 top-1/2 -translate-y-1/2 transition-all ${expanded&&" rotate-180"}`}/>
+      <img loading='lazy' src={process.env.PUBLIC_URL + "/img/triangle.svg"} alt='' className={`absolute w-5 h-5 right-3 top-1/2 -translate-y-1/2 transition-all ${expanded&&" rotate-180"}`}/>
       </div>
       {<div className={` ${expanded?" -top-[500px] translate-y-0 transition-all h-full ":""} z-50 transition-all bg-[#454E61] p-4 text-white absolute -bottom-2 flex flex-col translate-y-full w-full -left-0`}
       style={{'boxShadow': "0px 4px 15px rgba(0, 0, 0, 0.25), 0px 0px 2px rgba(34, 41, 56, 0.9)"}}>

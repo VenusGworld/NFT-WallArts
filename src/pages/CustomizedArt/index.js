@@ -17,7 +17,7 @@ const CustomizedArt = () => {
   return (<div>
     <div className={`w-full h-full mt-20 relative text-white`}>
       <div className='relative'>
-        <img
+        <img loading='lazy'
           src={process.env.PUBLIC_URL + "/img/image40.png"}
           className="w-full object-cover"
           alt="background"

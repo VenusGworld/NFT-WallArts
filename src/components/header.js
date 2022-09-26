@@ -19,7 +19,7 @@ const Header = () => {
           }}
         >
           <div className="">
-            <img
+            <img loading='lazy'
               href={process.env.PUBLIC_URL + "/img/New-Logo 1.png"}
               alt="logo"
               className=" w-48 mt-4"
@@ -52,7 +52,7 @@ const Header = () => {
                 <RoundedButtonMD text="List" onButtonClick={() => {}} active />
               </div>
               <div>
-                <img
+                <img loading='lazy'
                   src={process.env.PUBLIC_URL + "/img/globe_icon.svg"}
                   className="w-5 h-5 mr-2 text-white inline-block"
                   alt="globe"
@@ -62,7 +62,7 @@ const Header = () => {
               <div>
                 <RoundedButtonSM
                   icon={
-                    <img
+                    <img loading='lazy'
                       src={process.env.PUBLIC_URL + "/img/wallet.svg"}
                       className="w-3 h-3 text-black inline-block"
                       alt="globe"

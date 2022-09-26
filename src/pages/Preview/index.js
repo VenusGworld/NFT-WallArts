@@ -8,7 +8,7 @@ const Preview = () => {
   return (<div>
     <div className={`w-full h-full mt-20 relative text-white`}>
       <div className='relative'>
-        <img
+        <img loading='lazy'
           src={process.env.PUBLIC_URL + "/img/image40.png"}
           className="w-full object-cover"
           alt="background"
@@ -21,8 +21,8 @@ const Preview = () => {
           <div className='xl:text-5xl lg:text-3xl md:text-2xl text-lg font-bold inline-block my-5'>Preview</div>
             <div className='flex items-start space-x-5 relative'>
               <div className='w-3/5 bg-white flex relative justify-center items-center h-full'>
-                <img src={process.env.PUBLIC_URL + "/img/image51.png"} alt=''/>
-                <img src={process.env.PUBLIC_URL + "/img/360-view1.svg"} alt='' className='absolute bottom-5 right-3'/>
+                <img loading='lazy' src={process.env.PUBLIC_URL + "/img/image51.png"} alt=''/>
+                <img loading='lazy' src={process.env.PUBLIC_URL + "/img/360-view1.svg"} alt='' className='absolute bottom-5 right-3'/>
               </div>
               <div className='w-2/5 bg-[#444E66] px-6 py-10 flex flex-col space-y-10'>
                 <div className='flex'>
@@ -53,10 +53,10 @@ const Preview = () => {
                   <span className='text-[#818DA9]'>Colour</span>
                   <div className='flex items-center space-x-3'>
                     <div className={`relative bg-black p-3 rounded-full border ${color===1?' border-green-500 ': ' border-gray-400 '} cursor-pointer inline-block`} onClick={() => {color===1?setColor(0):setColor(1)}}>
-                      {color===1 && <img src={process.env.PUBLIC_URL + "/img/check-green.svg"} alt='check' className='w-2 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2'/> }
+                      {color===1 && <img loading='lazy' src={process.env.PUBLIC_URL + "/img/check-green.svg"} alt='check' className='w-2 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2'/> }
                     </div>
                     <div className={`relative bg-white p-3 rounded-full border  ${color===2?' border-green-500 ': ' border-gray-400 '} cursor-pointer inline-block`} onClick={() => {color===2?setColor(0):setColor(2)}}>
-                      {color===2 && <img src={process.env.PUBLIC_URL + "/img/check-green.svg"} alt='check' className='w-2 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2'/> }
+                      {color===2 && <img loading='lazy' src={process.env.PUBLIC_URL + "/img/check-green.svg"} alt='check' className='w-2 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2'/> }
                     </div>
                   </div>
                 </div>
