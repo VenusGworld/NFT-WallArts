@@ -1,12 +1,17 @@
 import React, { useState } from 'react';
-import RoundedButtonBG from '../Input/RoundedButton_bg';
+import { useNavigate } from 'react-router-dom';
 
 const CustomizedArtCard = ({item}) => {
   const {width, height, price, bestseller, popular} = item;
   const[color,setColor] = useState(0);
+  const navigate = useNavigate();
 
   return (
-    <div className='relative md:w-[48%] xl:w-[30%] w-[90%] shadow-xl flex flex-col my-4 hover:shadow-2xl bg-[#454E61] p-3'>
+    <div className='relative md:w-[48%] xl:w-[30%] w-[90%] shadow-xl flex flex-col my-4 hover:shadow-2xl bg-[#454E61] p-3 cursor-pointer'
+      onClick={() => {
+        navigate('/preview')
+      }}
+    >
       <div className='relative box-border border-white border-2'>
         <img src={process.env.PUBLIC_URL + "/img/image41.png"} alt='' className='w-full '/>
         <div className='absolute bg-white shadow-lg top-10 left-1/2 -translate-x-1/2'

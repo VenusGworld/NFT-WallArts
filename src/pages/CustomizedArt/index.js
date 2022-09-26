@@ -24,7 +24,7 @@ const CustomizedArt = () => {
         />
         <div className='absolute xl:text-7xl lg:text-5xl md:text-4xl text-xl top-1/2 font-extrabold left-1/2 -translate-x-1/2 -translate-y-1/2' style={{'textShadow': ' 0px 4px 12px rgba(0, 0, 0, 0.25)'}}>Customized Wall Arts</div>
       </div>
-      <div className='bg-[#363f54] w-full p-10 relative flex flex-col justify-start items-start'>
+      <div className='bg-[#363f54] w-full p-10 relative flex flex-col justify-start items-start -mt-[8%]'>
         <div className='w-[80%] mx-auto'>
           <div className='flex flex-col justify-start items-start'>
           <div className='xl:text-5xl lg:text-3xl md:text-2xl text-lg font-bold inline-block my-5'>Select your size</div>

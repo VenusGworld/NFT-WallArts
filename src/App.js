@@ -14,6 +14,7 @@ import "@fontsource/inter";
 import Category from './pages/Category';
 import Footer from './components/footer';
 import CustomizedArt from './pages/CustomizedArt';
+import Preview from './pages/Preview';
 
 export const main_routes = [
   {
@@ -76,6 +77,7 @@ function App() {
           <Route key='profile' path='profile' element={<Profile/>}/>
           <Route key='category' path='category' element={<Category/>}/>
           <Route key='customizedArt' path='customizedArt' element={<CustomizedArt/>}/>
+          <Route key='preview' path='preview' element={<Preview/>}/>
           {/* </Layout> */}
         </Routes>
         <Footer/>

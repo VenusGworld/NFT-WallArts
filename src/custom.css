@@ -6,3 +6,36 @@
 .App {
   position: relative;
 }
+
+.react-calendar { 
+  /* width: 400px;
+  max-width: 100%; */
+  background-color: #212837;
+  color: white;
+  border-radius: 15px;
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+  font-family: Arial, Helvetica, sans-serif;
+  line-height: 1.125em;
+ }
+
+ .react-calendar__navigation {
+  padding: 20px 0 !important;
+ }
+
+ .react-calendar__month-view__weekdays__weekday, .react-calendar__month-view__weekdays__weekday abbr {
+  text-decoration: none;
+  color: #B982FF;
+ }
+
+ .react-calendar__month-view__weekdays {
+  margin: 20px 0 !important;
+ }
+
+ .react-calendar__month-view__days__day {
+  margin: 10px 0 !important;
+ }
+
+ .react-calendar__month-view__days__day--neighboringMonth {
+  color: gray !important;
+ }
+ 
