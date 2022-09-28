@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import { ToggleButton, DropDownSelect, NumberInput, Calendar, RoundedButtonMD } from '../../components/Input';
 
 const Preview = () => {
   const[color,setColor] = useState(0);
   const[isbuy,setIsBuy] = useState(false);
+  const navigate = useNavigate();
   return (<div>
     <div className={`w-full h-full mt-20 relative text-white`}>
       <div className='relative'>
@@ -84,7 +86,9 @@ const Preview = () => {
                   </div>
                 </div>
                 <div className='flex flex-col items-start space-y-2 w-full'>
-                  <RoundedButtonMD text="See Next" onButtonClick={() => {}} active fullWidth/>
+                  <RoundedButtonMD text="See Next" onButtonClick={() => {
+                    navigate('/payment');
+                  }} active fullWidth/>
                 </div>
               </div>
             </div>

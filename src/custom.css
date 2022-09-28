@@ -3,6 +3,10 @@
   letter-spacing: 0.5px;
 }
 
+input:focus {
+  outline: none;
+}
+
 .App {
   position: relative;
 }

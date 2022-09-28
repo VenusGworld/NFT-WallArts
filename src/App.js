@@ -15,6 +15,8 @@ import Category from './pages/Category';
 import Footer from './components/footer';
 import CustomizedArt from './pages/CustomizedArt';
 import Preview from './pages/Preview';
+import Payment from './pages/Payment';
+import OrderSummary from './pages/OrderSummary';
 
 export const main_routes = [
   {
@@ -78,6 +80,8 @@ function App() {
           <Route key='category' path='category' element={<Category/>}/>
           <Route key='customizedArt' path='customizedArt' element={<CustomizedArt/>}/>
           <Route key='preview' path='preview' element={<Preview/>}/>
+          <Route key='payment' path='payment' element={<Payment/>}/>
+          <Route key='order_summary' path='order_summary' element={<OrderSummary/>}/>
           {/* </Layout> */}
         </Routes>
         <Footer/>
