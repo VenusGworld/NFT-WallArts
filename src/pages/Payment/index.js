@@ -495,7 +495,7 @@ const Payment = () => {
         <div className="w-[80%] mx-auto flex">
           <div className="flex justify-start items-start w-3/5 pr-8">
             <div className="flex flex-col">
-              <span className="xl:text-5xl lg:text-3xl md:text-2xl text-lg font-bold inline-block my-5 text-start">
+              <span className="xl:text-5xl lg:text-3xl md:text-2xl text-lg font-bold inline-block my-7 text-start">
                 Mailing Details
               </span>
               <div className="flex flex-col items-start">

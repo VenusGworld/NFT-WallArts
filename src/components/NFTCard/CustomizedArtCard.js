@@ -7,7 +7,7 @@ const CustomizedArtCard = ({item}) => {
   const navigate = useNavigate();
 
   return (
-    <div className='relative md:w-[48%] xl:w-[30%] w-[90%] shadow-xl flex flex-col my-4 hover:shadow-2xl bg-[#454E61] p-3 cursor-pointer'
+    <div className='relative hover:scale-105 hover:drop-shadow-2xl transition-all md:w-[48%] xl:w-[30%] w-[90%] shadow-xl flex flex-col my-4 hover:shadow-2xl bg-[#454E61] p-3 cursor-pointer'
       onClick={() => {
         navigate('/preview')
       }}

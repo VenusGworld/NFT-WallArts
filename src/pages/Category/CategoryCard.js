@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 const CategoryCard = ({img, name, desc}) => {
   const navigate = useNavigate();
   return (
-    <div className='lg:w-[45%] sm:w-[90%] shadow-2xl flex flex-col my-8 cursor-pointer' onClick={() => {
+    <div className='lg:w-[45%] sm:w-[90%] shadow-2xl flex flex-col my-8 cursor-pointer hover:scale-105 hover:drop-shadow-2xl transition-all' onClick={() => {
       navigate('/customizedArt');
     }}>
       <img loading='lazy' alt='categorycard' src={ process.env.PUBLIC_URL+ "/img/" +img} className=' w-full h-full'/>
