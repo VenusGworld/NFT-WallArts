@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { ToggleButton, DropDownSelect, NumberInput, Calendar, RoundedButtonMD } from '../../components/Input';
+import { ToggleButton, DropDownSelect, NumberInput, Calendar, RoundedButtonMD, RoundedDropDownSelect } from '../../components/Input';
 
 const Preview = () => {
   const[color,setColor] = useState(0);
@@ -33,7 +33,7 @@ const Preview = () => {
                 </div>
                 <div className='flex flex-col items-start space-y-2'>
                   <span className='text-[#818DA9]'>Frame Size</span>
-                  <DropDownSelect
+                  <RoundedDropDownSelect
                     onChangeHandle={(v) => {
                       
                     }}

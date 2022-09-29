@@ -3,6 +3,7 @@ import { Link, useNavigate, useLocation } from "react-router-dom";
 
 import { main_routes } from "../App";
 import { RoundedButtonMD, RoundedButtonSM, SearchBar } from "./Input";
+import DropDownNavButton from "./Input/DropDownNavButton";
 
 const Header = () => {
   const [sidevar, openSidevar] = useState(false);
@@ -15,10 +16,10 @@ const Header = () => {
           className="flex items-center h-20 p-1 justify-center"
           style={{
             boxShadow: "0px 4px 6px #3e46725e",
-            background: "linear-gradient(to right, #515874 0%, #363945 100%)",
+            // background: "linear-gradient(to right, #515874 0%, #363945 100%)",
           }}
         >
-          <div className="">
+          <div className="mr-10">
             <img loading='lazy'
               href={process.env.PUBLIC_URL + "/img/New-Logo 1.png"}
               alt="logo"
@@ -28,11 +29,12 @@ const Header = () => {
           </div>
           <div className="items-center justify-center">
             <div className="flex items-center w-full px-8 justify-center space-x-7">
-              <div className="p-[7px 0px 0 40px] font-medium text-lg text-center md:flex hidden mx-2 space-x-4">
+              <div className="p-[7px 0px 0 40px] font-medium text-lg text-center md:flex hidden mx-2 space-x-10 items-center">
+                <DropDownNavButton list={['Live Auctions','Upcoming Auction','On Sale']} title='Explorer'/>
                 {main_routes.map((r) => (
                   <Link
                     key={r.key}
-                    className={` ${
+                    className={` w-24 whitespace-nowrap ${
                       location.pathname === r.path
                         ? " text-white"
                         : " text-[#ececec99]"

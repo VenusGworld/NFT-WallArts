@@ -19,15 +19,7 @@ import Payment from './pages/Payment';
 import OrderSummary from './pages/OrderSummary';
 
 export const main_routes = [
-  {
-    key: "explore",
-    title: "Explore",
-    description: "Explore",
-    component: <Explorer/>,
-    path: "/explorer",
-    isEnabled: true,
-    appendDivider: true,
-  },
+
   {
     key: "topsold",
     title: "Top Sold",
@@ -72,6 +64,7 @@ function App() {
           <Route
               path="/"
               element={<Navigate to="/category" replace />}
+              // element={<Navigate to="/profile" replace />}
           />
           {main_routes.map(route =>
             <Route key={route.key} path={route.path} element={route.component} />

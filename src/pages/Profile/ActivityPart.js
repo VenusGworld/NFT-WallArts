@@ -4,19 +4,19 @@ import { Area, AreaChart, CartesianGrid, XAxis, YAxis } from 'recharts';
 // import { Items } from '.';
 
 import Board from '../../components/Board';
-import { RoundedButtonSM } from '../../components/Input';
+import { RoundedButtonSM, RoundedDropDownSelect } from '../../components/Input';
 import DropDownSelect from '../../components/Input/DropDownSelect';
 
 export const Activities = [
-  {img:'image 4.png', name: 'Aui dolorem eum', price:5, quantity: '1', from:'ffff', to: 'tttt', time: '10 min'},
-  {img:'image 16.png', name: 'Annoyances accepted', price:2, quantity: '1', from:'ffff', to: 'tttt', time: '10 min'},
-  {img:'image 19.png', name: 'Facere possimus', price:3, quantity: '1', from:'ffff', to: 'tttt', time: '10 min'},
-  {img:'image 16.png', name: 'Lorem Ipsume', price:10, quantity: '1', from:'ffff', to: 'tttt', time: '10 min'},
-  {img:'image 19.png', name: 'Aui dolorem eum', price:3.5, quantity: '1', from:'ffff', to: 'tttt', time: '10 min'},
-  {img:'image 19.png', name: 'Facere possimus', price:1, quantity: '1', from:'ffff', to: 'tttt', time: '10 min'},
-  {img:'image 16.png', name: 'Lorem Ipsume', price:0.3, quantity: '1', from:'ffff', to: 'tttt', time: '10 min'},
-  {img:'image 4.png', name: 'Aui dolorem eum', price:11, quantity: '1', from:'ffff', to: 'tttt', time: '10 min'},
-  {img:'image 16.png', name: 'Annoyances accepted', price:5, quantity: '1', from:'ffff', to: 'tttt', time: '10 min'},
+  {img:'image 4.png', name: 'Aui dolorem eum', price:5, quantity: '1', from:'Jeffry Benton', to: 'Aida Bugg', time: '10 min'},
+  {img:'image 16.png', name: 'Annoyances accepted', price:2, quantity: '1', from:'Abraham Marubutt', to: 'Peg Legge', time: '3 min'},
+  {img:'image 19.png', name: 'Facere possimus', price:3, quantity: '1', from:'Georgi Liu', to: 'Allie Grater', time: '2 min'},
+  {img:'image 16.png', name: 'Lorem Ipsume', price:10, quantity: '1', from:'Robert Lee', to: 'Olive Yew', time: '11 min'},
+  {img:'image 19.png', name: 'Aui dolorem eum', price:3.5, quantity: '1', from:'Grant Dong', to: 'Jeffry Benton', time: '7 min'},
+  {img:'image 19.png', name: 'Facere possimus', price:1, quantity: '1', from:'Jeffry Benton', to: 'MICHAEL Jin', time: '20 min'},
+  {img:'image 16.png', name: 'Lorem Ipsume', price:0.3, quantity: '1', from:'Olive Yew', to: 'Georgi Liu', time: '30 min'},
+  {img:'image 4.png', name: 'Aui dolorem eum', price:11, quantity: '1', from:'Jackson Bill', to: 'Robert Lee', time: '15 min'},
+  {img:'image 16.png', name: 'Annoyances accepted', price:5, quantity: '1', from:'Scalett Ohara', to: 'Billy Graham', time: '10 min'},
 ]
 
 const ActivityPart = () => {
@@ -46,7 +46,7 @@ const ActivityPart = () => {
   return (<div className='w-[90%] flex flex-col space-y-10'>
     <div className='flex w-full justify-end items-end text-white'>
       <div className='flex w-1/3'>
-        <DropDownSelect onChangeHandle={() => {}} list={[{
+        <RoundedDropDownSelect onChangeHandle={() => {}} list={[{
           text: 'Listing',
           value: 0
         },{
@@ -65,7 +65,7 @@ const ActivityPart = () => {
       <div className='flex flex-col justify-center w-full h-full space-y-4'>
         <div className='flex space-x-8'>
           <div className='w-1/4'>
-            <DropDownSelect
+            <RoundedDropDownSelect
               onChangeHandle={(v) => {
                 setChartData(generateChartData(v));
               }}
@@ -119,11 +119,11 @@ const ActivityPart = () => {
     <div className=' my-32'>
       <div className='flex justify-center items-start  text-white px-8 py-2'>
         <div className=' flex justify-start w-3/12'>Item</div>
-        <div className=' flex justify-start w-2/12'>Price</div>
-        <div className=' flex justify-start w-1/12'>Quantity</div>
-        <div className=' flex justify-start w-2/12'>From</div>
-        <div className=' flex justify-start w-2/12'>To</div>
-        <div className=' flex justify-start w-2/12'>Time</div>
+        <div className=' flex justify-center w-2/12'>Price</div>
+        <div className=' flex justify-center w-1/12'>Quantity</div>
+        <div className=' flex justify-center w-2/12'>From</div>
+        <div className=' flex justify-center w-2/12'>To</div>
+        <div className=' flex justify-center w-2/12'>Time</div>
       </div>
       <div className='flex flex-col space-y-3'>
       {
@@ -132,10 +132,10 @@ const ActivityPart = () => {
             <Board key={i}>
               <div className='flex w-full text-xl'>
                 <div className=' flex justify-start items-center w-3/12'>
-                  <img loading='lazy' src={process.env.PUBLIC_URL + "/img/" + item.img} alt='' className='w-12 h-12 rounded-full'/>
+                  <img loading='lazy' src={process.env.PUBLIC_URL + "/img/" + item.img} alt='' className='w-16 h-16 rounded-full'/>
                   <div className=' ml-3'>{item.name}</div>
                 </div>
-                <div className=' flex justify-end w-2/12 flex-col items-start'>
+                <div className=' flex justify-center w-2/12 flex-col items-center'>
                   <div className='flex flex-col justify-end'>
                     <div className='flex justify-end text-xl'>
                       <img loading='lazy' src={process.env.PUBLIC_URL + "/img/eth_icon.svg"} alt='' className=' inline-block w-7 h-7'/>
@@ -144,10 +144,10 @@ const ActivityPart = () => {
                     <div className=' text-[#b6b3e0] text-2xl'>${Number(item.price * 1459)}</div>
                   </div>
                 </div>
-                <div className=' flex justify-start items-center w-1/12'>{item.quantity}</div>
-                <div className=' flex justify-start items-center w-2/12'>{item.from}</div>
-                <div className=' flex justify-start items-center w-2/12'>{item.to}</div>
-                <div className=' flex justify-start items-center w-2/12'>{item.time}</div>
+                <div className=' flex justify-center items-center w-1/12'>{item.quantity}</div>
+                <div className=' flex justify-center items-center w-2/12'><span className='w-16 overflow-hidden text-ellipsis whitespace-nowrap'>{item.from}</span></div>
+                <div className=' flex justify-center items-center w-2/12'><span className=' w-16 overflow-hidden text-ellipsis whitespace-nowrap'>{item.to}</span></div>
+                <div className=' flex justify-center items-center w-2/12'>{item.time}</div>
               </div>
               
             </Board>
