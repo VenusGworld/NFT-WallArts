@@ -6,7 +6,7 @@ const DropDownSelect = ({list, onChangeHandle}) => {
   const [selectedItem,selectItem] = useState(0);
 
   return (
-    <div className='relative w-full'>
+    <div className={`relative w-full ${expanded&&"overflow-hidden"} transition-all`}>
     <div 
       className={`relative w-full cursor-pointer px-7 py-5 ${expanded?' bg-[#57637C] overflow-hidden ':'  bg-[#4a5367] '}`}
       onClick={() => {setExpanded(!expanded)}}
@@ -24,7 +24,7 @@ const DropDownSelect = ({list, onChangeHandle}) => {
             selectItem(i)
             setExpanded(!expanded)
             onChangeHandle(item['value'])
-          }} className={`${selectedItem===i?"text-[#D3B789]":" text-white"} p-1`}>
+          }} className={`${selectedItem===i?"text-[#D3B789] border-l border-l-gray-400 border-r border-r-gray-400  ":" text-white"} p-1`}>
             {item['text']}
           </div>
         ))

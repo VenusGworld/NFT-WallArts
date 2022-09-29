@@ -4,7 +4,7 @@ import RoundedButtonBG from '../Input/RoundedButton_bg';
 const ProfileNFTCard = ({item}) => {
   const {img, name, like, auction, sale, price, sold, highestBid, endsIn} = item;
   return (
-    <div className='md:w-[48%] xl:w-[30%] w-[90%] shadow-2xl flex flex-col my-4 hover:scale-105 transition-all'>
+    <div className='md:w-[48%] xl:w-[30%] w-[90%] shadow-2xl flex flex-col my-4 hover:scale-105 transition-all cursor-pointer'>
       <img loading='lazy' src={process.env.PUBLIC_URL + "/img/" + img} alt='' className='w-full'/>
       <div className='flex p-5 bg-white text-[#313949] justify-between w-full h-full'>
         <div className='flex flex-col justify-between text-sm w-full'>

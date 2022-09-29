@@ -4,7 +4,9 @@ const FilterPart = () => {
 return(<div className="p-5 flex text-white w-[90%] bg-[#414b5e] mb-10 hd-nm border-theme-24 flex-col justify-start text-xl">
   <div className=" text-2xl flex justify-start my-3">Filter :</div>
   <div className="flex justify-between items-center flex-wrap">
-    <SearchBar placeholder='Search Items, collections'/>
+    <div className=" w-1/3">
+      <SearchBar placeholder='Search Items, collections'/>
+    </div>
     <RoundedButtonMD active text='Reset'/>
   </div>
   <div className=" text-2xl flex justify-start my-3">Sale Types :</div>

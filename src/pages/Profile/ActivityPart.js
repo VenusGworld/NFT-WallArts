@@ -21,7 +21,7 @@ export const Activities = [
 
 const ActivityPart = () => {
   
-  
+  const[selectedPage,selectPage] = useState(0);
   useEffect(()=>{
     
   },[]);
@@ -117,7 +117,7 @@ const ActivityPart = () => {
       </div>
     </Board>
     <div className=' my-32'>
-      <div className='flex justify-center items-start  text-white px-8 py-2'>
+      <div className='flex justify-center items-start  text-white px-11 py-2'>
         <div className=' flex justify-start w-3/12'>Item</div>
         <div className=' flex justify-center w-2/12'>Price</div>
         <div className=' flex justify-center w-1/12'>Quantity</div>
@@ -130,18 +130,18 @@ const ActivityPart = () => {
         Activities.map((item, i) => {
           return (
             <Board key={i}>
-              <div className='flex md:flex-row w-full text-xl flex-wrap'>
+              <div className='flex md:flex-row w-full text-xl flex-wrap cursor-pointer hover:px-0 px-3 transition-all'>
                 <div className=' flex justify-start items-center w-3/12'>
                   <img loading='lazy' src={process.env.PUBLIC_URL + "/img/" + item.img} alt='' className='w-16 h-16 rounded-full'/>
                   <div className=' ml-3'>{item.name}</div>
                 </div>
                 <div className=' flex justify-center w-2/12 flex-col items-center'>
                   <div className='flex flex-col justify-end'>
-                    <div className='flex justify-end text-xl'>
+                    <div className='flex justify-end text-2xl'>
                       <img loading='lazy' src={process.env.PUBLIC_URL + "/img/eth_icon.svg"} alt='' className=' inline-block w-7 h-7'/>
                       {item.price}
                     </div>
-                    <div className=' text-[#b6b3e0] text-2xl'>${Number(item.price * 1459)}</div>
+                    <div className=' text-[#b6b3e0] text-lg'>${Number(item.price * 1459)}</div>
                   </div>
                 </div>
                 <div className=' flex justify-center items-center w-1/12'>{item.quantity}</div>
@@ -156,13 +156,16 @@ const ActivityPart = () => {
       }
       </div>
       <div className='flex space-x-1 my-3 items-center justify-center'>
-        <RoundedButtonSM text={1} active/>
-        <RoundedButtonSM text={2}/>
-        <RoundedButtonSM text={3}/>
-        <RoundedButtonSM text={4}/>
-        <RoundedButtonSM text={5}/>
-        <div className=' text-[#D3B789] mx-3 cursor-pointer'>Next</div>
-      </div>
+      <RoundedButtonSM text={1} active={selectedPage===0} onButtonClick={() => {selectPage(0)}}/>
+      <RoundedButtonSM text={2} active={selectedPage===1} onButtonClick={() => {selectPage(1)}}/>
+      <RoundedButtonSM text={3} active={selectedPage===2} onButtonClick={() => {selectPage(2)}}/>
+      <RoundedButtonSM text={4} active={selectedPage===3} onButtonClick={() => {selectPage(3)}}/>
+      <RoundedButtonSM text={5} active={selectedPage===4} onButtonClick={() => {selectPage(4)}}/>
+      <div className=' text-[#D3B789] mx-3 cursor-pointer' onClick={() => {
+        if(selectedPage===4) selectPage(0);
+        else selectPage(selectedPage+1)
+      }}>Next</div>
+    </div>
     </div>
     
   </div>)

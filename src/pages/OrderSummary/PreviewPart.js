@@ -37,7 +37,7 @@ const PreviewPart = () => {
   return (<Board>
     <div className="flex flex-col sm:items-start items-center">
       <span className=" text-3xl my-5">Preview</span>
-      <div className='flex flex-col space-y-5 my-10'>
+      <div className='flex flex-col space-y-5 my-10 w-full'>
         {
           data.map((item, i) => {
             return (<PreviewCard info={item} key={i}/>)

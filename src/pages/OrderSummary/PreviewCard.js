@@ -4,11 +4,11 @@ import { useNavigate } from "react-router-dom";
 const PreviewCard = ({ info }) => {
   const { img, title, frameSize, quantity, colour } = info;
 
-  return (<div className="flex sm:space-x-5 flex-col sm:flex-row">
+  return (<div className="flex lg:space-x-5 flex-col lg:flex-row w-full">
     {/* <div className=" w-32 h-32 bg-white rounded-2xl flex justify-center items-center"> */}
       <img src={process.env.PUBLIC_URL + "/img/" +img} alt="" className="w-32 h-32 flex justify-center items-center rounded-2xl"/>
     {/* </div> */}
-    <div className="flex flex-col">
+    <div className="flex flex-col lg:w-[70%] w-full">
       <span className=" my-1 text-xl text-start">{title}</span>
       <div className="flex justify-between my-3">
         <div className="flex flex-col items-start">

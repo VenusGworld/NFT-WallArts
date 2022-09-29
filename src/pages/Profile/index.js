@@ -19,7 +19,7 @@ export const Items = [
 const Profile = () => {
 
   const[filterExpanded,expandFilter] = useState(false);
-  const[itemsExpanded,expandItems] = useState(false);
+  const[itemsExpanded,expandItems] = useState(true);
 
   return (
     <div className='h-full relative mt-20 bg-[#363F54]'>
