@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 const PreviewCard = ({ info }) => {
   const { img, title, frameSize, quantity, colour } = info;
 
-  return (<div className="flex space-x-5">
+  return (<div className="flex sm:space-x-5 flex-col sm:flex-row">
     {/* <div className=" w-32 h-32 bg-white rounded-2xl flex justify-center items-center"> */}
       <img src={process.env.PUBLIC_URL + "/img/" +img} alt="" className="w-32 h-32 flex justify-center items-center rounded-2xl"/>
     {/* </div> */}

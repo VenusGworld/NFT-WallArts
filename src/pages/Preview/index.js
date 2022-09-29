@@ -20,9 +20,9 @@ const Preview = () => {
       <div className='bg-[#363f54] w-full p-10 relative flex flex-col justify-start items-start -mt-[8%]'>
         <div className='w-[80%] mx-auto'>
           <div className='flex flex-col justify-start items-start'>
-          <div className='xl:text-5xl lg:text-3xl md:text-2xl text-lg font-bold inline-block my-5'>Preview</div>
-            <div className='flex items-start space-x-5 relative'>
-              <div className='w-3/5 bg-white flex relative justify-center items-center h-full'>
+          <div className='xl:text-5xl lg:text-3xl md:text-2xl text-lg font-bold inline-block my-5 h-full'>Preview</div>
+            <div className='flex items-start space-x-5 relative justify-center h-full'>
+              <div className='w-3/5 bg-white h-full relative'>
                 <img loading='lazy' src={process.env.PUBLIC_URL + "/img/image51.png"} alt=''/>
                 <img loading='lazy' src={process.env.PUBLIC_URL + "/img/360-view1.svg"} alt='' className='absolute bottom-5 right-3'/>
               </div>
@@ -41,13 +41,13 @@ const Preview = () => {
                       text: '30x20cm',
                       value: 90
                     },{
-                      text: '30x20cm',
+                      text: '10x40cm',
                       value: 50
                     },{
-                      text: '30x20cm',
+                      text: '70x50cm',
                       value: 30
                     },{
-                      text: '30x20cm',
+                      text: '100x100cm',
                       value: 10
                     }]}/>
                 </div>

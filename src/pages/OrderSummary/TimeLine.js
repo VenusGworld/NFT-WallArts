@@ -13,7 +13,7 @@ const TimeLine = ({ info, last }) => {
         <span>{time}</span>
       </div>
       {detail && (
-        <span className=" absolute -right-96   top-1/2 -translate-y-1/2 w-56">{detail}</span>
+        <span className=" xl:absolute xl:left-96   xl:top-1/2 xl:-translate-y-1/2 w-56">{detail}</span>
       )}
     </div>
   </div>);

@@ -34,7 +34,7 @@ const RoundedDropDownSelect = ({ list, onChangeHandle, label }) => {
             expanded
               ? " -top-[500px] translate-y-0 transition-all h-full duration-200 hidden"
               : ""
-          } z-50 transition-all overflow-y-auto h-40 bg-[#454E61] p-4 text-white absolute -bottom-2 flex flex-col translate-y-full w-full -left-0`}
+          } z-50 transition-all overflow-y-auto h-40 bg-[#454E61] p-4 text-white absolute -bottom-2 flex flex-col items-start translate-y-full w-full -left-0`}
           style={{
             boxShadow:
               "0px 4px 15px rgba(0, 0, 0, 0.25), 0px 0px 2px rgba(34, 41, 56, 0.9)",

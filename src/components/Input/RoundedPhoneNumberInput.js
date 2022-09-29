@@ -30,7 +30,7 @@ const RoundedPhoneNumberInput = ({placeholder, label, defaultValue}) => {
         <span>+{NumberList[selectedItem]['prefix']}</span>
       </div>
       <img loading='lazy' src={process.env.PUBLIC_URL + "/img/triangle.svg"} alt='' className={`absolute w-5 h-5 right-3 top-1/2 -translate-y-1/2 transition-all ${expanded&&" rotate-180"}`}/>
-      <input placeholder={placeholder} defaultValue={value} onChange={(e)=>{setValue(e.value)}} className=' pl-2 border-l border-[#818895] bg-[#444E66] text-white mr-2'/>
+      <input placeholder={placeholder} defaultValue={value} onChange={(e)=>{setValue(e.value)}} className=' overflow-hidden pl-2 border-l border-[#818895] bg-[#444E66] text-white mr-2'/>
   </div>
   </div>
   {<div className={` ${expanded?" -top-[500px] translate-y-0 transition-all h-full hidden duration-200":""} z-50 transition-all bg-[#454E61] p-4 text-white absolute -bottom-2 flex flex-col translate-y-full w-full -left-0`}

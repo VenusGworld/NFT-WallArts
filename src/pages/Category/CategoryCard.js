@@ -9,8 +9,8 @@ const CategoryCard = ({img, name, desc}) => {
     }}>
       <img loading='lazy' alt='categorycard' src={ process.env.PUBLIC_URL+ "/img/" +img} className=' w-full h-full'/>
       <div className='flex flex-col items-baseline p-5 bg-[#454e61]'>
-        <div className='py-5 text-2xl xl:text-4xl'>{name}</div>
-        <div className=' text-start xl:text-xl'>{desc}</div>
+        <div className='py-5 text-2xl xl:text-3xl'>{name}</div>
+        <div className=' text-start xl:text-lg'>{desc}</div>
       </div>
     </div>
   )

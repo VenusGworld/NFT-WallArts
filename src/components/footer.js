@@ -19,7 +19,7 @@ const Footer = () => {
                   src={process.env.PUBLIC_URL + "/img/New-Logo 1.png"}
                 />
               </div>
-              <div className="w-[40%] py-1 content-start text-gray-500 text-ellipsis overflow-hidden">
+              <div className=" w-full py-1 content-start text-gray-500 text-ellipsis overflow-hidden">
                 <div className="py-1 font-bold text-white">
                   Stay in the NFT WALLARTS
                 </div>
@@ -52,7 +52,7 @@ const Footer = () => {
               </div>
             </div>
           </div>
-          <div className="flex justify-between flex-1 md:w-fit w-full">
+          <div className="flex justify-between flex-1 md:w-fit w-full  flex-wrap">
             <div className="flex flex-col space-y-5">
               <div>Explore</div>
               <div>Stats</div>

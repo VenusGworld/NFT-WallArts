@@ -16,7 +16,7 @@ const DropDownNavButton = ({list, title, onChangeHandle}) => {
       <img loading='lazy' src={process.env.PUBLIC_URL + "/img/triangle.svg"} alt='' className={`absolute w-5 h-5 right-3 top-1/2 -translate-y-1/2 transition-all ${expanded&&" rotate-180"}`}/>
       </div>
     </div>
-    {<div className={` ${expanded?" -top-[500px] translate-y-0 hidden transition-all h-full ":""} z-50 transition-all bg-[#454E61] p-4 text-white absolute -bottom-2 flex flex-col translate-y-full w-full -left-0`}
+    {<div className={` ${expanded?" -top-[500px] translate-y-0 hidden transition-all h-full ":""} z-50 transition-all bg-[#454E61] p-4 text-white absolute -bottom-2 flex flex-col justify-start items-start translate-y-full w-[230px] left-0 ml-5`}
       style={{'boxShadow': "0px 4px 15px rgba(0, 0, 0, 0.25), 0px 0px 2px rgba(34, 41, 56, 0.9)"}}>
       {
         list.map((item, i) => (
@@ -24,7 +24,7 @@ const DropDownNavButton = ({list, title, onChangeHandle}) => {
             // selectItem(i)
             setExpanded(!expanded)
             onChangeHandle(item)
-          }} className={`p-1`}>
+          }} className={`p-1 cursor-pointer`}>
             {item}
           </div>
         ))

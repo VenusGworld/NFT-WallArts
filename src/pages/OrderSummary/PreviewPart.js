@@ -35,7 +35,7 @@ const PreviewPart = () => {
   const navigate = useNavigate();
 
   return (<Board>
-    <div className="flex flex-col items-start">
+    <div className="flex flex-col sm:items-start items-center">
       <span className=" text-3xl my-5">Preview</span>
       <div className='flex flex-col space-y-5 my-10'>
         {

@@ -13,7 +13,7 @@ const CalendarInput = ({list, onChangeHandle}) => {
   function formatDate(date) {
     return [
       (padTo2Digits(date.getDate()) + ' ' +
-      month[date.getMonth() + 1] + '' + ', ' +
+      month[date.getMonth()] + '' + ', ' +
       date.getFullYear()
       ),
     ].join(', ');

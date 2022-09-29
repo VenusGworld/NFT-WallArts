@@ -40,8 +40,8 @@ const CustomizedArtCard = ({item}) => {
       <div className='flex flex-col p-3 text-white justify-between w-full h-full'>
         <div className='flex justify-between items-start w-full'>
           <div className='flex flex-col items-baseline space-y-2'>
-            <div className=' text-[#818DA9]'>Frame Size</div>
-            <div className='text-white text-lg font-bold text'>{width} x {height} cm</div>
+            <div className=' text-[#818DA9] text-xl'>Frame Size</div>
+            <div className='text-white text-xl font-bold text'>{width} x {height} cm</div>
           </div>
           <div className='flex items-center space-x-3'>
             <div className={`relative bg-black p-3 rounded-full border ${color===1?' border-green-500 ': ' border-gray-400 '} cursor-pointer inline-block`} onClick={() => {color===1?setColor(0):setColor(1)}}>

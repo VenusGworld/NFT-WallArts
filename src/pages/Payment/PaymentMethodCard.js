@@ -20,7 +20,7 @@ export default function PaymentMethodCard() {
 
   return (
     <RadioGroup value={selectedMailingLists} onChange={setSelectedMailingLists}>
-      <div className="mt-4 flex w-full justify-between">
+      <div className="mt-4 flex flex-wrap sm:items-stretch sm:space-y-0 justify-between">
         {mailingLists.map((mailingList) => (
           <RadioGroup.Option
             key={mailingList.id}
@@ -29,7 +29,7 @@ export default function PaymentMethodCard() {
               classNames(
                 checked ? 'border-transparent' : 'border-gray-300',
                 active ? 'border-[#D3B789] ring-2 ring-[#D3B789]' : '',
-                'relative flex justify-center items-center cursor-pointer rounded-2xl border bg-[#57637C] p-4 shadow-sm focus:outline-none w-[18%]'
+                'relative flex justify-center items-center cursor-pointer rounded-2xl border w-[80%] mb-2 sm:mb-0 bg-[#57637C] p-4 shadow-sm focus:outline-none sm:w-[18%]'
               )
             }
           >

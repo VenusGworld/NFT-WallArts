@@ -14,7 +14,7 @@ export default function RadioGroup({list}) {
                 defaultChecked={index === 0}
                 className="h-5 w-5 border-gray-300 text-[#D3B789] focus:ring-indigo-500"
               />
-              <label className="ml-3 block font-medium text-white">
+              <label className="ml-3 block font-medium text-white overflow-hidden">
                 {notificationMethod}
               </label>
             </div>

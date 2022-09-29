@@ -45,7 +45,7 @@ const Header = () => {
                   </Link>
                 ))}
               </div>
-              <div className="lg:inline-block hidden">
+              <div className="lg:inline-block hidden w-[400px]">
                 <SearchBar
                   placeholder={"Search items, collections and accounts"}
                 />
@@ -59,7 +59,7 @@ const Header = () => {
                   className="w-5 h-5 mr-2 text-white inline-block"
                   alt="globe"
                 />
-                <p className=" inline-block text-white">En</p>
+                <p className=" inline-block text-white">EN</p>
               </div>
               <div>
                 <RoundedButtonSM
