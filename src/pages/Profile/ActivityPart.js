@@ -130,7 +130,7 @@ const ActivityPart = () => {
         Activities.map((item, i) => {
           return (
             <Board key={i}>
-              <div className='flex w-full text-xl'>
+              <div className='flex md:flex-row w-full text-xl flex-wrap'>
                 <div className=' flex justify-start items-center w-3/12'>
                   <img loading='lazy' src={process.env.PUBLIC_URL + "/img/" + item.img} alt='' className='w-16 h-16 rounded-full'/>
                   <div className=' ml-3'>{item.name}</div>

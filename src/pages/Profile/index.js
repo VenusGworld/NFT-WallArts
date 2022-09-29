@@ -26,7 +26,7 @@ const Profile = () => {
       <img loading='lazy' src={process.env.PUBLIC_URL + "/img/img1 1.png"} alt="profile_banner" width='100%'/>
       <div className=' p-20 flex flex-col justify-center items-center'>
         <div className=' rounded-full bg-[#00AEEF] border-4 border-white p-10 -mt-36'>
-          <img loading='lazy' src={process.env.PUBLIC_URL + "/img/sandbox_mark.svg"} alt='' className=' w-16 h-16'/>
+          <img loading='lazy' src={process.env.PUBLIC_URL + "/img/sandbox_mark.svg"} alt='' className=' w-24 h-24 scale-125'/>
         </div>
         <div className='relative my-5'>
           <div className=' text-white text-4xl'>The Sandbox</div>
