@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 
 import { ToggleButton, DropDownSelect, NumberInput, Calendar, RoundedButtonMD, RoundedDropDownSelect } from '../../components/Input';
 
 const Preview = () => {
   const[color,setColor] = useState(0);
-  const[isbuy,setIsBuy] = useState(false);
+  const [quantity, setquantity] = useState(0)
+  // const[isbuy,setIsBuy] = useState(false);
+  const [searchParams] = useSearchParams();
+  console.log(searchParams.get('price'));
   const navigate = useNavigate();
   return (<div>
     <div className={`w-full h-full mt-20 relative text-white`}>
@@ -28,8 +31,8 @@ const Preview = () => {
               </div>
               <div className='w-2/5 bg-[#444E66] px-6 py-10 flex flex-col space-y-10'>
                 <div className='flex'>
-                  <div className='flex-1'><ToggleButton label='List'/></div>
-                  <div className='flex-1'><ToggleButton label='Buy' onChangeHandle={setIsBuy}/></div>
+                  {/* <div className='flex-1'><ToggleButton label='List'/></div>
+                  <div className='flex-1'><ToggleButton label='Buy' onChangeHandle={setIsBuy}/></div> */}
                 </div>
                 <div className='flex flex-col items-start space-y-2'>
                   <span className='text-[#818DA9]'>Frame Size</span>
@@ -64,9 +67,9 @@ const Preview = () => {
                 </div>
                 <div className='flex flex-col items-start space-y-2'>
                   <span className='text-[#818DA9]'>Quantity</span>
-                  <NumberInput/>
+                  <NumberInput onChangeHandle={setquantity}/>
                 </div>
-                {!isbuy && (<div className='flex flex-col space-y-3'>
+                {/* {!isbuy && (<div className='flex flex-col space-y-3'>
                 <div className='flex flex-col items-start space-y-2'>
                   <span className='text-[#818DA9]'>Start Date Aunction</span>
                   <Calendar/>
@@ -74,14 +77,14 @@ const Preview = () => {
                 <div className='flex flex-col items-start space-y-2'>
                   <span className='text-[#818DA9]'>End Date Aunction</span>
                   <Calendar/>
-                </div></div>)}
+                </div></div>)} */}
                 <div className='flex flex-col items-start space-y-2'>
                   <span className='text-[#818DA9]'>End Date Aunction</span>
                   <div className='flex justify-between w-full'>
-                    <span className=' text-white text-lg'>8 x 8.2 ETH</span>
+                    <span className=' text-white text-2xl'>{quantity} x {searchParams.get('price')} ETH</span>
                     <div className='flex flex-col justify-end'>
-                      <span className=' text-white text-lg'>65.6 ETH</span>
-                      <span className=' text-white text-sm'>( 2775 USD )</span>
+                      <span className=' text-[#D3B789] text-2xl'>{quantity * searchParams.get('price')} ETH</span>
+                      <span className=' text-white text-sm'>( {(quantity * searchParams.get('price')*1327.12).toFixed(2)} USD )</span>
                     </div>
                   </div>
                 </div>

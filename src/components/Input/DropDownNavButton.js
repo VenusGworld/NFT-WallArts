@@ -1,8 +1,10 @@
 import React from 'react';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const DropDownNavButton = ({list, title, onChangeHandle}) => {
   const [expanded, setExpanded] = useState(true);
+  const navigate = useNavigate();
   // const [selectedItem,selectItem] = useState(0);
 
   return (
@@ -23,9 +25,12 @@ const DropDownNavButton = ({list, title, onChangeHandle}) => {
           <div key={i} onClick={() => {
             // selectItem(i)
             setExpanded(!expanded)
-            onChangeHandle(item)
+            navigate({
+              pathname: '/customizedArt',
+              search: `?type=${item.link}`
+            })
           }} className={`p-1 cursor-pointer`}>
-            {item}
+            {item.title}
           </div>
         ))
       }

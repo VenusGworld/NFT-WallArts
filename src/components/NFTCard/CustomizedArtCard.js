@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { createSearchParams, useNavigate } from 'react-router-dom';
 
 const CustomizedArtCard = ({item}) => {
   const {width, height, price, bestseller, popular} = item;
@@ -9,7 +9,10 @@ const CustomizedArtCard = ({item}) => {
   return (
     <div className='relative hover:scale-105 hover:drop-shadow-2xl transition-all md:w-[48%] xl:w-[30%] w-[90%] shadow-xl flex flex-col my-4 hover:shadow-2xl bg-[#454E61] p-3 cursor-pointer'
       onClick={() => {
-        navigate('/preview')
+        navigate({
+          pathname: '/preview',
+          search: `?width=${width}&height=${height}&price=${price}`
+        })
       }}
     >
       <div className='relative box-border border-white border-2'>

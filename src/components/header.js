@@ -20,7 +20,8 @@ const Header = () => {
           }}
         >
           <div className="mr-10">
-            <img loading='lazy'
+            <img
+              loading="lazy"
               href={process.env.PUBLIC_URL + "/img/New-Logo 1.png"}
               alt="logo"
               className=" w-48 mt-4"
@@ -30,7 +31,27 @@ const Header = () => {
           <div className="items-center justify-center">
             <div className="flex items-center w-full px-8 justify-center space-x-7">
               <div className="p-[7px 0px 0 40px] font-medium text-lg text-center md:flex hidden mx-2 space-x-10 items-center">
-                <DropDownNavButton list={['Live Auctions','Upcoming Auction','On Sale']} title='Explorer'/>
+                <DropDownNavButton
+                  list={[
+                    {
+                      title: `Canvas`,
+                      link: "canvas",
+                    },
+                    {
+                      title: `Panels`,
+                      link: "panels",
+                    },
+                    {
+                      title: `Foam`,
+                      link: "foam",
+                    },
+                    {
+                      title: `Metal`,
+                      link: "metal",
+                    },
+                  ]}
+                  title="Category"
+                />
                 {main_routes.map((r) => (
                   <Link
                     key={r.key}
@@ -54,7 +75,8 @@ const Header = () => {
                 <RoundedButtonMD text="List" onButtonClick={() => {}} active />
               </div>
               <div>
-                <img loading='lazy'
+                <img
+                  loading="lazy"
                   src={process.env.PUBLIC_URL + "/img/globe_icon.svg"}
                   className="w-5 h-5 mr-2 text-white inline-block"
                   alt="globe"
@@ -64,14 +86,15 @@ const Header = () => {
               <div>
                 <RoundedButtonSM
                   icon={
-                    <img loading='lazy'
+                    <img
+                      loading="lazy"
                       src={process.env.PUBLIC_URL + "/img/wallet.svg"}
                       className="w-3 h-3 text-black inline-block"
                       alt="globe"
                     />
                   }
                   onButtonClick={() => {
-                    navigate("/profile")
+                    navigate("/profile");
                   }}
                   active
                 />
@@ -103,24 +126,74 @@ const Header = () => {
           </div>
         </div>
       </div>
-      {sidevar?
-        <div className=" z-[100000] absolute w-full items-center shadow-lg bg-[#3c3c63] md:hidden"
-          style={{boxShadow: 'rgb(18 20 32) 0px 0px 10px'}}
+      {sidevar ? (
+        <div
+          className=" z-[100000] absolute w-full items-center shadow-lg bg-[#3c3c63] md:hidden"
+          style={{ boxShadow: "rgb(18 20 32) 0px 0px 10px" }}
         >
           <div className=" w-full border-b-2 border-[#93939330] mx-auto h-12 text-white flex px-5 items-center space-x-3">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="feather feather-layers"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
-            <span>Explore</span> 
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="feather feather-layers"
+            >
+              <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+              <polyline points="2 17 12 22 22 17"></polyline>
+              <polyline points="2 12 12 17 22 12"></polyline>
+            </svg>
+            <span>Explore</span>
           </div>
           <div className=" w-full border-b-2 border-[#93939330] mx-auto h-12 text-white flex px-5 items-center space-x-3">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="feather feather-server"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect><rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect><line x1="6" y1="6" x2="6.01" y2="6"></line><line x1="6" y1="18" x2="6.01" y2="18"></line></svg>
-            <span>Top Sold</span> 
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="feather feather-server"
+            >
+              <rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect>
+              <rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect>
+              <line x1="6" y1="6" x2="6.01" y2="6"></line>
+              <line x1="6" y1="18" x2="6.01" y2="18"></line>
+            </svg>
+            <span>Top Sold</span>
           </div>
           <div className=" w-full border-b-2 border-[#93939330] mx-auto h-12 text-white flex px-5 items-center space-x-3">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="feather feather-server"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect><rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect><line x1="6" y1="6" x2="6.01" y2="6"></line><line x1="6" y1="18" x2="6.01" y2="18"></line></svg>
-            <span>List</span> 
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="feather feather-server"
+            >
+              <rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect>
+              <rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect>
+              <line x1="6" y1="6" x2="6.01" y2="6"></line>
+              <line x1="6" y1="18" x2="6.01" y2="18"></line>
+            </svg>
+            <span>List</span>
           </div>
-        </div>:<></>
-      }
+        </div>
+      ) : (
+        <></>
+      )}
     </div>
   );
 };
