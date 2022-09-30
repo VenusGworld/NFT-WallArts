@@ -17,6 +17,7 @@ import CustomizedArt from './pages/CustomizedArt';
 import Preview from './pages/Preview';
 import Payment from './pages/Payment';
 import OrderSummary from './pages/OrderSummary';
+import ScrollToTop from './helper/ScrollToTop';
 
 export const main_routes = [
 
@@ -59,6 +60,7 @@ function App() {
   return (
     <div className="App">
         <Header/>
+        <ScrollToTop/>
         <Routes>
           {/* <Layout> */}
           <Route
