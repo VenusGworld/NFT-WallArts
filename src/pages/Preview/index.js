@@ -79,7 +79,7 @@ const Preview = () => {
                   <Calendar/>
                 </div></div>)} */}
                 <div className='flex flex-col items-start space-y-2'>
-                  <span className='text-[#818DA9]'>End Date Aunction</span>
+                  <span className='text-[#818DA9]'>Total Price</span>
                   <div className='flex justify-between w-full'>
                     <span className=' text-white text-2xl'>{quantity} x {searchParams.get('price')} ETH</span>
                     <div className='flex flex-col justify-end'>
