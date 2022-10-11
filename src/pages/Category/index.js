@@ -1,30 +1,31 @@
-import React from 'react';
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
 import CategoryCard from './CategoryCard';
 
-const CateCardInfos = [
-  {
-    img:'image31.png',
-    name: 'Canvas',
-    desc: 'All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary'
-  },
-  {
-    img:'image32.png',
-    name: 'Panels',
-    desc: 'It is pleasure, but because those who do not know how to pursue pleasure rationally encounter'
-  },
-  {
-    img:'image33.png',
-    name: 'Foam',
-    desc: 'Men who are so beguiled and demoralized by the charms of pleasure of the momen blinded by desire'
-  },
-  {
-    img:'image34.png',
-    name: 'Metal',
-    desc: 'Aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt'
-  }
-];
-
 const Category = () => {
+  const [data, setData] = useState([])
+  const [fetchedFlag, setfetchedFlag] = useState(false)
+  // useEffect(() => {
+  //   return async () => {
+  //     await ; 
+  //   };
+  // }, []);
+  
+
+  const fetchData = async () => {
+    console.log('sdfffffffff');
+    await axios
+      .get(`http://localhost:5000/api/categories/`)
+      .then((res) => {
+        console.log("res", res.data.data);
+        setData(res.data.data)
+        setfetchedFlag(true)
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  if(!fetchedFlag) fetchData()
   return (<div>
     <div className={`w-full h-full mt-20 relative text-white`}>
       <div className='relative'>
@@ -38,8 +39,8 @@ const Category = () => {
       <div className='bg-[#363f54] w-full p-10 relative -mt-[8%]'>
         <div className=' flex flex-wrap justify-around items-baseline w-9/12 mx-auto -mt-[15%] lg:-mt-[10%]'>
           {/* <div > */}
-          {CateCardInfos.map((info, i) => {
-            return <CategoryCard img={info.img} name={info.name} desc={info.desc} key={i}/>
+          {data.map((info, i) => {
+            return <CategoryCard img={'http://localhost:5000/images/'+info.image} name={info.name} desc={info.description} key={info._id}/>
           })}
           {/* </div> */}
         </div>

@@ -17,6 +17,7 @@
     "@trendyol-js/react-carousel": "^3.0.0",
     "apexcharts": "^3.35.3",
     "axios": "^0.27.2",
+    "dotenv": "^16.0.3",
     "react": "^17.0.2",
     "react-apexcharts": "^1.4.0",
     "react-calendar": "^3.9.0",

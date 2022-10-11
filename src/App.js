@@ -37,7 +37,7 @@ function App() {
   const dispatch = useDispatch();
   
   useEffect(()=>{
-    if(!is_Connected) connectWallet();
+    // if(!is_Connected) connectWallet();
   // eslint-disable-next-line react-hooks/exhaustive-deps
   },[]);
 
