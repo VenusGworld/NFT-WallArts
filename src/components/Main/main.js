@@ -13,7 +13,8 @@ const Main = () => {
         right: "20px",
         float: "right",
         paddingTop: "38px",
-      }}>
+      }}
+    >
       <MainTop />
     </div>
   );

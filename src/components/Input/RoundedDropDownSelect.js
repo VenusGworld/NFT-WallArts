@@ -6,7 +6,11 @@ const RoundedDropDownSelect = ({ list, onChangeHandle, label }) => {
   const [selectedItem, selectItem] = useState(0);
 
   return (
-    <div className={`relative flex flex-col justify-start items-start space-y-2 w-full cursor-pointer ${expanded&&"overflow-hidden"} transition-all`}>
+    <div
+      className={`relative flex flex-col justify-start items-start space-y-2 w-full cursor-pointer ${
+        expanded && "overflow-hidden"
+      } transition-all`}
+    >
       <span className=" text-sm">{label}</span>
       <div
         className={`relative w-full rounded-full cursor-pointer px-7 py-4 ${
@@ -49,7 +53,9 @@ const RoundedDropDownSelect = ({ list, onChangeHandle, label }) => {
                 onChangeHandle(item["value"]);
               }}
               className={`${
-                selectedItem === i ? "text-[#D3B789] border-l border-l-gray-400 border-r border-r-gray-400 " : " text-white"
+                selectedItem === i
+                  ? "text-[#D3B789] border-l border-l-gray-400 border-r border-r-gray-400 "
+                  : " text-white"
               } p-1 px-3 w-full`}
             >
               {item["text"]}
