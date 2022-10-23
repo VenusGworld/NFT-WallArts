@@ -1,5 +1,7 @@
 import React from "react";
-import CustomizedArtCard from "../../components/NFTCard/CustomizedArtCard";
+import { useSearchParams } from "react-router-dom";
+import ItemCard from "../../components/NFTCard/CustomizedArtCard";
+import { useItemByCategory } from "../../hooks/useItemByCategory";
 
 const data = [
   { width: 50, height: 50, price: 5, bestseller: true },
@@ -14,6 +16,10 @@ const data = [
 ];
 
 const CustomizedArt = () => {
+  const [searchParams] = useSearchParams();
+  console.log(searchParams.get('category_id'))
+  const items = useItemByCategory({category_id: searchParams.get('category_id')})
+  console.log('items', items.data?.data)
   return (
     <div>
       <div className={`w-full h-full mt-20 relative text-white`}>
@@ -37,10 +43,15 @@ const CustomizedArt = () => {
               <div className="xl:text-5xl lg:text-3xl md:text-2xl text-lg font-bold inline-block my-5">
                 Select your size
               </div>
-              <div className="flex flex-wrap justify-between">
-                {data.map((item, i) => (
-                  <CustomizedArtCard item={item} key={i} />
-                ))}
+              <div className="flex flex-wrap justify-between w-full">
+                {/* {data.map((item, i) => (
+                  <ItemCard item={item} key={i} />
+                ))} */}
+                {(items.isLoading && items.data?.data.length === 0)?<div className=" h-96"></div>:(
+                  items.data?.data.map((item, i) => (
+                    <ItemCard item={item} key={i} />
+                  ))
+                )}
               </div>
             </div>
           </div>

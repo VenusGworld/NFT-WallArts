@@ -6,7 +6,7 @@ const DropDownNavButton = ({ list, title, onChangeHandle }) => {
   const [expanded, setExpanded] = useState(true);
   const navigate = useNavigate();
   // const [selectedItem,selectItem] = useState(0);
-
+  console.log('list', list);
   return (
     <div className="relative w-full">
       <div
@@ -47,12 +47,12 @@ const DropDownNavButton = ({ list, title, onChangeHandle }) => {
                 setExpanded(!expanded);
                 navigate({
                   pathname: "/customizedArt",
-                  search: `?type=${item.link}`,
+                  search: `?category_id=${item.link}`,
                 });
               }}
               className={`p-1 cursor-pointer`}
             >
-              {item.title}
+              {item?.title}
             </div>
           ))}
         </div>

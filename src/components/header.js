@@ -2,12 +2,14 @@ import React, { useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 
 import { main_routes } from "../App";
+import { useCategory } from "../hooks/useCategory";
 import { RoundedButtonMD, RoundedButtonSM, SearchBar } from "./Input";
 import DropDownNavButton from "./Input/DropDownNavButton";
 
 const Header = () => {
   const [sidevar, openSidevar] = useState(false);
   const location = useLocation();
+  const categories = useCategory();
   const navigate = useNavigate();
   return (
     <div className=" fixed z-[1001] w-full top-0">
@@ -32,24 +34,16 @@ const Header = () => {
             <div className="flex items-center w-full px-8 justify-center space-x-7">
               <div className="p-[7px 0px 0 40px] font-medium text-lg text-center md:flex hidden mx-2 space-x-10 items-center">
                 <DropDownNavButton
-                  list={[
-                    {
-                      title: `Canvas`,
-                      link: "canvas",
-                    },
-                    {
-                      title: `Panels`,
-                      link: "panels",
-                    },
-                    {
-                      title: `Foam`,
-                      link: "foam",
-                    },
-                    {
-                      title: `Metal`,
-                      link: "metal",
-                    },
-                  ]}
+                  list={
+                    categories.isLoading
+                      ?{}
+                      :categories?.data?.data.map((info, i) => {
+                            return {
+                              title: info.name,
+                              link: info._id,
+                            };
+                          })
+                  }
                   title="Category"
                 />
                 {main_routes.map((r) => (

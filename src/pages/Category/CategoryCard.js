@@ -1,13 +1,17 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
-const CategoryCard = ({ img, name, desc }) => {
+const CategoryCard = ({ img, name, desc, id }) => {
   const navigate = useNavigate();
   return (
     <div
       className="lg:w-[45%] sm:w-[90%] shadow-2xl flex flex-col my-8 cursor-pointer hover:scale-105 hover:drop-shadow-2xl transition-all"
       onClick={() => {
-        navigate("/customizedArt");
+        // navigate("/customizedArt");
+        navigate({
+          pathname: "/customizedArt",
+          search: `?category_id=${id}`,
+        });
       }}
     >
       <img

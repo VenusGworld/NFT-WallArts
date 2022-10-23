@@ -1,28 +1,15 @@
 import axios from "axios";
 import React, { useState } from "react";
 import CategoryCard from "./CategoryCard";
-
+import {useCategory} from "../../hooks/useCategory"
 const Category = () => {
-  const [data, setData] = useState([]);
-  const [fetchedFlag, setfetchedFlag] = useState(false);
+
   // useEffect(() => {
   //   return async () => {
   //     await ;
   //   };
   // }, []);
-
-  const fetchData = async () => {
-    await axios
-      .get(`${process.env.REACT_APP_BACKEND_URL}/api/categories/`)
-      .then((res) => {
-        setData(res.data.data);
-        setfetchedFlag(true);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-  if (!fetchedFlag) fetchData();
+  const categories = useCategory();
   return (
     <div>
       <div className={`w-full h-full mt-20 relative text-white`}>
@@ -43,10 +30,12 @@ const Category = () => {
         <div className="bg-[#363f54] w-full p-10 relative -mt-[8%]">
           <div className=" flex flex-wrap justify-around items-baseline w-9/12 mx-auto -mt-[15%] lg:-mt-[10%]">
             {/* <div > */}
-            {data.map((info, i) => {
+            {categories.isLoading && <div className=" h-96"></div>}
+            {categories?.data?.data.map((info, i) => {
               return (
                 <CategoryCard
                   img={`${process.env.REACT_APP_BACKEND_URL}/images/${info.image}`}
+                  id={info._id}
                   name={info.name}
                   desc={info.description}
                   key={info._id}

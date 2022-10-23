@@ -2,8 +2,19 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const CustomizedArtCard = ({ item }) => {
-  const { width, height, price, bestseller, popular } = item;
-  const [color, setColor] = useState(0);
+  console.log(item);
+  const {
+    width,
+    height,
+    price,
+    bestseller,
+    popular,
+    color,
+    isColor,
+    image,
+    priceType,
+  } = item;
+  // const [color, setColor] = useState(0);
   const navigate = useNavigate();
 
   return (
@@ -24,8 +35,15 @@ const CustomizedArtCard = ({ item }) => {
           className="w-full "
         />
         <div
-          className="absolute bg-white shadow-lg top-10 left-1/2 -translate-x-1/2"
-          style={{ width: width + "px", height: height + "px" }}
+          className={`absolute bg-white shadow-lg top-10 left-1/2 -translate-x-1/2 `}
+          style={{
+            width: width + "px",
+            height: height + "px",
+            backgroundImage: `url(${process.env.REACT_APP_BACKEND_URL}/images/${image})`,
+            backgroundPosition: "center",
+            backgroundRepeat: "no-repeat",
+            backgroundSize: "contain",
+          }}
         >
           <div className="absolute -top-1 w-full border-dotted border-t border-gray-700">
             <div className="-mt-5 text-sm text-gray-700">{width} cm</div>
@@ -55,49 +73,28 @@ const CustomizedArtCard = ({ item }) => {
               {width} x {height} cm
             </div>
           </div>
-          <div className="flex items-center space-x-3">
-            <div
-              className={`relative bg-black p-3 rounded-full border ${
-                color === 1 ? " border-green-500 " : " border-gray-400 "
-              } cursor-pointer inline-block`}
-              onClick={() => {
-                color === 1 ? setColor(0) : setColor(1);
-              }}
-            >
-              {color === 1 && (
-                <img
-                  loading="lazy"
-                  src={process.env.PUBLIC_URL + "/img/check-green.svg"}
-                  alt="check"
-                  className="w-2 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
-                />
-              )}
+          {isColor && (
+            <div className="flex space-x-1 items-start">
+              <div className="flex space-x-1">
+                {color.map((c) => (
+                  <span
+                    key={c}
+                    className={`bg-${c} bg-${c}-500 p-3 rounded-full border border-gray-600`}
+                  ></span>
+                ))}
+              </div>
             </div>
-            <div
-              className={`relative bg-white p-3 rounded-full border  ${
-                color === 2 ? " border-green-500 " : " border-gray-400 "
-              } cursor-pointer inline-block`}
-              onClick={() => {
-                color === 2 ? setColor(0) : setColor(2);
-              }}
-            >
-              {color === 2 && (
-                <img
-                  loading="lazy"
-                  src={process.env.PUBLIC_URL + "/img/check-green.svg"}
-                  alt="check"
-                  className="w-2 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
-                />
-              )}
-            </div>
-          </div>
+          )}
         </div>
         <div className="flex justify-between items-center">
-          <div className=" text-[#818DA9] text-sm">Price in ETH</div>
+          {priceType === 'eth'?(<><div className=" text-[#818DA9] text-sm">Price in ETH</div>
           <div className="flex flex-col items-end">
             <div className=" text-lg font-bold">{price} ETH</div>
             <div className=" text-sm">( {Number(price * 1777)} USD )</div>
-          </div>
+          </div></>):(<><div className=" text-[#818DA9] text-sm">Price in USD</div>
+          <div className="flex flex-col items-end">
+            <div className=" text-lg font-bold">{price} $</div>
+          </div></>)}
         </div>
       </div>
     </div>
