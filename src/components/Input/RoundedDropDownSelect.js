@@ -1,10 +1,13 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 
-const RoundedDropDownSelect = ({ list, onChangeHandle, label }) => {
+const RoundedDropDownSelect = ({ list, onChangeHandle, label, value }) => {
   const [expanded, setExpanded] = useState(true);
-  const [selectedItem, selectItem] = useState(0);
-
+  const [selectedItem, selectItem] = useState(value?value:0);
+  useEffect(() => {
+    onChangeHandle(list[0]);
+  }, [])
+  
   return (
     <div
       className={`relative flex flex-col justify-start items-start space-y-2 w-full cursor-pointer ${
@@ -21,7 +24,7 @@ const RoundedDropDownSelect = ({ list, onChangeHandle, label }) => {
         }}
       >
         <div className="flex">
-          {list[selectedItem]["text"] && list[selectedItem]["text"]}
+          {list[selectedItem]?.text && list[selectedItem]?.text}
           <img
             loading="lazy"
             src={process.env.PUBLIC_URL + "/img/triangle.svg"}
@@ -58,7 +61,7 @@ const RoundedDropDownSelect = ({ list, onChangeHandle, label }) => {
                   : " text-white"
               } p-1 px-3 w-full`}
             >
-              {item["text"]}
+              {item?.text}
             </div>
           ))}
         </div>

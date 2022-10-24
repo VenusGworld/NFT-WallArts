@@ -36,7 +36,7 @@ const Header = () => {
                 <DropDownNavButton
                   list={
                     categories.isLoading
-                      ?{}
+                      ?[]
                       :categories?.data?.data.map((info, i) => {
                             return {
                               title: info.name,

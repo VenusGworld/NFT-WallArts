@@ -17,8 +17,7 @@ const data = [
 
 const CustomizedArt = () => {
   const [searchParams] = useSearchParams();
-  console.log(searchParams.get('category_id'))
-  const items = useItemByCategory({category_id: searchParams.get('category_id')})
+  const items = useItemByCategory({category_id: searchParams.get('category')})
   console.log('items', items.data?.data)
   return (
     <div>

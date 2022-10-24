@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const CustomizedArtCard = ({ item }) => {
-  console.log(item);
   const {
+    _id,
     width,
     height,
     price,
@@ -14,7 +14,6 @@ const CustomizedArtCard = ({ item }) => {
     image,
     priceType,
   } = item;
-  // const [color, setColor] = useState(0);
   const navigate = useNavigate();
 
   return (
@@ -23,7 +22,7 @@ const CustomizedArtCard = ({ item }) => {
       onClick={() => {
         navigate({
           pathname: "/preview",
-          search: `?width=${width}&height=${height}&price=${price}`,
+          search: `?item=${_id}`,
         });
       }}
     >

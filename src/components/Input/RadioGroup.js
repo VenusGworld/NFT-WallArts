@@ -20,7 +20,7 @@ export default function RadioGroup({ list }) {
                   checked={clickedId === index}
                   name="notification-method"
                   type="radio"
-                  defaultChecked={index === 0}
+                  onChange={() => {}}
                   className="h-5 w-5 border-gray-300 text-[#D3B789] focus:ring-indigo-500"
                 />
                 <label className="ml-3 block font-medium text-white overflow-hidden">
