@@ -1,7 +1,6 @@
-import { useState } from "react";
 
-export default function RadioGroup({ list, onChangeHandle }) {
-  const [clickedId, click] = useState(0);
+export default function RadioGroup({ list, onChangeHandle, checkedId }) {
+  // const [clickedId, click] = useState(0);
   return (
     <div>
       <fieldset className="mt-4">
@@ -12,13 +11,13 @@ export default function RadioGroup({ list, onChangeHandle }) {
                 key={index}
                 className="flex items-center mr-5 my-2 cursor-pointer"
                 onClick={() => {
-                  click(index);
+                  // click(index);
                   onChangeHandle(list[index]);
                 }}
               >
                 <input
                   // id={notificationMethod.id}
-                  checked={clickedId === index}
+                  checked={checkedId === index}
                   name="notification-method"
                   type="radio"
                   onChange={() => {}}

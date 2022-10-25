@@ -18,7 +18,7 @@ const data = [
 const CustomizedArt = () => {
   const [searchParams] = useSearchParams();
   const items = useItemByCategory({category_id: searchParams.get('category')})
-  console.log('items', items.data?.data)
+
   return (
     <div>
       <div className={`w-full h-full mt-20 relative text-white`}>

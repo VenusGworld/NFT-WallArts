@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-// import { useSelector, useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { Route, Routes, Navigate } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
@@ -8,7 +8,7 @@ import "./custom.css";
 import Header from "./components/header";
 import Lobby from "./pages/lobby";
 import "react-toastify/dist/ReactToastify.css";
-// import { connect, isConnected, setChain } from "./store/accountReducer";
+import { connect, isConnected, setChain, connectedAccount } from "./store/accountReducer";
 import Profile from "./pages/Profile";
 import "@fontsource/inter";
 import Category from "./pages/Category";
@@ -46,37 +46,42 @@ export const main_routes = [
 ];
 
 function App() {
-  // const is_Connected = useSelector(isConnected);
-  // const dispatch = useDispatch();
+  const is_Connected = useSelector(isConnected);
+  const connected_account = useSelector(connectedAccount);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    // if(!is_Connected) connectWallet();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    if(!is_Connected) connectWallet();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // const connectWallet = async () => {
-  //   if (!is_Connected) {
-  //     await window.ethereum.send("eth_requestAccounts");
-  //     dispatch(setChain(Number(window.ethereum?.networkVersion)));
-  //     await window.ethereum.request({
-  //       method: "wallet_requestPermissions",
-  //       params: [{ eth_accounts: {} }],
-  //     });
-  //     const accounts = await window.ethereum.request({
-  //       method: "eth_accounts",
-  //     });
-  //     if (accounts[0]) dispatch(connect(accounts[0]));
-  //   }
-  //   // else {
-  //   //   dispatch(disConnect())
-  //   // }
-  // };
+  const connectWallet = async () => {
+    if (!is_Connected) {
+      await window.ethereum.send("eth_requestAccounts");
+      dispatch(setChain(Number(window.ethereum?.networkVersion)));
+      await window.ethereum.request({
+        method: "wallet_requestPermissions",
+        params: [{ eth_accounts: {} }],
+      });
+      const accounts = await window.ethereum.request({
+        method: "eth_accounts",
+      });
+      if (accounts[0]) dispatch(connect(accounts[0]));
+    }
+    // else {
+    //   dispatch(disConnect())
+    // }
+  };
 
   return (
     <QueryClientProvider client={queryClient}>
       <div className="App">
         <Header />
         <ScrollToTop />
+        <div className=" p-3 bg-gray-600 rounded-md text-white absolute top-4 inline-block w-fit right-0 z-50">
+          Wallet Address: {connected_account?connected_account:'Not Connected!'}
+        </div>
+        
         <Routes>
           {/* <Layout> */}
           <Route

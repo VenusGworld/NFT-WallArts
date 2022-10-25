@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Country, State, City } from "country-state-city";
+import { useSelector, useDispatch } from "react-redux";
 
 import {
   RadioGroup,
@@ -9,8 +10,11 @@ import {
 } from "../../components/Input";
 import PaymentMethodCard from "./PaymentMethodCard";
 import PreviewPart from "./PreviewPart";
+import { connectedAccount } from "../../store/accountReducer";
 
 const Payment = () => {
+  const connected_account = useSelector(connectedAccount);
+  console.log('connected_account', connected_account);
   let countries = Country.getAllCountries();
   const [contactInfo, setContactInfo] = useState({
     firstName: "",
@@ -38,6 +42,7 @@ const Payment = () => {
     address: "",
     apt_suiteNo: "",
     postalCode: "",
+    paymentMethod: "visa",
     country: initialCountry,
     state: initialState,
     city: initialCity,
@@ -107,6 +112,10 @@ const Payment = () => {
       : setPaymentInfo({ ...paymentInfo, city: {} });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [paymentInfo.state]);
+  
+  const submitOrder = () => {
+
+  }
 
   return (
     <div className="w-full h-full mt-20 relative text-white">
@@ -125,7 +134,6 @@ const Payment = () => {
                   <div className=" w-[90%] sm:w-[45%] mb-5">
                     <RoundedTextInput
                       label="First Name"
-                      defaultValue="John"
                       onChangeHandle={(v) => {
                         setContactInfo({ ...contactInfo, firstName: v });
                       }}
@@ -134,7 +142,6 @@ const Payment = () => {
                   <div className=" w-[90%] sm:w-[45%] mb-5">
                     <RoundedTextInput
                       label="Last Name"
-                      defaultValue="Doe"
                       onChangeHandle={(v) => {
                         setContactInfo({ ...contactInfo, lastName: v });
                       }}
@@ -143,7 +150,6 @@ const Payment = () => {
                   <div className=" w-[90%] sm:w-[45%] mb-5">
                     <RoundedPhoneNumberInput
                       label="Phone No."
-                      defaultValue="5505623"
                       onChangeHandle={(v) => {
                         setContactInfo({ ...contactInfo, phoneNo: v });
                       }}
@@ -152,7 +158,6 @@ const Payment = () => {
                   <div className=" w-[90%] sm:w-[45%] mb-5">
                     <RoundedTextInput
                       label="Email"
-                      defaultValue="johndoe@zmail.com"
                       onChangeHandle={(v) => {
                         setContactInfo({ ...contactInfo, email: v });
                       }}
@@ -168,7 +173,6 @@ const Payment = () => {
                   <div className=" sm:w-[45%] w-[90%] mb-5">
                     <RoundedTextInput
                       label="Address"
-                      defaultValue="Oliver Street"
                       onChangeHandle={(v) => {
                         setDeliveryInfo({ ...deliveryInfo, address: v });
                       }}
@@ -177,7 +181,6 @@ const Payment = () => {
                   <div className=" w-[90%] sm:w-[45%] mb-5">
                     <RoundedTextInput
                       label="Apt / Suite No."
-                      defaultValue="235 B"
                       onChangeHandle={(v) => {
                         setDeliveryInfo({ ...deliveryInfo, apt_suiteNo: v });
                       }}
@@ -286,7 +289,6 @@ const Payment = () => {
                   <div className=" w-[90%] sm:w-[45%] mb-5">
                     <RoundedTextInput
                       label="Postal Code"
-                      defaultValue="94403"
                       onChangeHandle={(v) => {
                         setDeliveryInfo({ ...deliveryInfo, postalCode: v });
                       }}
@@ -300,6 +302,7 @@ const Payment = () => {
                   <PaymentMethodCard
                     onChangeHandle={(v) => {
                       if (v === "crypto") {
+                        setPaymentInfo({ ...paymentInfo, paymentMethod: v });
                         setIsCrypto(true);
                       } else setIsCrypto(false);
                     }}
@@ -312,6 +315,7 @@ const Payment = () => {
                         "Same as shipping address",
                         "Use a different billing address",
                       ]}
+                      checkedId={isSameAddress?0:1}
                       onChangeHandle={(v) => {
                         if (v === "Same as shipping address")
                           setIsSameAddress(true);
@@ -321,19 +325,21 @@ const Payment = () => {
                   </div>
                 )}
                 <div
-                  className={`flex sm:flex-row flex-col flex-wrap justify-between ${
+                  className={`sm:flex-row flex-col flex-wrap justify-between ${
                     !isSameAddress && !isCrypto ? " flex" : " hidden"
                   }`}
                 >
                   <div className=" w-[90%] sm:w-[45%] mb-5">
-                    <RoundedTextInput label="First Name" defaultValue="John"
+                    <RoundedTextInput
+                      label="First Name"
                       onChangeHandle={(v) => {
                         setPaymentInfo({ ...contactInfo, firstName: v });
                       }}
                     />
                   </div>
                   <div className=" w-[90%] sm:w-[45%] mb-5">
-                    <RoundedTextInput label="Last Name" defaultValue="Doe" 
+                    <RoundedTextInput
+                      label="Last Name"
                       onChangeHandle={(v) => {
                         setPaymentInfo({ ...contactInfo, lastName: v });
                       }}
@@ -342,7 +348,6 @@ const Payment = () => {
                   <div className=" w-[90%] sm:w-[45%] mb-5">
                     <RoundedTextInput
                       label="Address"
-                      defaultValue="Oliver Street"
                       onChangeHandle={(v) => {
                         setPaymentInfo({ ...contactInfo, address: v });
                       }}
@@ -351,7 +356,6 @@ const Payment = () => {
                   <div className=" w-[90%] sm:w-[45%] mb-5">
                     <RoundedTextInput
                       label="Apt / Suite No."
-                      defaultValue="235 B"
                       onChangeHandle={(v) => {
                         setPaymentInfo({ ...contactInfo, apt_suiteNo: v });
                       }}
@@ -460,7 +464,6 @@ const Payment = () => {
                   <div className=" w-[90%] sm:w-[45%] mb-5">
                     <RoundedTextInput
                       label="Postal Code"
-                      defaultValue="94403"
                       onChangeHandle={(v) => {
                         setPaymentInfo({ ...contactInfo, postalCode: v });
                       }}

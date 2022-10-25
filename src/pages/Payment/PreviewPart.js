@@ -35,7 +35,7 @@ const data = [
   },
 ];
 
-const PreviewPart = () => {
+const PreviewPart = ({orderClickHandle}) => {
   const navigate = useNavigate();
 
   return (
@@ -58,7 +58,8 @@ const PreviewPart = () => {
           <RoundedButtonMD
             text="Order Now"
             onButtonClick={() => {
-              navigate("/order_summary");
+              // navigate("/order_summary");
+              orderClickHandle();
             }}
             active
             fullWidth

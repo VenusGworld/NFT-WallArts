@@ -10,7 +10,6 @@ import {
 const Preview = () => {
   const [color, setColor] = useState(0);
   const [quantity, setquantity] = useState(0);
-  // const[isbuy,setIsBuy] = useState(false);
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   return (
@@ -166,6 +165,10 @@ const Preview = () => {
                       text="See Next"
                       onButtonClick={() => {
                         navigate("/payment");
+                        navigate({
+                          pathname: "/payment",
+                          search: `?item=${searchParams.get("item")}`,
+                        });
                       }}
                       active
                       fullWidth
