@@ -3,11 +3,14 @@ import { useState } from "react";
 
 const RoundedDropDownSelect = ({ list, onChangeHandle, label, value }) => {
   const [expanded, setExpanded] = useState(true);
-  const [selectedItem, selectItem] = useState(value?value:0);
+  const [selectedItem, selectItem] = useState(value>0?value:0);
   useEffect(() => {
-    onChangeHandle(list[0]);
-  }, [])
-  
+    onChangeHandle(list[value>0?value:0]);
+  }, []);
+
+  // useEffect(() => {
+  //   onChangeHandle(list[0]);
+  // }, [])
   return (
     <div
       className={`relative flex flex-col justify-start items-start space-y-2 w-full cursor-pointer ${

@@ -6,6 +6,7 @@ import { CheckCircleIcon } from "@heroicons/react/20/solid";
 const mailingLists = [
   {
     id: 1,
+    name: "visa",
     img: (
       <img
         className="w-14 h-14"
@@ -16,6 +17,7 @@ const mailingLists = [
   },
   {
     id: 2,
+    name: "crypto",
     img: (
       <img
         className="w-14 h-14"
@@ -26,6 +28,7 @@ const mailingLists = [
   },
   {
     id: 3,
+    name: "paypal",
     img: (
       <img
         className="w-14 h-14"
@@ -36,6 +39,7 @@ const mailingLists = [
   },
   {
     id: 4,
+    name: "mastercard",
     img: (
       <img
         className="w-14 h-14"
@@ -44,20 +48,26 @@ const mailingLists = [
       />
     ),
   },
-  { id: 5, title: "other" },
+  { id: 5, title: "other", name: 'other' },
 ];
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-export default function PaymentMethodCard() {
+export default function PaymentMethodCard({ onChangeHandle }) {
   const [selectedMailingLists, setSelectedMailingLists] = useState(
     mailingLists[0]
   );
 
   return (
-    <RadioGroup value={selectedMailingLists} onChange={setSelectedMailingLists}>
+    <RadioGroup
+      value={selectedMailingLists}
+      onChange={(v) => {
+        setSelectedMailingLists(v);
+        onChangeHandle(v.name)
+      }}
+    >
       <div className="mt-4 flex flex-wrap sm:items-stretch sm:space-y-0 justify-between">
         {mailingLists.map((mailingList) => (
           <RadioGroup.Option

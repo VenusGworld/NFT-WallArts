@@ -60,7 +60,7 @@ const NumberList = [
   },
 ];
 
-const RoundedPhoneNumberInput = ({ placeholder, label, defaultValue }) => {
+const RoundedPhoneNumberInput = ({ placeholder, label, defaultValue, onChangeHandle }) => {
   const [value, setValue] = useState(defaultValue);
   const [expanded, setExpanded] = useState(true);
   const [selectedItem, selectItem] = useState(0);
@@ -91,7 +91,8 @@ const RoundedPhoneNumberInput = ({ placeholder, label, defaultValue }) => {
             placeholder={placeholder}
             defaultValue={value}
             onChange={(e) => {
-              setValue(e.value);
+              setValue(e.target.value);
+              onChangeHandle(NumberList[selectedItem]["prefix"]+e.target.value)
             }}
             className=" overflow-hidden pl-2 border-l border-[#818895] bg-[#444E66] text-white mr-2"
           />
@@ -114,6 +115,7 @@ const RoundedPhoneNumberInput = ({ placeholder, label, defaultValue }) => {
               key={i}
               onClick={() => {
                 selectItem(i);
+                onChangeHandle(NumberList[i]["prefix"]+''+value)
                 // onChangeHandle(item['value'])
               }}
               className={`${

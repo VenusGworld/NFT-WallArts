@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const RoundedTextInput = ({ placeholder, label, defaultValue }) => {
+const RoundedTextInput = ({ placeholder, label, defaultValue, onChangeHandle }) => {
   const [value, setValue] = useState(defaultValue);
   return (
     <div className="flex flex-col justify-start items-start space-y-2 w-full ]">
@@ -10,7 +10,8 @@ const RoundedTextInput = ({ placeholder, label, defaultValue }) => {
           placeholder={placeholder}
           defaultValue={value}
           onChange={(e) => {
-            setValue(e.value);
+            setValue(e.target.value);
+            onChangeHandle(e.target.value)
           }}
           className="w-full border-none bg-[#444E66] text-white mr-2"
         />

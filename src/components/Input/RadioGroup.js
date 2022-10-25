@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export default function RadioGroup({ list }) {
+export default function RadioGroup({ list, onChangeHandle }) {
   const [clickedId, click] = useState(0);
   return (
     <div>
@@ -13,6 +13,7 @@ export default function RadioGroup({ list }) {
                 className="flex items-center mr-5 my-2 cursor-pointer"
                 onClick={() => {
                   click(index);
+                  onChangeHandle(list[index]);
                 }}
               >
                 <input

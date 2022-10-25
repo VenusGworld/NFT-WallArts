@@ -12,45 +12,101 @@ import PreviewPart from "./PreviewPart";
 
 const Payment = () => {
   let countries = Country.getAllCountries();
-  // let states = State.getStatesOfCountry(countries[0].isoCode);
-  // let cities = City.getCitiesOfState(countries[0].isoCode, states[0].isoCode);
+  const [contactInfo, setContactInfo] = useState({
+    firstName: "",
+    lastName: "",
+    phoneNo: "",
+    email: "",
+  });
+  let initialCountry = countries[10];
+  let initialState = State.getStatesOfCountry(initialCountry.isoCode)[0];
+  let initialCity = City.getCitiesOfState(
+    initialCountry.isoCode,
+    State.getStatesOfCountry(initialCountry.isoCode)[0].isoCode
+  )[0];
   const [deliveryInfo, setDeliveryInfo] = useState({
-    country: countries[20],
-    state: State.getStatesOfCountry(countries[0].isoCode)[0],
-    city: City.getCitiesOfState(
-      countries[0].isoCode,
-      State.getStatesOfCountry(countries[0].isoCode)[0].isoCode
-    )[0],
+    address: "",
+    apt_suiteNo: "",
+    postalCode: "",
+    country: initialCountry,
+    state: initialState,
+    city: initialCity,
+  });
+  const [paymentInfo, setPaymentInfo] = useState({
+    firstName: "",
+    lastName: "",
+    address: "",
+    apt_suiteNo: "",
+    postalCode: "",
+    country: initialCountry,
+    state: initialState,
+    city: initialCity,
   });
   const [statesDeliveryArray, setStatesDeliveryArray] = useState(
-    State.getStatesOfCountry(countries[0].isoCode)
+    State.getStatesOfCountry(initialCountry.isoCode)
   );
   const [citiesDeliveryArray, setCitiesDeliveryArray] = useState(
     City.getCitiesOfState(
-      countries[0].isoCode,
-      State.getStatesOfCountry(countries[0].isoCode)[0].isoCode
+      initialCountry.isoCode,
+      State.getStatesOfCountry(initialCountry.isoCode)[0].isoCode
     )
   );
-
+  const [statesPaymentArray, setStatesPaymentArray] = useState(
+    State.getStatesOfCountry(initialCountry.isoCode)
+  );
+  const [citiesPaymentArray, setCitiesPaymentArray] = useState(
+    City.getCitiesOfState(
+      initialCountry.isoCode,
+      State.getStatesOfCountry(initialCountry.isoCode)[0].isoCode
+    )
+  );
+  const [isCrypto, setIsCrypto] = useState(false);
+  const [isSameAddress, setIsSameAddress] = useState(true);
   useEffect(() => {
-    console.log('deliveryInfo.country.isoCode', deliveryInfo.country.isoCode,  State.getStatesOfCountry(deliveryInfo.country.isoCode))
     setStatesDeliveryArray(
       State.getStatesOfCountry(deliveryInfo.country.isoCode)
     );
     statesDeliveryArray[0]
       ? setDeliveryInfo({ ...deliveryInfo, state: statesDeliveryArray[0] })
       : setDeliveryInfo({ ...deliveryInfo, state: {} });
-    
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [deliveryInfo.country]);
 
   useEffect(() => {
     setCitiesDeliveryArray(
-      City.getCitiesOfState(deliveryInfo.country.isoCode, deliveryInfo.state.isoCode)
-    )
+      City.getCitiesOfState(
+        deliveryInfo.country.isoCode,
+        deliveryInfo.state.isoCode
+      )
+    );
     citiesDeliveryArray[0]
       ? setDeliveryInfo({ ...deliveryInfo, city: citiesDeliveryArray[0] })
       : setDeliveryInfo({ ...deliveryInfo, city: {} });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [deliveryInfo.state]);
+
+  useEffect(() => {
+    setStatesPaymentArray(
+      State.getStatesOfCountry(paymentInfo.country.isoCode)
+    );
+    statesPaymentArray[0]
+      ? setPaymentInfo({ ...paymentInfo, state: statesPaymentArray[0] })
+      : setPaymentInfo({ ...paymentInfo, state: {} });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [paymentInfo.country]);
+
+  useEffect(() => {
+    setCitiesPaymentArray(
+      City.getCitiesOfState(
+        paymentInfo.country.isoCode,
+        paymentInfo.state.isoCode
+      )
+    );
+    citiesPaymentArray[0]
+      ? setPaymentInfo({ ...paymentInfo, city: citiesPaymentArray[0] })
+      : setPaymentInfo({ ...paymentInfo, city: {} });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [paymentInfo.state]);
 
   return (
     <div className="w-full h-full mt-20 relative text-white">
@@ -67,21 +123,39 @@ const Payment = () => {
                 </span>
                 <div className="flex sm:flex-row flex-col flex-wrap justify-between">
                   <div className=" w-[90%] sm:w-[45%] mb-5">
-                    <RoundedTextInput label="First Name" defaultValue="John" />
+                    <RoundedTextInput
+                      label="First Name"
+                      defaultValue="John"
+                      onChangeHandle={(v) => {
+                        setContactInfo({ ...contactInfo, firstName: v });
+                      }}
+                    />
                   </div>
                   <div className=" w-[90%] sm:w-[45%] mb-5">
-                    <RoundedTextInput label="Last Name" defaultValue="Doe" />
+                    <RoundedTextInput
+                      label="Last Name"
+                      defaultValue="Doe"
+                      onChangeHandle={(v) => {
+                        setContactInfo({ ...contactInfo, lastName: v });
+                      }}
+                    />
                   </div>
                   <div className=" w-[90%] sm:w-[45%] mb-5">
                     <RoundedPhoneNumberInput
                       label="Phone No."
                       defaultValue="5505623"
+                      onChangeHandle={(v) => {
+                        setContactInfo({ ...contactInfo, phoneNo: v });
+                      }}
                     />
                   </div>
                   <div className=" w-[90%] sm:w-[45%] mb-5">
                     <RoundedTextInput
                       label="Email"
                       defaultValue="johndoe@zmail.com"
+                      onChangeHandle={(v) => {
+                        setContactInfo({ ...contactInfo, email: v });
+                      }}
                     />
                   </div>
                 </div>
@@ -95,20 +169,32 @@ const Payment = () => {
                     <RoundedTextInput
                       label="Address"
                       defaultValue="Oliver Street"
+                      onChangeHandle={(v) => {
+                        setDeliveryInfo({ ...deliveryInfo, address: v });
+                      }}
                     />
                   </div>
                   <div className=" w-[90%] sm:w-[45%] mb-5">
                     <RoundedTextInput
                       label="Apt / Suite No."
                       defaultValue="235 B"
+                      onChangeHandle={(v) => {
+                        setDeliveryInfo({ ...deliveryInfo, apt_suiteNo: v });
+                      }}
                     />
                   </div>
                   <div className=" w-[90%] sm:w-[45%] mb-5">
                     <RoundedDropDownSelect
                       label="Country"
-                      value={countries.findIndex(
-                        (x) => x.name === deliveryInfo.country.name
-                      )}
+                      value={
+                        countries.findIndex(
+                          (x) => x.name === deliveryInfo.country.name
+                        ) > 0
+                          ? countries.findIndex(
+                              (x) => x.name === deliveryInfo.country.name
+                            )
+                          : 0
+                      }
                       list={countries.map((v) => ({
                         ...v,
                         text: v?.name,
@@ -119,7 +205,9 @@ const Payment = () => {
                           ...deliveryInfo,
                           country:
                             countries[
-                              countries.findIndex((x) => x.isoCode === v)
+                              countries.findIndex((x) => x.isoCode === v) > 0
+                                ? countries.findIndex((x) => x.isoCode === v)
+                                : 0
                             ],
                         });
                         // setCountryDelivery(countries[countries.findIndex((x) => x.isoCode === v)]);
@@ -129,9 +217,15 @@ const Payment = () => {
                   <div className=" w-[90%] sm:w-[45%] mb-5">
                     <RoundedDropDownSelect
                       label="State"
-                      value={statesDeliveryArray.findIndex(
-                        (x) => x.name === deliveryInfo.state.name
-                      )}
+                      value={
+                        statesDeliveryArray.findIndex(
+                          (x) => x.name === deliveryInfo.state.name
+                        ) > 0
+                          ? statesDeliveryArray.findIndex(
+                              (x) => x.name === deliveryInfo.state.name
+                            )
+                          : 0
+                      }
                       list={statesDeliveryArray.map((v) => ({
                         ...v,
                         text: v?.name,
@@ -142,7 +236,13 @@ const Payment = () => {
                           ...deliveryInfo,
                           state:
                             statesDeliveryArray[
-                              statesDeliveryArray.findIndex((x) => x.isoCode === v)
+                              statesDeliveryArray.findIndex(
+                                (x) => x.isoCode === v
+                              ) > 0
+                                ? statesDeliveryArray.findIndex(
+                                    (x) => x.isoCode === v
+                                  )
+                                : 0
                             ],
                         });
                         // setCountryDelivery(countries[countries.findIndex((x) => x.isoCode === v)]);
@@ -152,16 +252,33 @@ const Payment = () => {
                   <div className=" w-[90%] sm:w-[45%] mb-5">
                     <RoundedDropDownSelect
                       label="City"
-                      value={citiesDeliveryArray.findIndex(
-                        (x) => x.name === deliveryInfo.city.name
-                      )}
+                      value={
+                        citiesDeliveryArray.findIndex(
+                          (x) => x.name === deliveryInfo.city.name
+                        ) > 0
+                          ? citiesDeliveryArray.findIndex(
+                              (x) => x.name === deliveryInfo.city.name
+                            )
+                          : 0
+                      }
                       list={citiesDeliveryArray.map((v) => ({
                         ...v,
                         text: v?.name,
                         value: v?.isoCode,
                       }))}
                       onChangeHandle={(v) => {
-                        console.log("city", v);
+                        setDeliveryInfo({
+                          ...deliveryInfo,
+                          city: citiesDeliveryArray[
+                            citiesDeliveryArray.findIndex(
+                              (x) => x.isoCode === v
+                            ) > 0
+                              ? citiesDeliveryArray.findIndex(
+                                  (x) => x.isoCode === v
+                                )
+                              : 0
+                          ],
+                        });
                         // setCountryDelivery(countries[countries.findIndex((x) => x.isoCode === v)]);
                       }}
                     />
@@ -170,6 +287,9 @@ const Payment = () => {
                     <RoundedTextInput
                       label="Postal Code"
                       defaultValue="94403"
+                      onChangeHandle={(v) => {
+                        setDeliveryInfo({ ...deliveryInfo, postalCode: v });
+                      }}
                     />
                   </div>
                 </div>
@@ -177,56 +297,173 @@ const Payment = () => {
               <div className="flex flex-col items-start">
                 <span className=" text-[#D3B789] my-8">3. Payment Method</span>
                 <div className=" relative w-full">
-                  <PaymentMethodCard />
-                </div>
-                <div className="flex flex-wrap my-10">
-                  <RadioGroup
-                    list={[
-                      "Same as shipping address",
-                      "Use a different billing address",
-                    ]}
+                  <PaymentMethodCard
+                    onChangeHandle={(v) => {
+                      if (v === "crypto") {
+                        setIsCrypto(true);
+                      } else setIsCrypto(false);
+                    }}
                   />
                 </div>
-                <div className="flex sm:flex-row flex-col flex-wrap justify-between">
+                {!isCrypto && (
+                  <div className="flex flex-wrap my-10">
+                    <RadioGroup
+                      list={[
+                        "Same as shipping address",
+                        "Use a different billing address",
+                      ]}
+                      onChangeHandle={(v) => {
+                        if (v === "Same as shipping address")
+                          setIsSameAddress(true);
+                        else setIsSameAddress(false);
+                      }}
+                    />
+                  </div>
+                )}
+                <div
+                  className={`flex sm:flex-row flex-col flex-wrap justify-between ${
+                    !isSameAddress && !isCrypto ? " flex" : " hidden"
+                  }`}
+                >
                   <div className=" w-[90%] sm:w-[45%] mb-5">
-                    <RoundedTextInput label="First Name" defaultValue="John" />
+                    <RoundedTextInput label="First Name" defaultValue="John"
+                      onChangeHandle={(v) => {
+                        setPaymentInfo({ ...contactInfo, firstName: v });
+                      }}
+                    />
                   </div>
                   <div className=" w-[90%] sm:w-[45%] mb-5">
-                    <RoundedTextInput label="Last Name" defaultValue="Doe" />
+                    <RoundedTextInput label="Last Name" defaultValue="Doe" 
+                      onChangeHandle={(v) => {
+                        setPaymentInfo({ ...contactInfo, lastName: v });
+                      }}
+                    />
                   </div>
                   <div className=" w-[90%] sm:w-[45%] mb-5">
                     <RoundedTextInput
                       label="Address"
                       defaultValue="Oliver Street"
+                      onChangeHandle={(v) => {
+                        setPaymentInfo({ ...contactInfo, address: v });
+                      }}
                     />
                   </div>
                   <div className=" w-[90%] sm:w-[45%] mb-5">
                     <RoundedTextInput
                       label="Apt / Suite No."
                       defaultValue="235 B"
+                      onChangeHandle={(v) => {
+                        setPaymentInfo({ ...contactInfo, apt_suiteNo: v });
+                      }}
                     />
-                  </div>
-                  <div className=" w-[90%] sm:w-[45%] mb-5">
-                    <RoundedTextInput label="City" defaultValue="Grapevine" />
                   </div>
                   <div className=" w-[90%] sm:w-[45%] mb-5">
                     <RoundedDropDownSelect
                       label="Country"
-                      list={countries}
-                      onChangeHandle={() => {}}
+                      value={
+                        countries.findIndex(
+                          (x) => x.name === paymentInfo.country.name
+                        ) > 0
+                          ? countries.findIndex(
+                              (x) => x.name === paymentInfo.country.name
+                            )
+                          : 0
+                      }
+                      list={countries.map((v) => ({
+                        ...v,
+                        text: v?.name,
+                        value: v?.isoCode,
+                      }))}
+                      onChangeHandle={(v) => {
+                        setPaymentInfo({
+                          ...paymentInfo,
+                          country:
+                            countries[
+                              countries.findIndex((x) => x.isoCode === v) > 0
+                                ? countries.findIndex((x) => x.isoCode === v)
+                                : 0
+                            ],
+                        });
+                        // setCountryDelivery(countries[countries.findIndex((x) => x.isoCode === v)]);
+                      }}
                     />
                   </div>
                   <div className=" w-[90%] sm:w-[45%] mb-5">
                     <RoundedDropDownSelect
                       label="State"
-                      list={State.getStatesOfCountry(countries[0].isoCode)}
-                      onChangeHandle={() => {}}
+                      value={
+                        statesPaymentArray.findIndex(
+                          (x) => x.name === paymentInfo.state.name
+                        ) > 0
+                          ? statesPaymentArray.findIndex(
+                              (x) => x.name === paymentInfo.state.name
+                            )
+                          : 0
+                      }
+                      list={statesPaymentArray.map((v) => ({
+                        ...v,
+                        text: v?.name,
+                        value: v?.isoCode,
+                      }))}
+                      onChangeHandle={(v) => {
+                        setPaymentInfo({
+                          ...paymentInfo,
+                          state:
+                            statesPaymentArray[
+                              statesPaymentArray.findIndex(
+                                (x) => x.isoCode === v
+                              ) > 0
+                                ? statesPaymentArray.findIndex(
+                                    (x) => x.isoCode === v
+                                  )
+                                : 0
+                            ],
+                        });
+                        // setCountryDelivery(countries[countries.findIndex((x) => x.isoCode === v)]);
+                      }}
+                    />
+                  </div>
+                  <div className=" w-[90%] sm:w-[45%] mb-5">
+                    <RoundedDropDownSelect
+                      label="City"
+                      value={
+                        citiesPaymentArray.findIndex(
+                          (x) => x.name === paymentInfo.city.name
+                        ) > 0
+                          ? citiesPaymentArray.findIndex(
+                              (x) => x.name === paymentInfo.city.name
+                            )
+                          : 0
+                      }
+                      list={citiesPaymentArray.map((v) => ({
+                        ...v,
+                        text: v?.name,
+                        value: v?.isoCode,
+                      }))}
+                      onChangeHandle={(v) => {
+                        setPaymentInfo({
+                          ...paymentInfo,
+                          city: citiesPaymentArray[
+                            citiesPaymentArray.findIndex(
+                              (x) => x.isoCode === v
+                            ) > 0
+                              ? citiesPaymentArray.findIndex(
+                                  (x) => x.isoCode === v
+                                )
+                              : 0
+                          ],
+                        });
+                        // setCountryDelivery(countries[countries.findIndex((x) => x.isoCode === v)]);
+                      }}
                     />
                   </div>
                   <div className=" w-[90%] sm:w-[45%] mb-5">
                     <RoundedTextInput
                       label="Postal Code"
                       defaultValue="94403"
+                      onChangeHandle={(v) => {
+                        setPaymentInfo({ ...contactInfo, postalCode: v });
+                      }}
                     />
                   </div>
                 </div>
