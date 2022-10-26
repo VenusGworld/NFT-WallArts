@@ -34,6 +34,16 @@
   justify-content: center;
 }
 
+.Toastify__toast.Toastify__toast-theme--light.Toastify__toast--error {
+  background-color: #282c34 !important;
+  color: white !important;
+}
+
+.Toastify__close-button.Toastify__close-button--light {
+  color: white !important;
+  opacity: 1 !important;
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);

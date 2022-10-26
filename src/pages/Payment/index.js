@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Country, State, City } from "country-state-city";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
+import { useSearchParams } from "react-router-dom";
+import { toast } from "react-toastify";
 
 import {
   RadioGroup,
@@ -11,10 +13,13 @@ import {
 import PaymentMethodCard from "./PaymentMethodCard";
 import PreviewPart from "./PreviewPart";
 import { connectedAccount } from "../../store/accountReducer";
+// import { useOrderStatus } from "../../hooks/useOrderStatus";
+import axios from "axios";
+
 
 const Payment = () => {
   const connected_account = useSelector(connectedAccount);
-  console.log('connected_account', connected_account);
+  const [searchParams] = useSearchParams();
   let countries = Country.getAllCountries();
   const [contactInfo, setContactInfo] = useState({
     firstName: "",
@@ -112,9 +117,108 @@ const Payment = () => {
       : setPaymentInfo({ ...paymentInfo, city: {} });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [paymentInfo.state]);
-  
-  const submitOrder = () => {
+  // const orderStatus = useOrderStatus();
+  const error = (text) => {
+    toast.error(text, {
+      position: "top-right",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: 0,
+    })
+  }
+  const success = (text) => {
+    toast.info(text, {
+      position: "top-right",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: 0,
+    })
+  }
+  const checkInputFormValidation = (arr) => {
+    let flag = true;
+    for (let index = 0; index < arr.length; index++) {
+      const element = arr[index];
+      if(element.v === '' || element.v === undefined || !element.v) {
+        error(`Input ${element.err_msg}!`);
+        flag = false
+      }
+    }
+    return flag;
+  }
+  const submitOrder = async () => {
+    // const result = await axios
+    // .get(`${process.env.REACT_APP_BACKEND_URL}/api/item/${searchParams.get("item")}`)
+    // .catch((err) => {
+    //   console.log(err);
+    // });
+    // console.log('aaaa',result.data.data)
+    
+    let arr = [];
 
+    if(!isCrypto && !isSameAddress) {
+      arr = [{v: paymentInfo.firstName, err_msg: 'Payment Information First Name'},
+      {v: paymentInfo.lastName, err_msg: 'Payment Information Last Name'},
+      {v: paymentInfo.address, err_msg: 'Payment Information Address'},
+      {v: paymentInfo.apt_suiteNo, err_msg: 'Payment Information Apt / Suite No.'},
+      {v: paymentInfo.postalCode, err_msg: 'Payment Information Postal Code'}]
+    }
+    let {firstName, lastName, phoneNo, email} = contactInfo;
+    let {address, apt_suiteNo, postalCode, country, state, city} = deliveryInfo;
+    let shouldBeCheckedValues = [
+      {v: firstName, err_msg: 'Contact Information First Name'},
+      {v: lastName, err_msg: 'Contact Information Last Name'},
+      {v: phoneNo, err_msg: 'Contact Information Phone Number'},
+      {v: email, err_msg: 'Contact Information Email'},
+      {v: address, err_msg: 'Delivery Information Address'},
+      {v: apt_suiteNo, err_msg: 'Delivery Information Apt / Suite No.'},
+      {v: postalCode, err_msg: 'Delivery Information Postal Code'},
+      ...arr
+    ]
+    if(
+      checkInputFormValidation(shouldBeCheckedValues)
+    ) {
+      const formData = {};
+      formData.item_id = searchParams.get("item");
+      formData.quantity = Number(searchParams.get("quantity"));
+      formData.user_wallet_address = connected_account;
+      formData.contact_first_name = firstName;
+      formData.contact_last_name = lastName;
+      formData.contact_phone_number = phoneNo;
+      formData.contact_email = email;
+      formData.delivery_address = address;
+      formData.delivery_apt_suite_No = apt_suiteNo;
+      formData.delivery_country = country.isoCode;
+      formData.delivery_state = state.isoCode;
+      formData.delivery_city = city.name;
+      formData.delivery_postal_code = postalCode;
+      formData.payment_first_name = (isSameAddress||isCrypto)?firstName:paymentInfo.firstName;
+      formData.payment_last_name = (isSameAddress||isCrypto)?lastName:paymentInfo.lastName;
+      formData.payment_address = (isSameAddress||isCrypto)?address:paymentInfo.address;
+      formData.payment_apt_suite_No = (isSameAddress||isCrypto)?apt_suiteNo:paymentInfo.apt_suiteNo;
+      formData.payment_type = paymentInfo.paymentMethod;
+      formData.payment_country = (isSameAddress||isCrypto)?country.isoCode:paymentInfo.country.isoCode;
+      formData.payment_state = (isSameAddress||isCrypto)?state.isoCode:paymentInfo.state.isoCode;
+      formData.payment_city = (isSameAddress||isCrypto)?city.name:paymentInfo.city.name;
+      formData.payment_postal_code = (isSameAddress||isCrypto)?postalCode:paymentInfo.postalCode;
+      await axios
+        .post(`${process.env.REACT_APP_BACKEND_URL}/api/order/`, formData)
+        .then((res) => {
+          if (res.status === 201) {
+            success("Saved Successfully!");
+            // console.log(res)
+          }
+        })
+        .catch((err) => {
+          error(err.response.data.message);
+          console.log(err);
+        });
+    }
   }
 
   return (
@@ -301,8 +405,8 @@ const Payment = () => {
                 <div className=" relative w-full">
                   <PaymentMethodCard
                     onChangeHandle={(v) => {
+                      setPaymentInfo({ ...paymentInfo, paymentMethod: v });
                       if (v === "crypto") {
-                        setPaymentInfo({ ...paymentInfo, paymentMethod: v });
                         setIsCrypto(true);
                       } else setIsCrypto(false);
                     }}
@@ -333,7 +437,7 @@ const Payment = () => {
                     <RoundedTextInput
                       label="First Name"
                       onChangeHandle={(v) => {
-                        setPaymentInfo({ ...contactInfo, firstName: v });
+                        setPaymentInfo({ ...paymentInfo, firstName: v });
                       }}
                     />
                   </div>
@@ -341,7 +445,7 @@ const Payment = () => {
                     <RoundedTextInput
                       label="Last Name"
                       onChangeHandle={(v) => {
-                        setPaymentInfo({ ...contactInfo, lastName: v });
+                        setPaymentInfo({ ...paymentInfo, lastName: v });
                       }}
                     />
                   </div>
@@ -349,7 +453,7 @@ const Payment = () => {
                     <RoundedTextInput
                       label="Address"
                       onChangeHandle={(v) => {
-                        setPaymentInfo({ ...contactInfo, address: v });
+                        setPaymentInfo({ ...paymentInfo, address: v });
                       }}
                     />
                   </div>
@@ -357,7 +461,7 @@ const Payment = () => {
                     <RoundedTextInput
                       label="Apt / Suite No."
                       onChangeHandle={(v) => {
-                        setPaymentInfo({ ...contactInfo, apt_suiteNo: v });
+                        setPaymentInfo({ ...paymentInfo, apt_suiteNo: v });
                       }}
                     />
                   </div>
@@ -465,7 +569,7 @@ const Payment = () => {
                     <RoundedTextInput
                       label="Postal Code"
                       onChangeHandle={(v) => {
-                        setPaymentInfo({ ...contactInfo, postalCode: v });
+                        setPaymentInfo({ ...paymentInfo, postalCode: v });
                       }}
                     />
                   </div>
@@ -474,7 +578,7 @@ const Payment = () => {
             </div>
           </div>
           <div className="xl:w-[40%] w-full mx-auto">
-            <PreviewPart />
+            <PreviewPart orderClickHandle={() => {submitOrder()}}/>
           </div>
         </div>
       </div>

@@ -2,6 +2,8 @@ import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Route, Routes, Navigate } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from 'react-toastify';
 
 import "./App.css";
 import "./custom.css";
@@ -75,6 +77,7 @@ function App() {
 
   return (
     <QueryClientProvider client={queryClient}>
+      <ToastContainer />
       <div className="App">
         <Header />
         <ScrollToTop />

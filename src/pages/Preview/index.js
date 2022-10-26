@@ -167,7 +167,7 @@ const Preview = () => {
                         navigate("/payment");
                         navigate({
                           pathname: "/payment",
-                          search: `?item=${searchParams.get("item")}`,
+                          search: `?item=${searchParams.get("item")}&quantity=${quantity}`,
                         });
                       }}
                       active
