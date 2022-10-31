@@ -21,6 +21,7 @@ import Payment from "./pages/Payment";
 import OrderSummary from "./pages/OrderSummary";
 import ScrollToTop from "./helper/ScrollToTop";
 
+
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
@@ -89,8 +90,8 @@ function App() {
           {/* <Layout> */}
           <Route
             path="/"
-            element={<Navigate to="/category" replace />}
-            // element={<Navigate to="/profile" replace />}
+            // element={<Navigate to="/category" replace />}
+            element={<Navigate to="/profile" replace />}
           />
           {main_routes.map((route) => (
             <Route

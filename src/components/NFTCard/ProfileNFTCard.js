@@ -1,17 +1,46 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import RoundedButtonBG from "../Input/RoundedButton_bg";
 
 const ProfileNFTCard = ({ item }) => {
-  const { img, name, like, auction, sale, price, sold, highestBid, endsIn } =
-    item;
+  const {
+    rawMetadata,
+    title,
+    like,
+    auction,
+    sale,
+    price,
+    sold,
+    highestBid,
+    endsIn,
+  } = item;
+  console.log("item", item);
+  const navigate = useNavigate();
+
   return (
-    <div className="md:w-[48%] xl:w-[30%] w-[90%] shadow-2xl flex flex-col my-4 hover:scale-105 transition-all cursor-pointer">
-      <img
-        loading="lazy"
-        src={process.env.PUBLIC_URL + "/img/" + img}
-        alt=""
-        className="w-full"
-      />
+    <div className="md:w-[48%] xl:w-[30%] w-[90%] shadow-2xl flex flex-col my-4 hover:scale-105 transition-all cursor-pointer"
+      onClick={() => {
+        navigate({
+          pathname: "/category",
+          search: `?nft_img=${rawMetadata?.image?.replace(
+            "ipfs://",
+            "https://ipfs.moralis.io:2053/ipfs/"
+          )}`,
+        });
+      }}
+    >
+      <div className="w-full h-full">
+        <img
+          loading="lazy"
+          src={rawMetadata?.image?.replace(
+            "ipfs://",
+            "https://ipfs.moralis.io:2053/ipfs/"
+          )}
+          alt=""
+          className="w-full"
+        />
+      </div>
+
       <div className="flex p-5 bg-white text-[#313949] justify-between w-full h-full">
         <div className="flex flex-col justify-between text-sm w-full">
           <div className="flex justify-between">
@@ -27,7 +56,7 @@ const ProfileNFTCard = ({ item }) => {
             </div>
           </div>
           <div className="my-2 flex justify-start sm:text-xl text-base font-bold">
-            {name}
+            {title}
           </div>
           {sale && (
             <div className="flex flex-col">
@@ -54,7 +83,7 @@ const ProfileNFTCard = ({ item }) => {
             </div>
           )}
           {!sale && !auction && (
-            <div className="h-full flex justify-center items-center py-4">
+            <div className=" h-20 flex justify-center items-center py-4">
               <RoundedButtonBG active text="List Here" />
             </div>
           )}

@@ -16,6 +16,7 @@
     "@testing-library/react": "^12.1.2",
     "@testing-library/user-event": "^13.5.0",
     "@trendyol-js/react-carousel": "^3.0.0",
+    "alchemy-sdk": "^2.2.0",
     "apexcharts": "^3.35.3",
     "axios": "^0.27.2",
     "country-state-city": "^3.1.2",

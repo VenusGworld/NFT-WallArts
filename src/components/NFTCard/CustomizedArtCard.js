@@ -1,5 +1,5 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
 const CustomizedArtCard = ({ item }) => {
   const {
@@ -15,6 +15,7 @@ const CustomizedArtCard = ({ item }) => {
     priceType,
   } = item;
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
 
   return (
     <div
@@ -22,7 +23,7 @@ const CustomizedArtCard = ({ item }) => {
       onClick={() => {
         navigate({
           pathname: "/preview",
-          search: `?item=${_id}`,
+          search: `?item=${_id}&nft_img=${searchParams.get('nft_img')}`,
         });
       }}
     >

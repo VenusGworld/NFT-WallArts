@@ -1,8 +1,13 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { Alchemy, Network } from "alchemy-sdk";
+import { useSelector, useDispatch } from "react-redux";
+
 import { RoundedButtonMD, RoundedButtonSM } from "../../components/Input";
 import ActivityPart from "./ActivityPart";
 import FilterPart from "./FilterPart";
 import ItemsPart from "./ItemsPart";
+import { connect, isConnected, setChain, connectedAccount } from "../../store/accountReducer";
+
 
 export const Items = [
   {
@@ -68,7 +73,31 @@ export const Items = [
 const Profile = () => {
   const [filterExpanded, expandFilter] = useState(false);
   const [itemsExpanded, expandItems] = useState(true);
+  const is_Connected = useSelector(isConnected);
+  const [nfts, setNfts] = useState([])
+  const [pageKey, setpageKey] = useState("");
+  const connected_account = useSelector(connectedAccount);
+  const config = {
+    apiKey: process.env.REACT_APP_ALCHEMY_KEY,
+    network: Network.ETH_MAINNET
+  }
 
+  const alchemy = new Alchemy(config);
+
+  useEffect(() => {
+    // if(is_Connected) fetchNFTs();
+  // }, [is_Connected])
+    fetchNFTs();
+  }, [])
+
+  const fetchNFTs = async() => {
+    const nfts = await alchemy.nft.getNftsForOwner("0x69f0b8c5e94f6b64d832b7d9b15f3a88cb2f6f4b", {
+      pageSize: 15,
+    })//connected_account);
+    console.log('nfts', nfts);
+    setNfts(nfts.ownedNfts);
+  }
+  
   return (
     <div className="h-full relative mt-20 bg-[#363F54]">
       <img
@@ -156,7 +185,7 @@ const Profile = () => {
           </div>
         </div>
         {filterExpanded && <FilterPart />}
-        {itemsExpanded && <ItemsPart Items={Items} />}
+        {itemsExpanded && <ItemsPart Items={nfts} />}
         {!itemsExpanded && <ActivityPart />}
       </div>
     </div>

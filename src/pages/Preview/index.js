@@ -39,7 +39,7 @@ const Preview = () => {
                 <div className="w-3/5 bg-white h-full relative">
                   <img
                     loading="lazy"
-                    src={process.env.PUBLIC_URL + "/img/image51.png"}
+                    src={searchParams.get('nft_img')}
                     alt=""
                   />
                   <img

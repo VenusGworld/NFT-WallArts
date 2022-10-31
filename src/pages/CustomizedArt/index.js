@@ -3,18 +3,6 @@ import { useSearchParams } from "react-router-dom";
 import ItemCard from "../../components/NFTCard/CustomizedArtCard";
 import { useItemByCategory } from "../../hooks/useItemByCategory";
 
-const data = [
-  { width: 50, height: 50, price: 5, bestseller: true },
-  { width: 90, height: 50, price: 6.7 },
-  { width: 70, height: 30, price: 8 },
-  { width: 100, height: 70, price: 12.6, bestseller: true },
-  { width: 60, height: 50, price: 3 },
-  { width: 80, height: 80, price: 4, popular: true },
-  { width: 150, height: 70, price: 3 },
-  { width: 100, height: 100, price: 5 },
-  { width: 70, height: 20, price: 5, popular: true },
-];
-
 const CustomizedArt = () => {
   const [searchParams] = useSearchParams();
   const items = useItemByCategory({category_id: searchParams.get('category')})
