@@ -1,5 +1,7 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import { useNavigate, useSearchParams } from "react-router-dom";
+import { ethPrice } from "../../store/infoReducer";
 
 const CustomizedArtCard = ({ item }) => {
   const {
@@ -16,7 +18,7 @@ const CustomizedArtCard = ({ item }) => {
   } = item;
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
-
+  const eth_price = useSelector(ethPrice);
   return (
     <div
       className="relative hover:scale-105 hover:drop-shadow-2xl transition-all md:w-[48%] xl:w-[30%] w-[90%] shadow-xl flex flex-col my-4 hover:shadow-2xl bg-[#454E61] p-3 cursor-pointer"
@@ -90,7 +92,7 @@ const CustomizedArtCard = ({ item }) => {
           {priceType === 'eth'?(<><div className=" text-[#818DA9] text-sm">Price in ETH</div>
           <div className="flex flex-col items-end">
             <div className=" text-lg font-bold">{price} ETH</div>
-            <div className=" text-sm">( {Number(price * 1777)} USD )</div>
+            <div className=" text-sm">( {Number(price * eth_price)} USD )</div>
           </div></>):(<><div className=" text-[#818DA9] text-sm">Price in USD</div>
           <div className="flex flex-col items-end">
             <div className=" text-lg font-bold">{price} $</div>

@@ -1,10 +1,10 @@
 import { ethers } from 'ethers';
 
 
-export async function getETHPrice() {
-    const provider = new 
-ethers.providers.JsonRpcProvider('RPC_URL_HERE');
-
+export async function getETHPrice(w_provider) {
+//     const provider = new 
+// ethers.providers.JsonRpcProvider('RPC_URL_HERE');
+    const provider = new ethers.providers.Web3Provider(w_provider);
     // This constant describes the ABI interface of the contract, which will provide the price of ETH
     // It looks like a lot, and it is, but this information is generated when we compile the contract
     // We need to let ethers know how to interact with this contract.
@@ -58,7 +58,8 @@ ethers.providers.JsonRpcProvider('RPC_URL_HERE');
         }
     ];
     // The address of the contract which will provide the price of ETH
-    const addr = '0x8A753747A1Fa494EC906cE90E9f37563A8AF630e';
+    const addr = '0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419';
+    //'0x8A753747A1Fa494EC906cE90E9f37563A8AF630e';
     // We create an instance of the contract which we can interact with
     const priceFeed = new ethers.Contract(addr, aggregatorV3InterfaceABI, provider);
     // We get the data from the last round of the contract 

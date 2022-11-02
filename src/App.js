@@ -20,6 +20,8 @@ import Preview from "./pages/Preview";
 import Payment from "./pages/Payment";
 import OrderSummary from "./pages/OrderSummary";
 import ScrollToTop from "./helper/ScrollToTop";
+import { getETHPrice } from "./utils/getEthPrice";
+import { setEthPrice } from "./store/infoReducer";
 
 
 const queryClient = new QueryClient({
@@ -54,7 +56,9 @@ function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if(!is_Connected) connectWallet();
+    if(!is_Connected) {
+      connectWallet();
+    }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -70,7 +74,10 @@ function App() {
         method: "eth_accounts",
       });
       if (accounts[0]) dispatch(connect(accounts[0]));
-    }
+      const price_eth = await getETHPrice(window.ethereum)
+      dispatch(setEthPrice(price_eth))
+    } 
+
     // else {
     //   dispatch(disConnect())
     // }
@@ -101,18 +108,19 @@ function App() {
             />
           ))}
           <Route key="profile" path="profile" element={<Profile />} />
-          <Route key="category" path="category" element={<Category />} />
+
+          <Route key="category" path="category" element={is_Connected?<Category />:<div className=" flex justify-center items-center text-white text-2xl py-40 bg-slate-700">Connect Wallet First!</div>} />
           <Route
             key="customizedArt"
             path="customizedArt"
             element={<CustomizedArt />}
           />
-          <Route key="preview" path="preview" element={<Preview />} />
-          <Route key="payment" path="payment" element={<Payment />} />
+          <Route key="preview" path="preview" element={is_Connected?<Preview />:<div className=" flex justify-center items-center text-white text-2xl py-40 bg-slate-700">Connect Wallet First!</div>} />
+          <Route key="payment" path="payment" element={is_Connected?<Payment />:<div className=" flex justify-center items-center text-white text-2xl py-40 bg-slate-700">Connect Wallet First!</div>} />
           <Route
             key="order_summary"
             path="order_summary"
-            element={<OrderSummary />}
+            element={is_Connected?<OrderSummary />:<div className=" flex justify-center items-center text-white text-2xl py-40 bg-slate-700">Connect Wallet First!</div>}
           />
           {/* </Layout> */}
         </Routes>

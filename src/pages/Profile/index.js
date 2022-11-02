@@ -7,68 +7,68 @@ import ActivityPart from "./ActivityPart";
 import FilterPart from "./FilterPart";
 import ItemsPart from "./ItemsPart";
 import { connect, isConnected, setChain, connectedAccount } from "../../store/accountReducer";
+import { ethPrice } from "../../store/infoReducer";
 
-
-export const Items = [
-  {
-    img: "image 4.png",
-    name: "Aui dolorem eum",
-    like: "243",
-    auction: true,
-    highestBid: 2.5,
-    endsIn: "02:23:49:01",
-  },
-  {
-    img: "image 16.png",
-    name: "Annoyances accepted",
-    like: "79",
-    sale: true,
-    price: 3,
-    sold: "3/5",
-  },
-  { img: "image 19.png", name: "Facere possimus", like: "320" },
-  {
-    img: "image 16.png",
-    name: "Lorem Ipsume",
-    like: "3",
-    sale: true,
-    price: 3,
-    sold: "3/5",
-  },
-  {
-    img: "image 19.png",
-    name: "Aui dolorem eum",
-    like: "11",
-    auction: true,
-    highestBid: 2.5,
-    endsIn: "02:23:49:01",
-  },
-  { img: "image 19.png", name: "Facere possimus", like: "320" },
-  {
-    img: "image 16.png",
-    name: "Lorem Ipsume",
-    like: "3",
-    sale: true,
-    price: 3,
-    sold: "3/5",
-  },
-  {
-    img: "image 4.png",
-    name: "Aui dolorem eum",
-    like: "243",
-    auction: true,
-    highestBid: 2.5,
-    endsIn: "02:23:49:01",
-  },
-  {
-    img: "image 16.png",
-    name: "Annoyances accepted",
-    like: "79",
-    sale: true,
-    price: 3,
-    sold: "3/5",
-  },
-];
+// export const Items = [
+//   {
+//     img: "image 4.png",
+//     name: "Aui dolorem eum",
+//     like: "243",
+//     auction: true,
+//     highestBid: 2.5,
+//     endsIn: "02:23:49:01",
+//   },
+//   {
+//     img: "image 16.png",
+//     name: "Annoyances accepted",
+//     like: "79",
+//     sale: true,
+//     price: 3,
+//     sold: "3/5",
+//   },
+//   { img: "image 19.png", name: "Facere possimus", like: "320" },
+//   {
+//     img: "image 16.png",
+//     name: "Lorem Ipsume",
+//     like: "3",
+//     sale: true,
+//     price: 3,
+//     sold: "3/5",
+//   },
+//   {
+//     img: "image 19.png",
+//     name: "Aui dolorem eum",
+//     like: "11",
+//     auction: true,
+//     highestBid: 2.5,
+//     endsIn: "02:23:49:01",
+//   },
+//   { img: "image 19.png", name: "Facere possimus", like: "320" },
+//   {
+//     img: "image 16.png",
+//     name: "Lorem Ipsume",
+//     like: "3",
+//     sale: true,
+//     price: 3,
+//     sold: "3/5",
+//   },
+//   {
+//     img: "image 4.png",
+//     name: "Aui dolorem eum",
+//     like: "243",
+//     auction: true,
+//     highestBid: 2.5,
+//     endsIn: "02:23:49:01",
+//   },
+//   {
+//     img: "image 16.png",
+//     name: "Annoyances accepted",
+//     like: "79",
+//     sale: true,
+//     price: 3,
+//     sold: "3/5",
+//   },
+// ];
 
 const Profile = () => {
   const [filterExpanded, expandFilter] = useState(false);
@@ -81,20 +81,22 @@ const Profile = () => {
     apiKey: process.env.REACT_APP_ALCHEMY_KEY,
     network: Network.ETH_MAINNET
   }
+  
 
   const alchemy = new Alchemy(config);
 
   useEffect(() => {
-    // if(is_Connected) fetchNFTs();
-  // }, [is_Connected])
-    fetchNFTs();
-  }, [])
+    if(is_Connected) fetchNFTs();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [is_Connected])
+    //fetchNFTs();
+  // }, [])
 
   const fetchNFTs = async() => {
-    const nfts = await alchemy.nft.getNftsForOwner("0x69f0b8c5e94f6b64d832b7d9b15f3a88cb2f6f4b", {
-      pageSize: 15,
+    const nfts = await alchemy.nft.getNftsForOwner(connected_account, {//("0x69f0b8c5e94f6b64d832b7d9b15f3a88cb2f6f4b", {
+      pageSize: 9,
     })//connected_account);
-    console.log('nfts', nfts);
+    
     setNfts(nfts.ownedNfts);
   }
   

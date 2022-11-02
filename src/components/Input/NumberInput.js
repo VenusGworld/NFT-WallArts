@@ -12,8 +12,8 @@ const NumberInput = ({ list, onChangeHandle }) => {
           className=" border-none w-auto bg-[#4a5367] text-white mr-2"
           value={number}
           onChange={(e) => {
-            setNumber(e.value);
-            onChangeHandle(e.value);
+            setNumber(Number(e.target.value));
+            onChangeHandle(e.target.value);
           }}
         />
         <img

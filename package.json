@@ -21,6 +21,7 @@
     "axios": "^0.27.2",
     "country-state-city": "^3.1.2",
     "dotenv": "^16.0.3",
+    "ethers": "^5.7.2",
     "react": "^17.0.2",
     "react-apexcharts": "^1.4.0",
     "react-calendar": "^3.9.0",

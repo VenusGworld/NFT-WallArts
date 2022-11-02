@@ -1,17 +1,42 @@
-import React, { useState } from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { useNavigate, useSearchParams } from "react-router-dom";
 
 import {
   NumberInput,
   RoundedButtonMD,
   RoundedDropDownSelect,
+  RoundedTextInput,
 } from "../../components/Input";
+import { ethPrice } from "../../store/infoReducer";
 
 const Preview = () => {
   const [color, setColor] = useState(0);
   const [quantity, setquantity] = useState(0);
+  const [nftInfo, setnftInfo] = useState({});
+  const [discount, setDiscount] = useState(0);
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
+  useEffect(() => {
+    fetchNFTInfo();
+  }, []);
+
+  const eth_price = useSelector(ethPrice);
+  const fetchNFTInfo = async () => {
+    const result = await axios
+      .get(
+        `${process.env.REACT_APP_BACKEND_URL}/api/item/${searchParams.get(
+          "item"
+        )}`
+      )
+      .catch((err) => {
+        console.log(err);
+      });
+    console.log(result.data.data);
+    setnftInfo(result.data.data);
+  };
+  console.log('nftInfo', nftInfo);
   return (
     <div>
       <div className={`w-full h-full mt-20 relative text-white`}>
@@ -39,7 +64,7 @@ const Preview = () => {
                 <div className="w-3/5 bg-white h-full relative">
                   <img
                     loading="lazy"
-                    src={searchParams.get('nft_img')}
+                    src={searchParams.get("nft_img")}
                     alt=""
                   />
                   <img
@@ -56,7 +81,13 @@ const Preview = () => {
                   </div>
                   <div className="flex flex-col items-start space-y-2">
                     <span className="text-[#818DA9]">Frame Size</span>
-                    <RoundedDropDownSelect
+                    {nftInfo.width !== undefined && <RoundedTextInput
+                      defaultValue={
+                        nftInfo?.width + "X" + nftInfo?.height + "cm"
+                      }
+                    />}
+                    
+                    {/* <RoundedDropDownSelect
                       onChangeHandle={(v) => {}}
                       list={[
                         {
@@ -76,7 +107,7 @@ const Preview = () => {
                           value: 10,
                         },
                       ]}
-                    />
+                    /> */}
                   </div>
                   <div className="flex flex-col items-start space-y-2">
                     <span className="text-[#818DA9]">Colour</span>
@@ -127,7 +158,25 @@ const Preview = () => {
                   </div>
                   <div className="flex flex-col items-start space-y-2">
                     <span className="text-[#818DA9]">Quantity</span>
-                    <NumberInput onChangeHandle={setquantity} />
+                    <NumberInput
+                      onChangeHandle={(v) => {
+                        if (nftInfo?.isBulk) {
+                          let min = 1000000;
+                          let dis = 0;
+                          nftInfo?.bulk_pricing.forEach((p) => {
+                            if (
+                              Number(v) - p.quantity >= 0 &&
+                              min > Number(v) - p.quantity
+                            ) {
+                              min = Number(v) - p;
+                              dis = p.discount;
+                            }
+                          });
+                          setDiscount(dis);
+                        }
+                        setquantity(Number(v));
+                      }}
+                    />
                   </div>
                   {/* {!isbuy && (<div className='flex flex-col space-y-3'>
                 <div className='flex flex-col items-start space-y-2'>
@@ -142,21 +191,44 @@ const Preview = () => {
                     <span className="text-[#818DA9]">Total Price</span>
                     <div className="flex justify-between w-full">
                       <span className=" text-white text-2xl">
-                        {quantity} x {searchParams.get("price")} ETH
+                        {quantity} x {nftInfo?.price}
+                        {nftInfo?.priceType === "eth" ? "ETH" : "$"}
                       </span>
                       <div className="flex flex-col justify-end">
                         <span className=" text-[#D3B789] text-2xl">
-                          {quantity * searchParams.get("price")} ETH
+                          {nftInfo?.priceType === "eth"
+                            ? Number(
+                                quantity *
+                                  nftInfo?.price *
+                                  ((100 - discount) / 100)
+                              ).toFixed(2) + "ETH"
+                            : null}
                         </span>
                         <span className=" text-white text-sm">
                           ({" "}
-                          {(
-                            quantity *
-                            searchParams.get("price") *
-                            1327.12
-                          ).toFixed(2)}{" "}
+                          {nftInfo?.priceType === "eth"
+                            ? (
+                                quantity *
+                                nftInfo?.price *
+                                ((100 - discount) / 100) *
+                                eth_price
+                              ).toFixed(2)
+                            : quantity *
+                              nftInfo?.price *
+                              ((100 - discount) / 100).toFixed(2)}{" "}
                           USD )
                         </span>
+                        <div>
+                          {nftInfo?.isBulk ? (
+                            <div className="flex flex-col">
+                              {nftInfo?.bulk_pricing.map((p, i) => (
+                                <span key={i}>
+                                  +{p?.quantity}NFTs -{p?.discount}%
+                                </span>
+                              ))}
+                            </div>
+                          ) : null}
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -167,7 +239,9 @@ const Preview = () => {
                         navigate("/payment");
                         navigate({
                           pathname: "/payment",
-                          search: `?item=${searchParams.get("item")}&quantity=${quantity}`,
+                          search: `?item=${searchParams.get(
+                            "item"
+                          )}&quantity=${quantity}`,
                         });
                       }}
                       active
