@@ -1,71 +1,54 @@
 import React, { useState } from "react";
-import { Link, useNavigate, useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 import { main_routes } from "../App";
-import { useCategory } from "../hooks/useCategory";
-import { RoundedButtonMD, RoundedButtonSM, SearchBar } from "./Input";
-import DropDownNavButton from "./Input/DropDownNavButton";
+// import { useCategory } from "../hooks/useCategory";
+import ConnectButton from "./ConnectButton";
+// import { RoundedButtonMD, RoundedButtonSM, SearchBar } from "./Input";
+// import DropDownNavButton from "./Input/DropDownNavButton";
 
 const Header = () => {
   const [sidevar, openSidevar] = useState(false);
   const location = useLocation();
-  const categories = useCategory();
-  const navigate = useNavigate();
+  // const categories = useCategory();
+  // const navigate = useNavigate();
   return (
     <div className=" fixed z-[1001] w-full top-0">
-      <div className=" border-none bg-[#363F54] hd-nm border-theme-24 -mx-3 sm:-mx-8 px-3 sm:px-8 p-0">
+      <div className=" border-none bg-gradient-to-r from-[#2d263b] to-[#221b33] hd-nm border-theme-24 -mx-3 sm:-mx-8 px-3 sm:px-8 p-0">
         <div
-          className="flex items-center h-20 p-1 justify-center"
+          className="flex items-center h-20 p-1 justify-between w-full px-10"
           style={{
             boxShadow: "0px 4px 6px #3e46725e",
             // background: "linear-gradient(to right, #515874 0%, #363945 100%)",
           }}
         >
-          <div className="mr-10">
-            <img
-              loading="lazy"
-              href={process.env.PUBLIC_URL + "/img/New-Logo 1.png"}
-              alt="logo"
-              className=" w-48 mt-4"
-              src={process.env.PUBLIC_URL + "/img/New-Logo 1.png"}
-            />
-          </div>
-          <div className="items-center justify-center">
-            <div className="flex items-center w-full px-8 justify-center space-x-7">
-              <div className="p-[7px 0px 0 40px] font-medium text-lg text-center md:flex hidden mx-2 space-x-10 items-center">
-                <DropDownNavButton
-                  list={
-                    categories.isLoading
-                      ?[]
-                      :categories?.data?.data.map((info, i) => {
-                            return {
-                              title: info.name,
-                              link: info._id,
-                            };
-                          })
-                  }
-                  title="Category"
-                />
-                {main_routes.map((r) => (
-                  <Link
-                    key={r.key}
-                    className={` w-24 whitespace-nowrap ${
-                      location.pathname === r.path
-                        ? " text-white"
-                        : " text-[#ececec99]"
-                    }`}
-                    to={r.path}
-                  >
-                    {r.title}
-                  </Link>
-                ))}
-              </div>
-              <div className="lg:inline-block hidden w-[400px]">
-                <SearchBar
-                  placeholder={"Search items, collections and accounts"}
-                />
-              </div>
-              <div className="sm:inline-block hidden">
+          <div className="flex items-center w-full px-8 justify-around space-x-7">
+            <div className="mr-10">
+              <img
+                loading="lazy"
+                href={process.env.PUBLIC_URL + "/img/logo.svg"}
+                alt="logo"
+                className=" w-9"
+                src={process.env.PUBLIC_URL + "/img/logo.svg"}
+              />
+            </div>
+            <div className="p-[7px 0px 0 40px] font-medium text-sm text-center md:flex hidden mx-2 items-center">
+              {main_routes.map((r) => (
+                <Link
+                  key={r.key}
+                  className={` mx-8 whitespace-nowrap ${
+                    location.pathname === r.path
+                      ? " text-white border-b-[#D3B789] border-b"
+                      : " text-[#ececec99] border-b border-b-[#d3b78900]"
+                  }`}
+                  to={r.path}
+                >
+                  {r.title}
+                </Link>
+              ))}
+            </div>
+
+            {/* <div className="sm:inline-block hidden">
                 <RoundedButtonMD text="List" onButtonClick={() => {}} active />
               </div>
               <div>
@@ -76,46 +59,32 @@ const Header = () => {
                   alt="globe"
                 />
                 <p className=" inline-block text-white">EN</p>
-              </div>
-              <div>
-                <RoundedButtonSM
-                  icon={
-                    <img
-                      loading="lazy"
-                      src={process.env.PUBLIC_URL + "/img/wallet.svg"}
-                      className="w-3 h-3 text-black inline-block"
-                      alt="globe"
-                    />
-                  }
-                  onButtonClick={() => {
-                    navigate("/profile");
-                  }}
-                  active
-                />
-              </div>
-              <div className="flex justify-center items-center">
-                <span
-                  className="md:hidden p-1 border-slate-500 border rounded"
-                  onClick={() => openSidevar(!sidevar)}
+              </div> */}
+            <div>
+            <ConnectButton/>
+            </div>
+            <div className="flex justify-center items-center">
+              <span
+                className="md:hidden p-1 border-slate-500 border rounded"
+                onClick={() => openSidevar(!sidevar)}
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="feather feather-bar-chart-2 w-6 h-6 text-white transform -rotate-90"
                 >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="20"
-                    height="20"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="1.5"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    className="feather feather-bar-chart-2 w-6 h-6 text-white transform -rotate-90"
-                  >
-                    <line x1="18" y1="20" x2="18" y2="10"></line>
-                    <line x1="12" y1="20" x2="12" y2="4"></line>
-                    <line x1="6" y1="20" x2="6" y2="14"></line>
-                  </svg>
-                </span>
-              </div>
+                  <line x1="18" y1="20" x2="18" y2="10"></line>
+                  <line x1="12" y1="20" x2="12" y2="4"></line>
+                  <line x1="6" y1="20" x2="6" y2="14"></line>
+                </svg>
+              </span>
             </div>
           </div>
         </div>

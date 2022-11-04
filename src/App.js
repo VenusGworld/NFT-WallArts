@@ -22,6 +22,7 @@ import OrderSummary from "./pages/OrderSummary";
 import ScrollToTop from "./helper/ScrollToTop";
 import { getETHPrice } from "./utils/getEthPrice";
 import { setEthPrice } from "./store/infoReducer";
+import Home from "./pages/Home";
 
 
 const queryClient = new QueryClient({
@@ -39,15 +40,51 @@ const queryClient = new QueryClient({
 });
 
 export const main_routes = [
+  // {
+  //   key: "topsold",
+  //   title: "Top Sold",
+  //   description: "Top Sold",
+  //   component: <Lobby />,
+  //   path: "/topsold",
+  //   isEnabled: true,
+  //   appendDivider: true,
+  // },
   {
-    key: "topsold",
-    title: "Top Sold",
-    description: "Top Sold",
-    component: <Lobby />,
-    path: "/topsold",
+    key: "home",
+    title: "Home",
+    description: "Home",
+    component: <Home />,
+    path: "/home",
     isEnabled: true,
     appendDivider: true,
   },
+  {
+    key: "products",
+    title: "Products",
+    description: "products",
+    component: <Home />,
+    path: "/products",
+    isEnabled: true,
+    appendDivider: true,
+  },
+  {
+    key: "process",
+    title: "Process",
+    description: "process",
+    component: <Home />,
+    path: "/process",
+    isEnabled: true,
+    appendDivider: true,
+  },
+  {
+    key: "place_order",
+    title: "Place Order",
+    description: "place order",
+    component: <Home />,
+    path: "/place_order",
+    isEnabled: true,
+    appendDivider: true,
+  }
 ];
 
 function App() {
@@ -55,12 +92,12 @@ function App() {
   const connected_account = useSelector(connectedAccount);
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    if(!is_Connected) {
-      connectWallet();
-    }
+  // useEffect(() => {
+  //   if(!is_Connected) {
+  //     connectWallet();
+  //   }
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  // }, []);
 
   const connectWallet = async () => {
     if (!is_Connected) {
