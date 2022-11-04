@@ -16,27 +16,27 @@ const Header = () => {
     <div className=" fixed z-[1001] w-full top-0">
       <div className=" border-none bg-gradient-to-r from-[#2d263b] to-[#221b33] hd-nm border-theme-24 -mx-3 sm:-mx-8 px-3 sm:px-8 p-0">
         <div
-          className="flex items-center h-20 p-1 justify-between w-full px-10"
+          className="flex items-center h-24 p-1 justify-between w-full px-10"
           style={{
             boxShadow: "0px 4px 6px #3e46725e",
             // background: "linear-gradient(to right, #515874 0%, #363945 100%)",
           }}
         >
           <div className="flex items-center w-full px-8 justify-around space-x-7">
-            <div className="mr-10">
+            <div className="ml-10 flex-1">
               <img
                 loading="lazy"
                 href={process.env.PUBLIC_URL + "/img/logo.svg"}
                 alt="logo"
-                className=" w-9"
+                className=" w-12"
                 src={process.env.PUBLIC_URL + "/img/logo.svg"}
               />
             </div>
-            <div className="p-[7px 0px 0 40px] font-medium text-sm text-center md:flex hidden mx-2 items-center">
+            <div className=" flex-1 p-[7px 0px 0 40px] font-medium text-xs text-center md:flex hidden mx-2 items-center">
               {main_routes.map((r) => (
                 <Link
                   key={r.key}
-                  className={` mx-8 whitespace-nowrap ${
+                  className={` mx-5 whitespace-nowrap ${
                     location.pathname === r.path
                       ? " text-white border-b-[#D3B789] border-b"
                       : " text-[#ececec99] border-b border-b-[#d3b78900]"
@@ -60,8 +60,8 @@ const Header = () => {
                 />
                 <p className=" inline-block text-white">EN</p>
               </div> */}
-            <div>
-            <ConnectButton/>
+            <div className=" flex justify-center flex-1">
+              <ConnectButton/>
             </div>
             <div className="flex justify-center items-center">
               <span

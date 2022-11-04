@@ -1,9 +1,68 @@
-import React from 'react';
+import React from "react";
+import { RectButton } from "../../components/Input";
 
 const Home = () => {
-  return (<div>
-
-  </div>)
-}
+  return (
+    <div className="h-full relative mt-24 bg-[#0b041b]">
+      <div className=" relative w-full">
+        <img
+          loading="lazy"
+          src={process.env.PUBLIC_URL + "/img/home/home_1.png"}
+          alt="profile_banner"
+          width="100%"
+        />
+        <div className=" absolute top-1/3 flex flex-col left-[15%] w-1/3 space-y-5">
+          <div className="relative w-28">
+            <img
+              loading="lazy"
+              src={process.env.PUBLIC_URL + "/img/home/Vector (3).svg"}
+              alt="profile_banner"
+              width="100%"
+            />
+            <span className=" absolute top-1/2 left-1/3 -translate-y-1/2">
+              NFTs
+            </span>
+          </div>
+          <div className=" text-5xl text-start font-bold leading-normal">
+            Bring Your{" "}
+            <span className="relative text-[#572dff] border border-[#572dff] rounded-md bg-[#b4acbc] z-10 px-1 pt-1">
+              NFT
+              <span className="absolute left-2 top-2 h-full text-[#572dff00] border border-[#572dff] rounded-md px-1 pt-1 -z-10">
+                NFT
+              </span>
+            </span>{" "}
+            Artwork to Life
+          </div>
+          <div className=" text-start">
+            Chances are if you're an <span>NFT art collector</span>, you've got
+            some hidden masterpieces gathering dust in your crypto wallet.
+          </div>
+          <div className="sm:w-1/2 w-full">
+            <RectButton text={"Create My NFT Display"} />
+          </div>
+        </div>
+        {/* body */}
+        <div className=" py-12 px-5 flex flex-col text-white">
+          <div className="flex flex-col space-y-3 items-center">
+            <div className="relative w-40 text-center text-black">
+              <img
+                loading="lazy"
+                src={process.env.PUBLIC_URL + "/img/home/Vector (3).svg"}
+                alt="profile_banner"
+                width="100%"
+              />
+              <span className="text-xs absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2">
+                PRODUCTS
+              </span>
+            </div>
+            <span className=" text-4xl font-bold">Choose A Format For Your NFT Wall Art</span>
+            <span className=" text-xs font-thin">Breathe life into your digital artwork by choosing a format that suits your interior space.</span>
+            <span className=" text-xs font-thin">Leave it to us - We'll upscale your NFT to bring you the finest quality print.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
 
 export default Home;

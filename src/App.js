@@ -126,9 +126,9 @@ function App() {
       <div className="App">
         <Header />
         <ScrollToTop />
-        <div className=" p-3 bg-gray-600 rounded-md text-white absolute top-4 inline-block w-fit right-0 z-50">
+        {/* <div className=" p-3 bg-gray-600 rounded-md text-white absolute top-4 inline-block w-fit right-0 z-50">
           Wallet Address: {connected_account?connected_account:'Not Connected!'}
-        </div>
+        </div> */}
         
         <Routes>
           {/* <Layout> */}

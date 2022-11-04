@@ -9,6 +9,7 @@ import RoundedTextInput from "./RoundedTextInput";
 import RoundedPhoneNumberInput from "./RoundedPhoneNumberInput";
 import RoundedDropDownSelect from "./RoundedDropDownSelect";
 import RadioGroup from "./RadioGroup";
+import RectButton from "./RectButton";
 
 export {
   RoundedButtonMD,
@@ -22,4 +23,5 @@ export {
   RoundedPhoneNumberInput,
   RoundedDropDownSelect,
   RadioGroup,
+  RectButton
 };
