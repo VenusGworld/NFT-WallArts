@@ -1,5 +1,6 @@
 import React from "react";
 import { RectButton } from "../../components/Input";
+import ChooseFormatPart from "./ChooseFormatPart";
 
 const Home = () => {
   return (
@@ -11,7 +12,7 @@ const Home = () => {
           alt="profile_banner"
           width="100%"
         />
-        <div className=" absolute top-1/3 flex flex-col left-[15%] w-1/3 space-y-5">
+        <div className=" absolute top-44 flex flex-col left-[15%] w-1/3 space-y-5">
           <div className="relative w-28">
             <img
               loading="lazy"
@@ -42,7 +43,7 @@ const Home = () => {
           </div>
         </div>
         {/* body */}
-        <div className=" py-12 px-5 flex flex-col text-white">
+        <div className=" py-12 px-5 flex flex-col text-white items-center">
           <div className="flex flex-col space-y-3 items-center">
             <div className="relative w-40 text-center text-black">
               <img
@@ -56,9 +57,10 @@ const Home = () => {
               </span>
             </div>
             <span className=" text-4xl font-bold">Choose A Format For Your NFT Wall Art</span>
-            <span className=" text-xs font-thin">Breathe life into your digital artwork by choosing a format that suits your interior space.</span>
-            <span className=" text-xs font-thin">Leave it to us - We'll upscale your NFT to bring you the finest quality print.</span>
+            <span className=" text-xs font-thin text-gray-400">Breathe life into your digital artwork by choosing a format that suits your interior space.</span>
+            <span className=" text-xs font-thin text-gray-400">Leave it to us - We'll upscale your NFT to bring you the finest quality print.</span>
           </div>
+          <ChooseFormatPart/>
         </div>
       </div>
     </div>
