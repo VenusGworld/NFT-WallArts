@@ -14,7 +14,7 @@ const ChooseFormatPart = () => {
             {categories?.data?.data.map((info, i) => {
               return (
                 <div
-                  className={`flex flex-col space-y-2 text-start mt-6 ${
+                  className={`flex flex-col space-y-2 text-start mt-6 cursor-pointer ${
                     selectedId === i ? "" : ""
                   }`}
                   onClick={() => {
@@ -22,18 +22,20 @@ const ChooseFormatPart = () => {
                   }}
                   key={i}
                 >
-                  <span className=" text-2xl">{info.name}</span>
-                  <span className=" text-gray-400">{info.description}</span>
+                  <span className=" text-xl">{info.name}</span>
+                  <span className=" text-gray-400 text-xs">{info.description}</span>
                 </div>
               );
             })}
             <div
-              className={`absolute bg-gradient-to-r from-[#a1a1a100] via-[#715b9f15] to-[#45454500] transition-all duration-100 -translate-y-1 mt-6 w-[70%]`}
+              className={`absolute bg-gradient-to-r from-[#a1a1a100] via-[#715b9f38] to-[#45454500] transition-all duration-300 ease-in-out delay-[0] -translate-y-1 mt-6 w-[85%]`}
               style={{
                 height: 100 / categories?.data?.data?.length + "%",
                 top: (100 / categories?.data?.data?.length) * selectedId + "%",
               }}
-            ></div>
+            >
+              <div className=" w-1 rounded-lg bg-gradient-to-b from-[#582eff] to-[#9260ff] h-[80%] top-1/2 absolute -translate-y-1/2 -left-5"/>
+            </div>
           </div>
         )}
       </div>

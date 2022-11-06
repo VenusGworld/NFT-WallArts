@@ -12,7 +12,7 @@ const Home = () => {
           alt="profile_banner"
           width="100%"
         />
-        <div className=" absolute top-44 flex flex-col left-[15%] w-1/3 space-y-5">
+        <div className=" absolute top-44 flex sm:flex-col flex-row left-[15%] w-1/3 space-y-5">
           <div className="relative w-28">
             <img
               loading="lazy"
@@ -24,7 +24,7 @@ const Home = () => {
               NFTs
             </span>
           </div>
-          <div className=" text-5xl text-start font-bold leading-normal">
+          <div className=" sm:text-5xl text-xl text-start font-bold leading-normal">
             Bring Your{" "}
             <span className="relative text-[#572dff] border border-[#572dff] rounded-md bg-[#b4acbc] z-10 px-1 pt-1">
               NFT
@@ -34,7 +34,7 @@ const Home = () => {
             </span>{" "}
             Artwork to Life
           </div>
-          <div className=" text-start">
+          <div className=" text-start sm:text-base text-xs">
             Chances are if you're an <span>NFT art collector</span>, you've got
             some hidden masterpieces gathering dust in your crypto wallet.
           </div>
@@ -43,8 +43,8 @@ const Home = () => {
           </div>
         </div>
         {/* body */}
-        <div className=" py-12 px-5 flex flex-col text-white items-center">
-          <div className="flex flex-col space-y-3 items-center">
+        <div className=" py-12 px-5 flex flex-col text-white items-center space-y-12">
+          <div className="flex flex-col space-y-3 items-center mt-24">
             <div className="relative w-40 text-center text-black">
               <img
                 loading="lazy"
@@ -61,6 +61,9 @@ const Home = () => {
             <span className=" text-xs font-thin text-gray-400">Leave it to us - We'll upscale your NFT to bring you the finest quality print.</span>
           </div>
           <ChooseFormatPart/>
+          <div className="sm:w-1/5 w-1/2 text-black">
+            <RectButton text={"Create My NFT Display"} />
+          </div>
         </div>
       </div>
     </div>
