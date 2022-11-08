@@ -1,6 +1,8 @@
 import React from "react";
 import { RectButton } from "../../components/Input";
 import ChooseFormatPart from "./ChooseFormatPart";
+import PlaceOrderPart from "./PlaceOrderPart";
+import ProcessPart from "./ProcessPart";
 
 const Home = () => {
   return (
@@ -64,6 +66,8 @@ const Home = () => {
           <div className="sm:w-1/5 w-1/2 text-black">
             <RectButton text={"Create My NFT Display"} />
           </div>
+          <ProcessPart/>
+          <PlaceOrderPart/>
         </div>
       </div>
     </div>
