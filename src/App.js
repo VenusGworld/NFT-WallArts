@@ -145,7 +145,6 @@ function App() {
             />
           ))}
           <Route key="profile" path="profile" element={<Profile />} />
-
           <Route key="category" path="category" element={is_Connected?<Category />:<div className=" flex justify-center items-center text-white text-2xl py-40 bg-slate-700">Connect Wallet First!</div>} />
           <Route
             key="customizedArt"

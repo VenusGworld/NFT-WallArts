@@ -92,7 +92,7 @@ const CustomizedArtCard = ({ item }) => {
           {priceType === 'eth'?(<><div className=" text-[#818DA9] text-sm">Price in ETH</div>
           <div className="flex flex-col items-end">
             <div className=" text-lg font-bold">{price} ETH</div>
-            <div className=" text-sm">( {Number(price * eth_price)} USD )</div>
+            <div className=" text-sm">( {Number(price * eth_price).toFixed(2)} $ )</div>
           </div></>):(<><div className=" text-[#818DA9] text-sm">Price in USD</div>
           <div className="flex flex-col items-end">
             <div className=" text-lg font-bold">{price} $</div>

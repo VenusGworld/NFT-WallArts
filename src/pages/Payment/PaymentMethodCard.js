@@ -47,8 +47,7 @@ const mailingLists = [
         alt=""
       />
     ),
-  },
-  { id: 5, title: "other", name: 'other' },
+  }
 ];
 
 function classNames(...classes) {

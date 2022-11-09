@@ -14,7 +14,7 @@ const Home = () => {
           alt="profile_banner"
           width="100%"
         />
-        <div className=" absolute top-44 flex sm:flex-col flex-row left-[15%] w-1/3 space-y-5">
+        <div className=" absolute top-44 flex flex-col md:left-[15%] left-[5%] md:w-1/3 w-4/5 space-y-5">
           <div className="relative w-28">
             <img
               loading="lazy"
@@ -26,15 +26,16 @@ const Home = () => {
               NFTs
             </span>
           </div>
-          <div className=" sm:text-5xl text-xl text-start font-bold leading-normal">
-            Bring Your{" "}
+          <div className=" md:text-5xl text-xl text-start font-bold leading-loose">
+            <span className="inline-block mb-7">Bring Your{" "}
             <span className="relative text-[#572dff] border border-[#572dff] rounded-md bg-[#b4acbc] z-10 px-1 pt-1">
               NFT
-              <span className="absolute left-2 top-2 h-full text-[#572dff00] border border-[#572dff] rounded-md px-1 pt-1 -z-10">
+              <span className=" absolute left-2 top-2 h-full text-[#572dff00] border border-[#572dff] rounded-md px-1 pt-1 -z-10">
                 NFT
               </span>
             </span>{" "}
-            Artwork to Life
+            </span>
+            <span>Artwork to Life</span>
           </div>
           <div className=" text-start sm:text-base text-xs">
             Chances are if you're an <span>NFT art collector</span>, you've got

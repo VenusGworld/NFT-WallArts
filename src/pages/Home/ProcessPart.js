@@ -33,7 +33,7 @@ const ProcessPart = () => {
         <span className=" text-4xl font-bold text-start">Process</span>
         <div>
           {data.map((item, i) => (
-            <div key={i} className="flex h-32 w-full mt-3 space-x-4">
+            <div key={i} className="flex w-full mt-3 space-x-4">
               <div className=" flex flex-col items-center justify-start">
                 <div className=" relative mb-3 w-10">
                   <img
@@ -48,15 +48,14 @@ const ProcessPart = () => {
                 </div>
                 <div className=" h-full w-[1px] bg-white"></div>
               </div>
-              <div className="flex items-start space-x-4 mt-5">
+              <div className="flex items-start space-x-4">
                 <img
                   loading="lazy"
                   src={process.env.PUBLIC_URL + "/img/home/" + item.icon}
                   alt="icon"
-                  width="100px"
-                  className=" -translate-y-1/2"
+                  width="80px"
                 />
-                <div className="flex flex-col space-y-2">
+                <div className="flex flex-col space-y-2 mb-10">
                   <span className=" text-lg">{item.title}</span>
                   <span className=" text-xs text-gray-400 leading-relaxed">{item.desc}</span>
                 </div>
