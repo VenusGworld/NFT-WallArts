@@ -7,7 +7,7 @@ import ActivityPart from "./ActivityPart";
 import FilterPart from "./FilterPart";
 import ItemsPart from "./ItemsPart";
 import { connect, isConnected, setChain, connectedAccount } from "../../store/accountReducer";
-import { ethPrice } from "../../store/infoReducer";
+// import { ethPrice } from "../../store/infoReducer";
 
 // export const Items = [
 //   {
@@ -75,7 +75,7 @@ const Profile = () => {
   const [itemsExpanded, expandItems] = useState(true);
   const is_Connected = useSelector(isConnected);
   const [nfts, setNfts] = useState([])
-  const [pageKey, setpageKey] = useState("");
+  // const [pageKey, setpageKey] = useState("");
   const connected_account = useSelector(connectedAccount);
   const config = {
     apiKey: process.env.REACT_APP_ALCHEMY_KEY,

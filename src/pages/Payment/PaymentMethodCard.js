@@ -6,17 +6,6 @@ import { CheckCircleIcon } from "@heroicons/react/20/solid";
 const mailingLists = [
   {
     id: 1,
-    name: "visa",
-    img: (
-      <img
-        className="w-14 h-14"
-        src={process.env.PUBLIC_URL + "/img/visa.svg"}
-        alt=""
-      />
-    ),
-  },
-  {
-    id: 2,
     name: "crypto",
     img: (
       <img
@@ -27,12 +16,23 @@ const mailingLists = [
     ),
   },
   {
-    id: 3,
+    id: 2,
     name: "paypal",
     img: (
       <img
         className="w-14 h-14"
         src={process.env.PUBLIC_URL + "/img/pp_fc_hl.svg"}
+        alt=""
+      />
+    ),
+  },
+  {
+    id: 3,
+    name: "visa",
+    img: (
+      <img
+        className="w-14 h-14"
+        src={process.env.PUBLIC_URL + "/img/visa.svg"}
         alt=""
       />
     ),
@@ -47,7 +47,7 @@ const mailingLists = [
         alt=""
       />
     ),
-  }
+  },
 ];
 
 function classNames(...classes) {
@@ -64,7 +64,7 @@ export default function PaymentMethodCard({ onChangeHandle }) {
       value={selectedMailingLists}
       onChange={(v) => {
         setSelectedMailingLists(v);
-        onChangeHandle(v.name)
+        onChangeHandle(v.name);
       }}
     >
       <div className="mt-4 flex flex-wrap sm:items-stretch sm:space-y-0 justify-between">

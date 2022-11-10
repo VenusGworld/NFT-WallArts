@@ -24,9 +24,9 @@ const ConnectButton = () => {
       dispatch(setEthPrice(price_eth))
     } 
 
-    else {
-      dispatch(disConnect())
-    }
+    // else {
+    //   dispatch(disConnect())
+    // }
   }} className='rounded-lg cursor-pointer text-sm hover:bg-[#f5cf92] transition-all bg-[#D3B789] py-2 px-6 border-2 border-[#513296]'> 
     {!is_Connected?'Connect Wallet':connected_account.substring(0, 5) + '...'+connected_account.substring(connected_account.length-4, connected_account.length)}
   </div>)

@@ -6,20 +6,20 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import {
   NumberInput,
   RoundedButtonMD,
-  RoundedDropDownSelect,
   RoundedTextInput,
 } from "../../components/Input";
 import { ethPrice } from "../../store/infoReducer";
 
 const Preview = () => {
   const [color, setColor] = useState(0);
-  const [quantity, setquantity] = useState(0);
+  const [quantity, setquantity] = useState(1);
   const [nftInfo, setnftInfo] = useState({});
   const [discount, setDiscount] = useState(0);
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   useEffect(() => {
     fetchNFTInfo();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const eth_price = useSelector(ethPrice);
@@ -33,10 +33,9 @@ const Preview = () => {
       .catch((err) => {
         console.log(err);
       });
-    console.log(result.data.data);
     setnftInfo(result.data.data);
   };
-  console.log('nftInfo', nftInfo);
+  // console.log('nftInfo', nftInfo);
   return (
     <div>
       <div className={`w-full h-full mt-20 relative text-white`}>
@@ -85,6 +84,7 @@ const Preview = () => {
                       defaultValue={
                         nftInfo?.width + "X" + nftInfo?.height + "cm"
                       }
+                      onChangeHandle={()=>{}}
                     />}
                     
                     {/* <RoundedDropDownSelect
@@ -161,14 +161,14 @@ const Preview = () => {
                     <NumberInput
                       onChangeHandle={(v) => {
                         if (nftInfo?.isBulk) {
-                          let min = 1000000;
+                          let min = 100000;
                           let dis = 0;
                           nftInfo?.bulk_pricing.forEach((p) => {
                             if (
                               Number(v) - p.quantity >= 0 &&
                               min > Number(v) - p.quantity
                             ) {
-                              min = Number(v) - p;
+                              min = Number(v) - p.quantity;
                               dis = p.discount;
                             }
                           });
@@ -216,7 +216,7 @@ const Preview = () => {
                             : quantity *
                               nftInfo?.price *
                               ((100 - discount) / 100).toFixed(2)}{" "}
-                          USD )
+                          $ )
                         </span>
                         <div>
                           {nftInfo?.isBulk ? (
@@ -236,12 +236,11 @@ const Preview = () => {
                     <RoundedButtonMD
                       text="See Next"
                       onButtonClick={() => {
-                        navigate("/payment");
                         navigate({
                           pathname: "/payment",
                           search: `?item=${searchParams.get(
                             "item"
-                          )}&quantity=${quantity}`,
+                          )}&quantity=${quantity}&nft_img=${searchParams.get('nft_img')}`,
                         });
                       }}
                       active

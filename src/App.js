@@ -92,12 +92,13 @@ function App() {
   const connected_account = useSelector(connectedAccount);
   const dispatch = useDispatch();
 
-  // useEffect(() => {
-  //   if(!is_Connected) {
-  //     connectWallet();
-  //   }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, []);
+  useEffect(() => {
+    if(!is_Connected) {
+      connectWallet();
+    }
+    fetchETHP()
+  //eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const connectWallet = async () => {
     if (!is_Connected) {
@@ -111,14 +112,12 @@ function App() {
         method: "eth_accounts",
       });
       if (accounts[0]) dispatch(connect(accounts[0]));
-      const price_eth = await getETHPrice(window.ethereum)
-      dispatch(setEthPrice(price_eth))
     } 
-
-    // else {
-    //   dispatch(disConnect())
-    // }
   };
+  const fetchETHP = async () => {
+    const price_eth = await getETHPrice(window.ethereum)
+    dispatch(setEthPrice(price_eth))
+  }
 
   return (
     <QueryClientProvider client={queryClient}>
