@@ -1,9 +1,8 @@
 import React from "react";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const CategoryCard = ({ img, name, desc, id }) => {
   const navigate = useNavigate();
-  const [searchParams] = useSearchParams();
   return (
     <div
       className="lg:w-[45%] sm:w-[90%] shadow-2xl flex flex-col my-8 cursor-pointer hover:scale-105 hover:drop-shadow-2xl transition-all"
@@ -11,7 +10,7 @@ const CategoryCard = ({ img, name, desc, id }) => {
         // navigate("/customizedArt");
         navigate({
           pathname: "/customizedArt",
-          search: `?category=${id}&nft_img=${searchParams.get('nft_img')}`,
+          search: `?category=${id}`,
         });
       }}
     >

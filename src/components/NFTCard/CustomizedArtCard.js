@@ -1,11 +1,11 @@
 import React from "react";
-import { useSelector } from "react-redux";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { ethPrice } from "../../store/infoReducer";
+import { setItem } from "../../store/selectedReducer";
 
 const CustomizedArtCard = ({ item }) => {
   const {
-    _id,
     width,
     height,
     price,
@@ -17,15 +17,15 @@ const CustomizedArtCard = ({ item }) => {
     priceType,
   } = item;
   const navigate = useNavigate();
-  const [searchParams] = useSearchParams();
   const eth_price = useSelector(ethPrice);
+  const dispatch = useDispatch();
   return (
     <div
       className="relative hover:scale-105 hover:drop-shadow-2xl transition-all md:w-[48%] xl:w-[30%] w-[90%] shadow-xl flex flex-col my-4 hover:shadow-2xl bg-[#454E61] p-3 cursor-pointer"
-      onClick={() => {
+      onClick={async () => {
+        await dispatch(setItem(item))
         navigate({
-          pathname: "/preview",
-          search: `?item=${_id}&nft_img=${searchParams.get('nft_img')}`,
+          pathname: "/preview"
         });
       }}
     >

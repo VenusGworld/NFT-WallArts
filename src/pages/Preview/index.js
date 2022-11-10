@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useSearchParams } from "react-router-dom";
 
 import {
@@ -9,6 +9,7 @@ import {
   RoundedTextInput,
 } from "../../components/Input";
 import { ethPrice } from "../../store/infoReducer";
+import { selectedData, setQuantity } from "../../store/selectedReducer";
 
 const Preview = () => {
   const [color, setColor] = useState(0);
@@ -17,18 +18,18 @@ const Preview = () => {
   const [discount, setDiscount] = useState(0);
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   useEffect(() => {
     fetchNFTInfo();
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const eth_price = useSelector(ethPrice);
+  const selected_data = useSelector(selectedData);
   const fetchNFTInfo = async () => {
     const result = await axios
       .get(
-        `${process.env.REACT_APP_BACKEND_URL}/api/item/${searchParams.get(
-          "item"
-        )}`
+        `${process.env.REACT_APP_BACKEND_URL}/api/item/${selected_data?.item_data?._id}`
       )
       .catch((err) => {
         console.log(err);
@@ -63,7 +64,7 @@ const Preview = () => {
                 <div className="w-3/5 bg-white h-full relative">
                   <img
                     loading="lazy"
-                    src={searchParams.get("nft_img")}
+                    src={selected_data?.nft_img}
                     alt=""
                   />
                   <img
@@ -235,12 +236,10 @@ const Preview = () => {
                   <div className="flex flex-col items-start space-y-2 w-full">
                     <RoundedButtonMD
                       text="See Next"
-                      onButtonClick={() => {
+                      onButtonClick={async () => {
+                        await dispatch(setQuantity(quantity))
                         navigate({
-                          pathname: "/payment",
-                          search: `?item=${searchParams.get(
-                            "item"
-                          )}&quantity=${quantity}&nft_img=${searchParams.get('nft_img')}`,
+                          pathname: "/payment"
                         });
                       }}
                       active

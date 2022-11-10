@@ -9,67 +9,6 @@ import ItemsPart from "./ItemsPart";
 import { connect, isConnected, setChain, connectedAccount } from "../../store/accountReducer";
 // import { ethPrice } from "../../store/infoReducer";
 
-// export const Items = [
-//   {
-//     img: "image 4.png",
-//     name: "Aui dolorem eum",
-//     like: "243",
-//     auction: true,
-//     highestBid: 2.5,
-//     endsIn: "02:23:49:01",
-//   },
-//   {
-//     img: "image 16.png",
-//     name: "Annoyances accepted",
-//     like: "79",
-//     sale: true,
-//     price: 3,
-//     sold: "3/5",
-//   },
-//   { img: "image 19.png", name: "Facere possimus", like: "320" },
-//   {
-//     img: "image 16.png",
-//     name: "Lorem Ipsume",
-//     like: "3",
-//     sale: true,
-//     price: 3,
-//     sold: "3/5",
-//   },
-//   {
-//     img: "image 19.png",
-//     name: "Aui dolorem eum",
-//     like: "11",
-//     auction: true,
-//     highestBid: 2.5,
-//     endsIn: "02:23:49:01",
-//   },
-//   { img: "image 19.png", name: "Facere possimus", like: "320" },
-//   {
-//     img: "image 16.png",
-//     name: "Lorem Ipsume",
-//     like: "3",
-//     sale: true,
-//     price: 3,
-//     sold: "3/5",
-//   },
-//   {
-//     img: "image 4.png",
-//     name: "Aui dolorem eum",
-//     like: "243",
-//     auction: true,
-//     highestBid: 2.5,
-//     endsIn: "02:23:49:01",
-//   },
-//   {
-//     img: "image 16.png",
-//     name: "Annoyances accepted",
-//     like: "79",
-//     sale: true,
-//     price: 3,
-//     sold: "3/5",
-//   },
-// ];
-
 const Profile = () => {
   const [filterExpanded, expandFilter] = useState(false);
   const [itemsExpanded, expandItems] = useState(true);
