@@ -7,7 +7,6 @@ import ActivityPart from "./ActivityPart";
 import FilterPart from "./FilterPart";
 import ItemsPart from "./ItemsPart";
 import { connect, isConnected, setChain, connectedAccount } from "../../store/accountReducer";
-// import { ethPrice } from "../../store/infoReducer";
 
 const Profile = () => {
   const [filterExpanded, expandFilter] = useState(false);

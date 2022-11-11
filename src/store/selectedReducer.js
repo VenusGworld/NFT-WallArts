@@ -4,26 +4,32 @@ export const selectedReducer = createSlice({
   name: 'selectedData',
   initialState: {
     nft_img: "",
+    nft_name: "",
     item_data: {},
     quantity: 0
   },
   reducers: {
-    setNFTImage: (state, action) => {
-      state.nft_img = action.payload;
+    setNFTData: (state, action) => {
+      state.nft_img = action.payload.image;
+      state.nft_name = action.payload.title;
     },
     setItem: (state, action) => {
       state.item_data = action.payload;
     },
     setQuantity: (state, action) => {
       state.quantity = action.payload;
+    },
+    clearResults() {
     }
   },
 })
 
 export const { 
-  setNFTImage,
+  setNFTData,
   setItem,
-  setQuantity } = selectedReducer.actions;
+  setQuantity,
+  initialize,
+  clearResults } = selectedReducer.actions;
 
 export const selectedData = (state) => state.selectedData;
 

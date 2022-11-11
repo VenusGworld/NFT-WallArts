@@ -1,8 +1,8 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { ethPrice } from "../../store/infoReducer";
 import { setItem } from "../../store/selectedReducer";
+import { useETHPrice } from "../../hooks/useEthPrice";
 
 const CustomizedArtCard = ({ item }) => {
   const {
@@ -17,7 +17,7 @@ const CustomizedArtCard = ({ item }) => {
     priceType,
   } = item;
   const navigate = useNavigate();
-  const eth_price = useSelector(ethPrice);
+  const eth_price = useETHPrice(window.ethereum);
   const dispatch = useDispatch();
   return (
     <div
@@ -92,7 +92,7 @@ const CustomizedArtCard = ({ item }) => {
           {priceType === 'eth'?(<><div className=" text-[#818DA9] text-sm">Price in ETH</div>
           <div className="flex flex-col items-end">
             <div className=" text-lg font-bold">{price} ETH</div>
-            <div className=" text-sm">( {Number(price * eth_price).toFixed(2)} $ )</div>
+            <div className=" text-sm">( {Number(price * eth_price.data).toFixed(2)} $ )</div>
           </div></>):(<><div className=" text-[#818DA9] text-sm">Price in USD</div>
           <div className="flex flex-col items-end">
             <div className=" text-lg font-bold">{price} $</div>

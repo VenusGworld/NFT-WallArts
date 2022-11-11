@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Country, State, City } from "country-state-city";
-import { useSelector } from "react-redux";
-import { useSearchParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+// import { confirmAlert } from "react-confirm-alert";
 
 import {
   RadioGroup,
@@ -15,11 +16,13 @@ import PreviewPart from "./PreviewPart";
 import { connectedAccount } from "../../store/accountReducer";
 // import { useOrderStatus } from "../../hooks/useOrderStatus";
 import axios from "axios";
-
+import { selectedData } from "../../store/selectedReducer";
+import { addingCart, orderedProducts } from "../../store/cartReducer";
+import { useETHPrice } from "../../hooks/useEthPrice";
 
 const Payment = () => {
   const connected_account = useSelector(connectedAccount);
-  const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
   let countries = Country.getAllCountries();
   const [contactInfo, setContactInfo] = useState({
     firstName: "",
@@ -27,6 +30,10 @@ const Payment = () => {
     phoneNo: "",
     email: "",
   });
+  const selected_data = useSelector(selectedData);
+  const eth_price = useETHPrice(window.ethereum);
+  const ordered_products = useSelector(orderedProducts);
+  const dispatch = useDispatch();
   let initialCountry = countries[10];
   let initialState = State.getStatesOfCountry(initialCountry.isoCode)[0];
   let initialCity = City.getCitiesOfState(
@@ -127,8 +134,8 @@ const Payment = () => {
       pauseOnHover: true,
       draggable: true,
       progress: 0,
-    })
-  }
+    });
+  };
   const success = (text) => {
     toast.info(text, {
       position: "top-right",
@@ -138,54 +145,60 @@ const Payment = () => {
       pauseOnHover: true,
       draggable: true,
       progress: 0,
-    })
-  }
+    });
+  };
   const checkInputFormValidation = (arr) => {
     let flag = true;
     for (let index = 0; index < arr.length; index++) {
       const element = arr[index];
-      if(element.v === '' || element.v === undefined || !element.v) {
+      if (element.v === "" || element.v === undefined || !element.v) {
         error(`Input ${element.err_msg}!`);
-        flag = false
+        flag = false;
       }
     }
     return flag;
-  }
-  const submitOrder = async () => {
-    // const result = await axios
-    // .get(`${process.env.REACT_APP_BACKEND_URL}/api/item/${searchParams.get("item")}`)
-    // .catch((err) => {
-    //   console.log(err);
-    // });
-    // console.log('aaaa',result.data.data)
-    
-    let arr = [];
+  };
+  const addToCart = async () => {
+      let arr = [];
 
-    if(!isCrypto && !isSameAddress) {
-      arr = [{v: paymentInfo.firstName, err_msg: 'Payment Information First Name'},
-      {v: paymentInfo.lastName, err_msg: 'Payment Information Last Name'},
-      {v: paymentInfo.address, err_msg: 'Payment Information Address'},
-      {v: paymentInfo.apt_suiteNo, err_msg: 'Payment Information Apt / Suite No.'},
-      {v: paymentInfo.postalCode, err_msg: 'Payment Information Postal Code'}]
+    if (!isCrypto && !isSameAddress) {
+      arr = [
+        { v: paymentInfo.firstName, err_msg: "Payment Information First Name" },
+        { v: paymentInfo.lastName, err_msg: "Payment Information Last Name" },
+        { v: paymentInfo.address, err_msg: "Payment Information Address" },
+        {
+          v: paymentInfo.apt_suiteNo,
+          err_msg: "Payment Information Apt / Suite No.",
+        },
+        {
+          v: paymentInfo.postalCode,
+          err_msg: "Payment Information Postal Code",
+        },
+      ];
     }
-    let {firstName, lastName, phoneNo, email} = contactInfo;
-    let {address, apt_suiteNo, postalCode, country, state, city} = deliveryInfo;
+    let { firstName, lastName, phoneNo, email } = contactInfo;
+    let { address, apt_suiteNo, postalCode, country, state, city } =
+      deliveryInfo;
     let shouldBeCheckedValues = [
-      {v: firstName, err_msg: 'Contact Information First Name'},
-      {v: lastName, err_msg: 'Contact Information Last Name'},
-      {v: phoneNo, err_msg: 'Contact Information Phone Number'},
-      {v: email, err_msg: 'Contact Information Email'},
-      {v: address, err_msg: 'Delivery Information Address'},
-      {v: apt_suiteNo, err_msg: 'Delivery Information Apt / Suite No.'},
-      {v: postalCode, err_msg: 'Delivery Information Postal Code'},
-      ...arr
-    ]
-    if(
-      checkInputFormValidation(shouldBeCheckedValues)
-    ) {
+      { v: firstName, err_msg: "Contact Information First Name" },
+      { v: lastName, err_msg: "Contact Information Last Name" },
+      { v: phoneNo, err_msg: "Contact Information Phone Number" },
+      { v: email, err_msg: "Contact Information Email" },
+      { v: address, err_msg: "Delivery Information Address" },
+      { v: apt_suiteNo, err_msg: "Delivery Information Apt / Suite No." },
+      { v: postalCode, err_msg: "Delivery Information Postal Code" },
+      ...arr,
+    ];
+    // if (checkInputFormValidation(shouldBeCheckedValues)) {
+
+
+
+
+
+
       const formData = {};
-      formData.item_id = searchParams.get("item");
-      formData.quantity = Number(searchParams.get("quantity"));
+      formData.item_id = selected_data?.item_data?._id;
+      formData.quantity = selected_data?.quantity;
       formData.user_wallet_address = connected_account;
       formData.contact_first_name = firstName;
       formData.contact_last_name = lastName;
@@ -197,28 +210,76 @@ const Payment = () => {
       formData.delivery_state = state.isoCode;
       formData.delivery_city = city.name;
       formData.delivery_postal_code = postalCode;
-      formData.payment_first_name = (isSameAddress||isCrypto)?firstName:paymentInfo.firstName;
-      formData.payment_last_name = (isSameAddress||isCrypto)?lastName:paymentInfo.lastName;
-      formData.payment_address = (isSameAddress||isCrypto)?address:paymentInfo.address;
-      formData.payment_apt_suite_No = (isSameAddress||isCrypto)?apt_suiteNo:paymentInfo.apt_suiteNo;
+      formData.payment_first_name =
+        isSameAddress || isCrypto ? firstName : paymentInfo.firstName;
+      formData.payment_last_name =
+        isSameAddress || isCrypto ? lastName : paymentInfo.lastName;
+      formData.payment_address =
+        isSameAddress || isCrypto ? address : paymentInfo.address;
+      formData.payment_apt_suite_No =
+        isSameAddress || isCrypto ? apt_suiteNo : paymentInfo.apt_suiteNo;
       formData.payment_type = paymentInfo.paymentMethod;
-      formData.payment_country = (isSameAddress||isCrypto)?country.isoCode:paymentInfo.country.isoCode;
-      formData.payment_state = (isSameAddress||isCrypto)?state.isoCode:paymentInfo.state.isoCode;
-      formData.payment_city = (isSameAddress||isCrypto)?city.name:paymentInfo.city.name;
-      formData.payment_postal_code = (isSameAddress||isCrypto)?postalCode:paymentInfo.postalCode;
-      await axios
-        .post(`${process.env.REACT_APP_BACKEND_URL}/api/order/`, formData)
-        .then((res) => {
-          if (res.status === 201) {
-            success("Saved Successfully!");
-            // console.log(res)
+      formData.payment_country =
+        isSameAddress || isCrypto
+          ? country.isoCode
+          : paymentInfo.country.isoCode;
+      formData.payment_state =
+        isSameAddress || isCrypto ? state.isoCode : paymentInfo.state.isoCode;
+      formData.payment_city =
+        isSameAddress || isCrypto ? city.name : paymentInfo.city.name;
+      formData.payment_postal_code =
+        isSameAddress || isCrypto ? postalCode : paymentInfo.postalCode;
+      formData.item_info = selected_data?.item_data;
+      formData.image_for_printing = selected_data?.nft_img;
+      formData.name_for_printing = selected_data?.nft_name;
+      let dis = 0;
+      if (selected_data?.item_data?.isBulk) {
+        let min = 100000;
+        selected_data?.item_data?.bulk_pricing.forEach((p) => {
+          if (
+            Number(selected_data?.quantity) - p.quantity >= 0 &&
+            min > Number(selected_data?.quantity) - p.quantity
+          ) {
+            min = Number(selected_data?.quantity) - p.quantity;
+            dis = p.discount;
           }
-        })
-        .catch((err) => {
-          error(err.response.data.message);
-          console.log(err);
         });
-    }
+      }
+      formData.total_price =
+        selected_data?.item_data?.priceType === "eth"
+          ? Number(
+              selected_data?.quantity *
+                selected_data?.item_data?.price *
+                ((100 - dis) / 100)
+            )
+          : Number(
+              selected_data?.quantity *
+                selected_data?.item_data?.price *
+                ((100 - dis) / 100)
+            ) / eth_price.data;
+      // console.log('form_data', formData);
+      await dispatch(addingCart(formData));
+
+      // await axios
+      //   .post(`${process.env.REACT_APP_BACKEND_URL}/api/order/`, formData)
+      //   .then((res) => {
+      //     if (res.status === 201) {
+      //       success("Saved Successfully!");
+      //       // console.log(res)
+      //     }
+      //   })
+      //   .catch((err) => {
+      //     error(err.response.data.message);
+      //     console.log(err);
+      //   });
+
+
+
+    // }
+  };
+
+  const submitOrder = async () => {
+    
   }
 
   return (
@@ -419,7 +480,7 @@ const Payment = () => {
                         "Same as shipping address",
                         "Use a different billing address",
                       ]}
-                      checkedId={isSameAddress?0:1}
+                      checkedId={isSameAddress ? 0 : 1}
                       onChangeHandle={(v) => {
                         if (v === "Same as shipping address")
                           setIsSameAddress(true);
@@ -578,7 +639,47 @@ const Payment = () => {
             </div>
           </div>
           <div className="xl:w-[40%] w-full mx-auto">
-            <PreviewPart orderClickHandle={() => {submitOrder()}}/>
+            <PreviewPart
+              orderClickHandle={async (isOrder) => {
+                if(isOrder) {
+                  if (window.confirm('Are you sure to Order this product too?')){
+                    addToCart().then(() => {
+                      success("Added Product to Cart")
+                    });
+                    submitOrder();
+                  } else {
+                    submitOrder();
+                  }
+                  // confirmAlert({
+                  //   title: "Confirm to submit",
+                  //   message: "Are you sure to Order this product too?",
+                  //   buttons: [
+                  //     {
+                  //       label: "Yes",
+                  //       onClick: async () => {
+                  //         addingCart();
+                  //         submitOrder();
+                  //       },
+                  //     },
+                  //     {
+                  //       label: "No",
+                  //       onClick: () => {
+                  //         submitOrder();
+                  //       },
+                  //     },
+                  //   ],
+                  // });
+                } else {
+                  await addToCart().then(() => {
+                    success("Added Product to Cart")
+                  });
+                  await navigate({
+                      pathname: "/profile"
+                    });
+                }
+                
+              }}
+            />
           </div>
         </div>
       </div>

@@ -8,8 +8,8 @@ import {
   RoundedButtonMD,
   RoundedTextInput,
 } from "../../components/Input";
-import { ethPrice } from "../../store/infoReducer";
 import { selectedData, setQuantity } from "../../store/selectedReducer";
+import { useETHPrice } from "../../hooks/useEthPrice";
 
 const Preview = () => {
   const [color, setColor] = useState(0);
@@ -23,8 +23,7 @@ const Preview = () => {
     fetchNFTInfo();
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  const eth_price = useSelector(ethPrice);
+  const eth_price = useETHPrice(window.ethereum);
   const selected_data = useSelector(selectedData);
   const fetchNFTInfo = async () => {
     const result = await axios
@@ -212,7 +211,7 @@ const Preview = () => {
                                 quantity *
                                 nftInfo?.price *
                                 ((100 - discount) / 100) *
-                                eth_price
+                                eth_price.data
                               ).toFixed(2)
                             : quantity *
                               nftInfo?.price *

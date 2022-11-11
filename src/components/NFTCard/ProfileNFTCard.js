@@ -1,7 +1,7 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { setNFTImage } from "../../store/selectedReducer";
+import { setNFTData } from "../../store/selectedReducer";
 import RoundedButtonBG from "../Input/RoundedButton_bg";
 
 const ProfileNFTCard = ({ item }) => {
@@ -16,16 +16,15 @@ const ProfileNFTCard = ({ item }) => {
     highestBid,
     endsIn,
   } = item;
-  console.log("item", item);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   return (
     <div className="md:w-[48%] xl:w-[30%] w-[90%] shadow-2xl flex flex-col my-4 hover:scale-105 transition-all cursor-pointer"
       onClick={async () => {
-        await dispatch(setNFTImage(rawMetadata?.image?.replace(
+        await dispatch(setNFTData({image:rawMetadata?.image?.replace(
           "ipfs://",
           "https://ipfs.moralis.io:2053/ipfs/"
-        )))
+        ), title}))
         await navigate({
           pathname: "/category"
         });

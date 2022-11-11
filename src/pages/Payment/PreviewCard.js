@@ -1,23 +1,22 @@
 import React from "react";
 
 const PreviewCard = ({ info }) => {
-  const { img, title, frameSize, quantity, colour } = info;
-
+  const { image_for_printing, name_for_printing, item_info, quantity, total_price } = info;
   return (
     <div className="flex sm:space-x-5 flex-col sm:flex-row w-full">
-      <div className=" bg-white rounded-2xl flex justify-center items-center">
+      <div className="rounded-2xl flex justify-center items-center">
         <img
-          src={process.env.PUBLIC_URL + "/img/" + img}
+          src={image_for_printing}
           alt=""
-          className="w-32 h-32 flex justify-center items-center rounded-2xl"
+          className="w-32 box-border flex justify-center items-center rounded-2xl"
         />
       </div>
       <div className="flex flex-col w-[60%]">
-        <span className=" my-1 text-xl text-start">{title}</span>
-        <div className="flex justify-between my-3 w-full">
+        <span className=" text-xl text-start">{name_for_printing}</span>
+        <div className="flex justify-between w-full">
           <div className="flex flex-col items-start">
             <span className="text-sm text-[#BFC8DD]">Frame Size</span>
-            <span>{frameSize}</span>
+            <span>{item_info?.width}X{item_info?.height}cm</span>
           </div>
           <div className="flex flex-col items-end">
             <span className="text-sm text-[#BFC8DD]">Quantity</span>
@@ -26,9 +25,16 @@ const PreviewCard = ({ info }) => {
         </div>
         <div className="flex space-x-3 items-center">
           <span className="text-sm text-[#BFC8DD]">Colour</span>
-          <div
-            className={`relative bg-${colour} p-3 rounded-full border`}
-          ></div>
+          {item_info?.color.map((colour, i) => (
+            <div
+              className={`relative bg-${colour} p-3 rounded-full border`}
+              key={i}
+            ></div>
+          ))}
+        </div>
+        <div className="flex space-x-3 items-center">
+        <span className="text-sm text-[#BFC8DD]">Price</span>
+        <span>{Number(total_price).toFixed(3)} ETH</span>
         </div>
       </div>
     </div>

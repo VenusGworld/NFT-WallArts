@@ -1,13 +1,15 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { connect, connectedAccount, disConnect, isConnected, setChain } from '../store/accountReducer';
-import { setEthPrice } from '../store/infoReducer';
-import { getETHPrice } from '../utils/getEthPrice';
+import { useETHPrice } from '../hooks/useEthPrice';
 
 const ConnectButton = () => {
   const is_Connected = useSelector(isConnected);
   const connected_account = useSelector(connectedAccount);
   const dispatch = useDispatch();
+  const price_eth = useETHPrice(window.ethereum);
+  if(!price_eth.isLoading) console.log(price_eth.data,window.ethereum)
+
   return (<div onClick={async () => {
     if (!is_Connected) {
       await window.ethereum.send("eth_requestAccounts");
@@ -20,8 +22,8 @@ const ConnectButton = () => {
         method: "eth_accounts",
       });
       if (accounts[0]) dispatch(connect(accounts[0]));
-      const price_eth = await getETHPrice(window.ethereum)
-      dispatch(setEthPrice(price_eth))
+      // const price_eth = useETHPrice(window.ethereum)
+      // dispatch(setEthPrice(price_eth))
     } 
 
     // else {

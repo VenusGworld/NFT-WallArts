@@ -4,32 +4,36 @@ import { persistReducer, persistStore } from "redux-persist";
 import thunk from "redux-thunk";
 
 import accountReducer from "./accountReducer";
-import infoReducer from "./infoReducer";
 import selectedReducer from "./selectedReducer";
+import cartReducer from "./cartReducer";
 
-const rootReducer = combineReducers({
-  account: persistReducer(
-    {
-      key: "account",
-      storage,
-    },
-    accountReducer
-  ),
-  info: persistReducer(
-    {
-      key: "info",
-      storage,
-    },
-    infoReducer
-  ),
-  selectedData: persistReducer(
-    { key: "selected_data", storage },
-    selectedReducer
-  ),
+const persistConfig = {
+  key: 'root',
+  storage,
+}
+
+const appReducer = combineReducers({
+  account:
+    accountReducer,
+  selectedData:
+    selectedReducer,
+  cart:
+    cartReducer
 });
 
+const rootReducer = (state, action) => {
+  if (action.type === 'account/clearResults') {
+    // this applies to all keys defined in persistConfig(s)
+    storage.removeItem('persist:root')
+    state = {}
+  }
+  return appReducer(state, action)
+}
+
+const persistedReducer = persistReducer(persistConfig, rootReducer)
+
 const store = configureStore({
-  reducer: rootReducer,
+  reducer: persistedReducer,
   middleware: [thunk],
 });
 

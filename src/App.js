@@ -2,15 +2,22 @@ import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Route, Routes, Navigate } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import 'react-toastify/dist/ReactToastify.css';
-import { ToastContainer } from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer } from "react-toastify";
 
 import "./App.css";
 import "./custom.css";
 import Header from "./components/header";
 import Lobby from "./pages/lobby";
 import "react-toastify/dist/ReactToastify.css";
-import { connect, isConnected, setChain, connectedAccount } from "./store/accountReducer";
+import {
+  connect,
+  isConnected,
+  setChain,
+  connectedAccount,
+  clearResults as initializeAccount,
+
+} from "./store/accountReducer";
 import Profile from "./pages/Profile";
 import "@fontsource/inter";
 import Category from "./pages/Category";
@@ -20,10 +27,9 @@ import Preview from "./pages/Preview";
 import Payment from "./pages/Payment";
 import OrderSummary from "./pages/OrderSummary";
 import ScrollToTop from "./helper/ScrollToTop";
-import { getETHPrice } from "./utils/getEthPrice";
-import { setEthPrice } from "./store/infoReducer";
 import Home from "./pages/Home";
-
+import { clearResults as initializeSelected } from "./store/selectedReducer";
+import { clearResults as initializeCart } from "./store/cartReducer";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -84,7 +90,7 @@ export const main_routes = [
     path: "/place_order",
     isEnabled: true,
     appendDivider: true,
-  }
+  },
 ];
 
 function App() {
@@ -93,12 +99,24 @@ function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if(!is_Connected) {
+    if (!is_Connected) {
       connectWallet();
     }
-    fetchETHP()
-  //eslint-disable-next-line react-hooks/exhaustive-deps
+    //eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    initializeStore();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+  
+  const initializeStore = async () => {
+    console.log('saaaaaaaaaaaaaa')
+    // await dispatch(initializeAccount());
+    // await dispatch(initializeInfo());
+    // await dispatch(initializeCart());
+    // await dispatch(initializeSelected());
+  };
 
   const connectWallet = async () => {
     if (!is_Connected) {
@@ -112,12 +130,8 @@ function App() {
         method: "eth_accounts",
       });
       if (accounts[0]) dispatch(connect(accounts[0]));
-    } 
+    }
   };
-  const fetchETHP = async () => {
-    const price_eth = await getETHPrice(window.ethereum)
-    dispatch(setEthPrice(price_eth))
-  }
 
   return (
     <QueryClientProvider client={queryClient}>
@@ -128,7 +142,7 @@ function App() {
         {/* <div className=" p-3 bg-gray-600 rounded-md text-white absolute top-4 inline-block w-fit right-0 z-50">
           Wallet Address: {connected_account?connected_account:'Not Connected!'}
         </div> */}
-        
+
         <Routes>
           {/* <Layout> */}
           <Route
@@ -144,18 +158,62 @@ function App() {
             />
           ))}
           <Route key="profile" path="profile" element={<Profile />} />
-          <Route key="category" path="category" element={is_Connected?<Category />:<div className=" flex justify-center items-center text-white text-2xl py-40 bg-slate-700">Connect Wallet First!</div>} />
+          <Route
+            key="category"
+            path="category"
+            element={
+              is_Connected ? (
+                <Category />
+              ) : (
+                <div className=" flex justify-center items-center text-white text-2xl py-40 bg-slate-700">
+                  Connect Wallet First!
+                </div>
+              )
+            }
+          />
           <Route
             key="customizedArt"
             path="customizedArt"
             element={<CustomizedArt />}
           />
-          <Route key="preview" path="preview" element={is_Connected?<Preview />:<div className=" flex justify-center items-center text-white text-2xl py-40 bg-slate-700">Connect Wallet First!</div>} />
-          <Route key="payment" path="payment" element={is_Connected?<Payment />:<div className=" flex justify-center items-center text-white text-2xl py-40 bg-slate-700">Connect Wallet First!</div>} />
+          <Route
+            key="preview"
+            path="preview"
+            element={
+              is_Connected ? (
+                <Preview />
+              ) : (
+                <div className=" flex justify-center items-center text-white text-2xl py-40 bg-slate-700">
+                  Connect Wallet First!
+                </div>
+              )
+            }
+          />
+          <Route
+            key="payment"
+            path="payment"
+            element={
+              is_Connected ? (
+                <Payment />
+              ) : (
+                <div className=" flex justify-center items-center text-white text-2xl py-40 bg-slate-700">
+                  Connect Wallet First!
+                </div>
+              )
+            }
+          />
           <Route
             key="order_summary"
             path="order_summary"
-            element={is_Connected?<OrderSummary />:<div className=" flex justify-center items-center text-white text-2xl py-40 bg-slate-700">Connect Wallet First!</div>}
+            element={
+              is_Connected ? (
+                <OrderSummary />
+              ) : (
+                <div className=" flex justify-center items-center text-white text-2xl py-40 bg-slate-700">
+                  Connect Wallet First!
+                </div>
+              )
+            }
           />
           {/* </Layout> */}
         </Routes>

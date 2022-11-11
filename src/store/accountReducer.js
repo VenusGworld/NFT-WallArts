@@ -19,11 +19,13 @@ export const accountSlice = createSlice({
     },
     setChain: (state, action) => {
       state.chain = action.payload
+    },
+    clearResults() {
     }
   },
 })
 
-export const { connect, disConnect, setChain } = accountSlice.actions;
+export const { connect, disConnect, setChain, initialize, clearResults } = accountSlice.actions;
 
 export const isConnected = (state) => state.account.isConnected;
 export const connectedChain = (state) => state.account.chain;

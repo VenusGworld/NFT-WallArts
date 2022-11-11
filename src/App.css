@@ -44,6 +44,10 @@
   opacity: 1 !important;
 }
 
+.react-confirm-alert-overlay {
+  background: rgb(128 128 128 / 90%) !important;
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
