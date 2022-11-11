@@ -2,6 +2,8 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import Board from "../../components/Board";
 import { RoundedButtonMD } from "../../components/Input";
+import { useOrder } from "../../hooks/useOrder";
+import { useOrderStatus } from "../../hooks/useOrderStatus";
 import PreviewCard from "./PreviewCard";
 
 const data = [
@@ -35,19 +37,21 @@ const data = [
   },
 ];
 
-const PreviewPart = () => {
-  const navigate = useNavigate();
-
+const PreviewPart = ({selectOrder, selectedOrder}) => {
+  const orders = useOrder();
+  const orderStatus = useOrderStatus();
   return (
     <Board>
-      <div className="flex flex-col sm:items-start items-center">
-        <span className=" text-3xl my-5">Preview</span>
-        <div className="flex flex-col space-y-5 my-10 w-full">
-          {data.map((item, i) => {
-            return <PreviewCard info={item} key={i} />;
+      <div className="flex flex-col sm:items-start items-center h-screen overflow-y-auto">
+        <span className=" text-3xl mt-3">Ordered Products</span>
+        <div className="flex flex-col space-y-5 my-3 w-full">
+          {orders?.data?.data?.map((item, i) => {
+            return <PreviewCard isSelected={selectedOrder===i} onClickHandle={() => selectOrder(i)} info={item} key={i} status={
+              orderStatus.isLoading?[]:orderStatus?.data?.data.filter((status) => status._id === item?.order_statuses[item?.order_statuses?.length-1]?.order_status_id)
+            }/>;
           })}
         </div>
-        <div className=" my-5 flex w-full justify-between items-center">
+        {/* <div className=" my-5 flex w-full justify-between items-center">
           <span className=" text-[#818DA9] text-lg">Total Price</span>
           <div className="flex flex-col">
             <span className="text-[#D3B789] text-xl">78.2ETH</span>
@@ -63,7 +67,7 @@ const PreviewPart = () => {
             active
             fullWidth
           />
-        </div>
+        </div> */}
       </div>
     </Board>
   );

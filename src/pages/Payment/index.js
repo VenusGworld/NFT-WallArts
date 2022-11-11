@@ -17,8 +17,9 @@ import { connectedAccount } from "../../store/accountReducer";
 // import { useOrderStatus } from "../../hooks/useOrderStatus";
 import axios from "axios";
 import { selectedData } from "../../store/selectedReducer";
-import { addingCart, orderedProducts } from "../../store/cartReducer";
+import { addingCart, clearResults, initialize, orderedProducts } from "../../store/cartReducer";
 import { useETHPrice } from "../../hooks/useEthPrice";
+import { ethers } from "ethers";
 
 const Payment = () => {
   const connected_account = useSelector(connectedAccount);
@@ -189,13 +190,7 @@ const Payment = () => {
       { v: postalCode, err_msg: "Delivery Information Postal Code" },
       ...arr,
     ];
-    // if (checkInputFormValidation(shouldBeCheckedValues)) {
-
-
-
-
-
-
+    if (checkInputFormValidation(shouldBeCheckedValues)) {
       const formData = {};
       formData.item_id = selected_data?.item_data?._id;
       formData.quantity = selected_data?.quantity;
@@ -245,7 +240,7 @@ const Payment = () => {
           }
         });
       }
-      formData.total_price =
+      formData.total_price_eth =
         selected_data?.item_data?.priceType === "eth"
           ? Number(
               selected_data?.quantity *
@@ -259,27 +254,55 @@ const Payment = () => {
             ) / eth_price.data;
       // console.log('form_data', formData);
       await dispatch(addingCart(formData));
-
-      // await axios
-      //   .post(`${process.env.REACT_APP_BACKEND_URL}/api/order/`, formData)
-      //   .then((res) => {
-      //     if (res.status === 201) {
-      //       success("Saved Successfully!");
-      //       // console.log(res)
-      //     }
-      //   })
-      //   .catch((err) => {
-      //     error(err.response.data.message);
-      //     console.log(err);
-      //   });
-
-
-
-    // }
+      return true;
+    }
+    return false
   };
-
+  const provider = new ethers.providers.Web3Provider(window.ethereum)
+  const signer = provider.getSigner()
   const submitOrder = async () => {
-    
+    const balance = await provider.getBalance(connected_account);
+    const balanceInEther = ethers.utils.formatEther(balance);  
+    let temp = 0;
+    ordered_products?.orderedProducts.forEach((item) => {
+      temp = Number(Number(temp) + Number(item.total_price_eth));
+    });
+    if(Number(balanceInEther)<temp) {
+      error("You haven't got enough ETH for Payment in your Wallet");
+    } else {
+      try {
+        console.log('process.env.REACT_APP_ADMIN_ADDRESS', temp)
+        const tx = await signer.sendTransaction({
+          to: process.env.REACT_APP_ADMIN_ADDRESS,
+          value: ethers.utils.parseEther(temp.toString())
+        })
+        await tx.wait()
+        success(`Sent ${temp}ETH to ${process.env.REACT_APP_ADMIN_ADDRESS} successfully!`)
+        let temp_arr = [];
+        ordered_products?.orderedProducts.forEach((item) => {
+          temp_arr.push({...item, transaction_hash: process.env.REACT_APP_ETHERSCAN_HASH_URL+tx.hash})
+        })
+        console.log('products', temp_arr);
+        await axios
+          .post(`${process.env.REACT_APP_BACKEND_URL}/api/order/`, temp_arr)
+          .then(async (res) => {
+            if (res.status === 201) {
+              success(`Ordered Successfully! We'll check and send you product soon!`);
+              console.log(res)
+              await dispatch(initialize());
+              await navigate({
+                pathname: "/profile"
+              });
+            }
+          })
+          .catch((err) => {
+            error(err.response.data.message);
+            console.log(err);
+          });
+      } catch (error) {
+        console.log(error);
+      }
+    }
   }
 
   return (
@@ -643,41 +666,26 @@ const Payment = () => {
               orderClickHandle={async (isOrder) => {
                 if(isOrder) {
                   if (window.confirm('Are you sure to Order this product too?')){
-                    addToCart().then(() => {
+                    let res = await addToCart()
+                    console.log('res', res)
+                    if(res) {
                       success("Added Product to Cart")
-                    });
-                    submitOrder();
+                      submitOrder();
+                    }
                   } else {
                     submitOrder();
                   }
-                  // confirmAlert({
-                  //   title: "Confirm to submit",
-                  //   message: "Are you sure to Order this product too?",
-                  //   buttons: [
-                  //     {
-                  //       label: "Yes",
-                  //       onClick: async () => {
-                  //         addingCart();
-                  //         submitOrder();
-                  //       },
-                  //     },
-                  //     {
-                  //       label: "No",
-                  //       onClick: () => {
-                  //         submitOrder();
-                  //       },
-                  //     },
-                  //   ],
-                  // });
                 } else {
-                  await addToCart().then(() => {
+                  let res = await addToCart()
+                  console.log('res', res)
+                  if(res) {
                     success("Added Product to Cart")
-                  });
-                  await navigate({
+                    navigate({
                       pathname: "/profile"
                     });
+                  }
+                  
                 }
-                
               }}
             />
           </div>

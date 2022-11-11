@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
+
 import PreviewPart from "./PreviewPart";
 import TimeLinePart from "./TimeLinePart";
 
 const OrderSummary = () => {
+  const [selectedOrderIndex,selectOrder] = useState(0);
   return (
     <div className="w-full h-full mt-20 relative text-white">
       <div className="bg-[#363f54] w-full p-10 relative flex flex-col justify-start items-start">
@@ -13,12 +15,12 @@ const OrderSummary = () => {
                 Order Summary
               </span>
               <div>
-                <TimeLinePart />
+                <TimeLinePart selectedOrderIndex={selectedOrderIndex} />
               </div>
             </div>
           </div>
           <div className="md:w-[40%] w-full ">
-            <PreviewPart />
+            <PreviewPart selectOrder={selectOrder} selectedOrder={selectedOrderIndex} />
           </div>
         </div>
       </div>

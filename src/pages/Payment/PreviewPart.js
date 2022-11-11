@@ -12,7 +12,7 @@ const PreviewPart = ({ orderClickHandle }) => {
   const ordered_products = useSelector(orderedProducts);
   let temp = 0;
   ordered_products?.orderedProducts.forEach((item) => {
-    temp = Number(Number(temp) + Number(item.total_price));
+    temp = Number(Number(temp) + Number(item.total_price_eth));
   });
   const eth_price = useETHPrice(window.ethereum);
   return (

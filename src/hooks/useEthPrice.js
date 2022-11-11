@@ -67,7 +67,7 @@ export function useETHPrice(w_provider) {
             // Determine how many decimals the price feed has (10**decimals)
             let decimals = await priceFeed.decimals();
             // We convert the price to a number and return it
-            return Number((roundData.answer.toString() / Math.pow(10, decimals)).toFixed(2));
+            return Number((roundData.answer.toString() / Math.pow(10, decimals)).toFixed(3));
         }),
       };
     

@@ -12,6 +12,9 @@ export const cartSlice = createSlice({
       state.orderedProducts = arr;
     },
     clearResults() {
+    },
+    initialize(state) {
+      state.orderedProducts = [];
     }
   },
 })

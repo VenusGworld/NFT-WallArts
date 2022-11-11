@@ -201,7 +201,7 @@ const Preview = () => {
                                 quantity *
                                   nftInfo?.price *
                                   ((100 - discount) / 100)
-                              ).toFixed(2) + "ETH"
+                              ).toFixed(3) + "ETH"
                             : null}
                         </span>
                         <span className=" text-white text-sm">
@@ -212,10 +212,10 @@ const Preview = () => {
                                 nftInfo?.price *
                                 ((100 - discount) / 100) *
                                 eth_price.data
-                              ).toFixed(2)
+                              ).toFixed(3)
                             : quantity *
                               nftInfo?.price *
-                              ((100 - discount) / 100).toFixed(2)}{" "}
+                              ((100 - discount) / 100).toFixed(3)}{" "}
                           $ )
                         </span>
                         <div>

@@ -111,7 +111,6 @@ function App() {
   }, []);
   
   const initializeStore = async () => {
-    console.log('saaaaaaaaaaaaaa')
     // await dispatch(initializeAccount());
     // await dispatch(initializeInfo());
     // await dispatch(initializeCart());
