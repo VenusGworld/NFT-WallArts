@@ -60,6 +60,7 @@ const Payment = () => {
     state: initialState,
     city: initialCity,
   });
+  console.log(paymentInfo)
   const [statesDeliveryArray, setStatesDeliveryArray] = useState(
     State.getStatesOfCountry(initialCountry.isoCode)
   );

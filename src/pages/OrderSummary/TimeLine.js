@@ -17,7 +17,9 @@ const TimeLine = ({ info, last }) => {
             alt=""
             className=" mr-2 inline-block"
           />
-          <span>{time}</span>
+          <span>{
+            new Date(time).toLocaleDateString() +" " +new Date(time).toLocaleTimeString()
+          }</span>
         </div>
         {detail && (
           <span className=" xl:absolute xl:left-96   xl:top-1/2 xl:-translate-y-1/2 w-56">
