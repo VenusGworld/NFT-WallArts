@@ -16,7 +16,7 @@ const Preview = () => {
   const [quantity, setquantity] = useState(1);
   const [nftInfo, setnftInfo] = useState({});
   const [discount, setDiscount] = useState(0);
-  const [searchParams] = useSearchParams();
+  // const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   useEffect(() => {

@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { Alchemy, Network } from "alchemy-sdk";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 
 import { RoundedButtonMD, RoundedButtonSM } from "../../components/Input";
 import ActivityPart from "./ActivityPart";
 import FilterPart from "./FilterPart";
 import ItemsPart from "./ItemsPart";
-import { connect, isConnected, setChain, connectedAccount } from "../../store/accountReducer";
+import { isConnected, connectedAccount } from "../../store/accountReducer";
 
 const Profile = () => {
   const [filterExpanded, expandFilter] = useState(false);

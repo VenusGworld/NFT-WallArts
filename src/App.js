@@ -8,15 +8,13 @@ import { ToastContainer } from "react-toastify";
 import "./App.css";
 import "./custom.css";
 import Header from "./components/header";
-import Lobby from "./pages/lobby";
+
 import "react-toastify/dist/ReactToastify.css";
 import {
   connect,
   isConnected,
   setChain,
   connectedAccount,
-  clearResults as initializeAccount,
-
 } from "./store/accountReducer";
 import Profile from "./pages/Profile";
 import "@fontsource/inter";
@@ -28,8 +26,8 @@ import Payment from "./pages/Payment";
 import OrderSummary from "./pages/OrderSummary";
 import ScrollToTop from "./helper/ScrollToTop";
 import Home from "./pages/Home";
-import { clearResults as initializeSelected } from "./store/selectedReducer";
-import { clearResults as initializeCart } from "./store/cartReducer";
+// import { clearResults as initializeSelected } from "./store/selectedReducer";
+// import { clearResults as initializeCart } from "./store/cartReducer";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -95,7 +93,7 @@ export const main_routes = [
 
 function App() {
   const is_Connected = useSelector(isConnected);
-  const connected_account = useSelector(connectedAccount);
+  // const connected_account = useSelector(connectedAccount);
   const dispatch = useDispatch();
 
   useEffect(() => {

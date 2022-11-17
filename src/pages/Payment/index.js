@@ -17,7 +17,11 @@ import { connectedAccount } from "../../store/accountReducer";
 // import { useOrderStatus } from "../../hooks/useOrderStatus";
 import axios from "axios";
 import { selectedData } from "../../store/selectedReducer";
-import { addingCart, clearResults, initialize, orderedProducts } from "../../store/cartReducer";
+import {
+  addingCart,
+  initialize,
+  orderedProducts,
+} from "../../store/cartReducer";
 import { useETHPrice } from "../../hooks/useEthPrice";
 import { ethers } from "ethers";
 
@@ -60,7 +64,7 @@ const Payment = () => {
     state: initialState,
     city: initialCity,
   });
-  console.log(paymentInfo)
+  console.log(paymentInfo);
   const [statesDeliveryArray, setStatesDeliveryArray] = useState(
     State.getStatesOfCountry(initialCountry.isoCode)
   );
@@ -161,7 +165,7 @@ const Payment = () => {
     return flag;
   };
   const addToCart = async () => {
-      let arr = [];
+    let arr = [];
 
     if (!isCrypto && !isSameAddress) {
       arr = [
@@ -257,42 +261,50 @@ const Payment = () => {
       await dispatch(addingCart(formData));
       return true;
     }
-    return false
+    return false;
   };
-  const provider = new ethers.providers.Web3Provider(window.ethereum)
-  const signer = provider.getSigner()
+  const provider = new ethers.providers.Web3Provider(window.ethereum);
+  const signer = provider.getSigner();
   const submitOrder = async () => {
     const balance = await provider.getBalance(connected_account);
-    const balanceInEther = ethers.utils.formatEther(balance);  
+    const balanceInEther = ethers.utils.formatEther(balance);
     let temp = 0;
     ordered_products?.orderedProducts.forEach((item) => {
       temp = Number(Number(temp) + Number(item.total_price_eth));
     });
-    if(Number(balanceInEther)<temp) {
+    if (Number(balanceInEther) < temp) {
       error("You haven't got enough ETH for Payment in your Wallet");
     } else {
       try {
-        console.log('process.env.REACT_APP_ADMIN_ADDRESS', temp)
+        console.log("process.env.REACT_APP_ADMIN_ADDRESS", temp);
         const tx = await signer.sendTransaction({
           to: process.env.REACT_APP_ADMIN_ADDRESS,
-          value: ethers.utils.parseEther(temp.toString())
-        })
-        await tx.wait()
-        success(`Sent ${temp}ETH to ${process.env.REACT_APP_ADMIN_ADDRESS} successfully!`)
+          value: ethers.utils.parseEther(temp.toString()),
+        });
+        await tx.wait();
+        success(
+          `Sent ${temp}ETH to ${process.env.REACT_APP_ADMIN_ADDRESS} successfully!`
+        );
         let temp_arr = [];
         ordered_products?.orderedProducts.forEach((item) => {
-          temp_arr.push({...item, transaction_hash: process.env.REACT_APP_ETHERSCAN_HASH_URL+tx.hash})
-        })
-        console.log('products', temp_arr);
+          temp_arr.push({
+            ...item,
+            transaction_hash:
+              process.env.REACT_APP_ETHERSCAN_HASH_URL + tx.hash,
+          });
+        });
+        console.log("products", temp_arr);
         await axios
           .post(`${process.env.REACT_APP_BACKEND_URL}/api/order/`, temp_arr)
           .then(async (res) => {
             if (res.status === 201) {
-              success(`Ordered Successfully! We'll check and send you product soon!`);
-              console.log(res)
+              success(
+                `Ordered Successfully! We'll check and send you product soon!`
+              );
+              console.log(res);
               await dispatch(initialize());
               await navigate({
-                pathname: "/profile"
+                pathname: "/profile",
               });
             }
           })
@@ -304,7 +316,7 @@ const Payment = () => {
         console.log(error);
       }
     }
-  }
+  };
 
   return (
     <div className="w-full h-full mt-20 relative text-white">
@@ -665,27 +677,28 @@ const Payment = () => {
           <div className="xl:w-[40%] w-full mx-auto">
             <PreviewPart
               orderClickHandle={async (isOrder) => {
-                if(isOrder) {
-                  if (window.confirm('Are you sure to Order this product too?')){
-                    let res = await addToCart()
-                    console.log('res', res)
-                    if(res) {
-                      success("Added Product to Cart")
+                if (isOrder) {
+                  if (
+                    window.confirm("Are you sure to Order this product too?")
+                  ) {
+                    let res = await addToCart();
+                    console.log("res", res);
+                    if (res) {
+                      success("Added Product to Cart");
                       submitOrder();
                     }
                   } else {
                     submitOrder();
                   }
                 } else {
-                  let res = await addToCart()
-                  console.log('res', res)
-                  if(res) {
-                    success("Added Product to Cart")
+                  let res = await addToCart();
+                  console.log("res", res);
+                  if (res) {
+                    success("Added Product to Cart");
                     navigate({
-                      pathname: "/profile"
+                      pathname: "/profile",
                     });
                   }
-                  
                 }
               }}
             />

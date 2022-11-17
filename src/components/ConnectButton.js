@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { connect, connectedAccount, disConnect, isConnected, setChain } from '../store/accountReducer';
+import { connect, connectedAccount, isConnected, setChain } from '../store/accountReducer';
 import { useETHPrice } from '../hooks/useEthPrice';
 import { useNavigate } from 'react-router-dom';
 

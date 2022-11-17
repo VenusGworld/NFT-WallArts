@@ -1,6 +1,6 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 import Board from "../../components/Board";
 import { RoundedButtonMD } from "../../components/Input";
 import { orderedProducts } from "../../store/cartReducer";

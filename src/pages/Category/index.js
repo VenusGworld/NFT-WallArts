@@ -1,5 +1,5 @@
-import axios from "axios";
-import React, { useState } from "react";
+// import axios from "axios";
+import React from "react";
 import CategoryCard from "./CategoryCard";
 import {useCategory} from "../../hooks/useCategory"
 const Category = () => {
