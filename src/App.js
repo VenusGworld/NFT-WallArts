@@ -9,12 +9,12 @@ import "./App.css";
 import "./custom.css";
 import Header from "./components/header";
 
-import "react-toastify/dist/ReactToastify.css";
+// import "react-toastify/dist/ReactToastify.css";
 import {
   connect,
   isConnected,
   setChain,
-  connectedAccount,
+  // connectedAccount,
 } from "./store/accountReducer";
 import Profile from "./pages/Profile";
 import "@fontsource/inter";
@@ -97,9 +97,9 @@ function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (!is_Connected) {
+    // if (!is_Connected) {
       connectWallet();
-    }
+    // }
     //eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -116,7 +116,7 @@ function App() {
   };
 
   const connectWallet = async () => {
-    if (!is_Connected) {
+    // if (!is_Connected) {
       await window.ethereum.send("eth_requestAccounts");
       dispatch(setChain(Number(window.ethereum?.networkVersion)));
       await window.ethereum.request({
@@ -127,7 +127,7 @@ function App() {
         method: "eth_accounts",
       });
       if (accounts[0]) dispatch(connect(accounts[0]));
-    }
+    // }
   };
 
   return (

@@ -6,6 +6,7 @@ const RoundedDropDownSelect = ({ list, onChangeHandle, label, value }) => {
   const [selectedItem, selectItem] = useState(value>0?value:0);
   useEffect(() => {
     onChangeHandle(list[value>0?value:0]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // useEffect(() => {

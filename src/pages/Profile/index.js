@@ -26,7 +26,7 @@ const Profile = () => {
   useEffect(() => {
     if(is_Connected) fetchNFTs();
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [is_Connected])
+  }, [is_Connected, connected_account])
     //fetchNFTs();
   // }, [])
 
