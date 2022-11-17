@@ -25,14 +25,14 @@ const CustomizedArtCard = ({ item }) => {
       onClick={async () => {
         await dispatch(setItem(item))
         navigate({
-          pathname: "/preview"
+          pathname: "/client/preview"
         });
       }}
     >
       <div className="relative box-border border-white border-2">
         <img
           loading="lazy"
-          src={process.env.PUBLIC_URL + "/img/image41.png"}
+          src={process.env.REACT_APP_BACKEND_URL + "/client/img/image41.png"}
           alt=""
           className="w-full "
         />

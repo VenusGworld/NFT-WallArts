@@ -26,7 +26,7 @@ const ProfileNFTCard = ({ item }) => {
           "https://ipfs.moralis.io:2053/ipfs/"
         ), title}))
         await navigate({
-          pathname: "/category"
+          pathname: "/client/category"
         });
       }}
     >
@@ -49,7 +49,7 @@ const ProfileNFTCard = ({ item }) => {
             <div className="flex items-center">
               <img
                 loading="lazy"
-                src={process.env.PUBLIC_URL + "/img/heart_icon.svg"}
+                src={process.env.REACT_APP_BACKEND_URL + "/client/img/heart_icon.svg"}
                 alt=""
                 className="w-5 h-5 mr-1 inline-block"
               />

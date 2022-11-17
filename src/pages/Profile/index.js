@@ -42,7 +42,7 @@ const Profile = () => {
     <div className="h-full relative mt-20 bg-[#363F54]">
       <img
         loading="lazy"
-        src={process.env.PUBLIC_URL + "/img/img1 1.png"}
+        src={process.env.REACT_APP_BACKEND_URL + "/client/img/img1 1.png"}
         alt="profile_banner"
         width="100%"
       />
@@ -50,7 +50,7 @@ const Profile = () => {
         <div className=" rounded-full bg-[#00AEEF] border-4 border-white p-10 -mt-36">
           <img
             loading="lazy"
-            src={process.env.PUBLIC_URL + "/img/sandbox_mark.svg"}
+            src={process.env.REACT_APP_BACKEND_URL + "/client/img/sandbox_mark.svg"}
             alt=""
             className=" w-24 h-24 scale-125"
           />
@@ -59,7 +59,7 @@ const Profile = () => {
           <div className=" text-white text-4xl">The Sandbox</div>
           <img
             loading="lazy"
-            src={process.env.PUBLIC_URL + "/img/verified_icon.svg"}
+            src={process.env.REACT_APP_BACKEND_URL + "/client/img/verified_icon.svg"}
             alt=""
             className=" absolute w-9 h-9 top-0 sm:-right-24 -right-10"
           />
@@ -83,7 +83,7 @@ const Profile = () => {
             <div className="flex text-3xl text-white">
               <img
                 loading="lazy"
-                src={process.env.PUBLIC_URL + "/img/eth_icon.svg"}
+                src={process.env.REACT_APP_BACKEND_URL + "/client/img/eth_icon.svg"}
                 alt=""
                 className=" inline-block w-8 h-8"
               />
@@ -112,7 +112,7 @@ const Profile = () => {
               icon={
                 <img
                   loading="lazy"
-                  src={process.env.PUBLIC_URL + "/img/filter_icon.svg"}
+                  src={process.env.REACT_APP_BACKEND_URL + "/client/img/filter_icon.svg"}
                   className="w-3 h-3 text-black inline-block"
                   alt="filter"
                 />

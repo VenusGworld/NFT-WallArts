@@ -26,10 +26,10 @@ const Header = () => {
             <div className="ml-10 flex-1">
               <img
                 loading="lazy"
-                href={process.env.PUBLIC_URL + "/img/logo.svg"}
+                href={process.env.REACT_APP_BACKEND_URL + "/client/img/logo.svg"}
                 alt="logo"
                 className=" w-12"
-                src={process.env.PUBLIC_URL + "/img/logo.svg"}
+                src={process.env.REACT_APP_BACKEND_URL + "/client/img/logo.svg"}
               />
             </div>
             <div className=" flex-1 p-[7px 0px 0 40px] font-medium text-xs text-center md:flex hidden mx-2 items-center">
@@ -54,7 +54,7 @@ const Header = () => {
               <div>
                 <img
                   loading="lazy"
-                  src={process.env.PUBLIC_URL + "/img/globe_icon.svg"}
+                  src={process.env.REACT_APP_BACKEND_URL + "/client/img/globe_icon.svg"}
                   className="w-5 h-5 mr-2 text-white inline-block"
                   alt="globe"
                 />

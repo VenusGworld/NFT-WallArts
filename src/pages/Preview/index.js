@@ -42,7 +42,7 @@ const Preview = () => {
         <div className="relative">
           <img
             loading="lazy"
-            src={process.env.PUBLIC_URL + "/img/image40.png"}
+            src={process.env.REACT_APP_BACKEND_URL + "/client/img/image40.png"}
             className="w-full object-cover"
             alt="background"
           />
@@ -68,7 +68,7 @@ const Preview = () => {
                   />
                   <img
                     loading="lazy"
-                    src={process.env.PUBLIC_URL + "/img/360-view1.svg"}
+                    src={process.env.REACT_APP_BACKEND_URL + "/client/img/360-view1.svg"}
                     alt=""
                     className="absolute bottom-5 right-3"
                   />
@@ -126,7 +126,7 @@ const Preview = () => {
                           <img
                             loading="lazy"
                             src={
-                              process.env.PUBLIC_URL + "/img/check-green.svg"
+                              process.env.REACT_APP_BACKEND_URL + "/client/img/check-green.svg"
                             }
                             alt="check"
                             className="w-2 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
@@ -147,7 +147,7 @@ const Preview = () => {
                           <img
                             loading="lazy"
                             src={
-                              process.env.PUBLIC_URL + "/img/check-green.svg"
+                              process.env.REACT_APP_BACKEND_URL + "/client/img/check-green.svg"
                             }
                             alt="check"
                             className="w-2 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
@@ -238,7 +238,7 @@ const Preview = () => {
                       onButtonClick={async () => {
                         await dispatch(setQuantity(quantity))
                         navigate({
-                          pathname: "/payment"
+                          pathname: "/client/payment"
                         });
                       }}
                       active

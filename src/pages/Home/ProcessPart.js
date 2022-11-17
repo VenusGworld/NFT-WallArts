@@ -24,7 +24,7 @@ const ProcessPart = () => {
       <div className="sm:w-[42%] w-full">
         <img
           loading="lazy"
-          src={process.env.PUBLIC_URL + "/img/home/home_3.png"}
+          src={process.env.REACT_APP_BACKEND_URL + "/client/img/home/home_3.png"}
           alt="profile_banner"
           width="100%"
         />
@@ -38,7 +38,7 @@ const ProcessPart = () => {
                 <div className=" relative mb-3 w-10">
                   <img
                     loading="lazy"
-                    src={process.env.PUBLIC_URL + "/img/home/NoIcon.svg"}
+                    src={process.env.REACT_APP_BACKEND_URL + "/client/img/home/NoIcon.svg"}
                     alt="icon"
                     className=" w-28"
                   />
@@ -51,7 +51,7 @@ const ProcessPart = () => {
               <div className="flex items-start space-x-4">
                 <img
                   loading="lazy"
-                  src={process.env.PUBLIC_URL + "/img/home/" + item.icon}
+                  src={process.env.REACT_APP_BACKEND_URL + "/client/img/home/" + item.icon}
                   alt="icon"
                   width="80px"
                 />

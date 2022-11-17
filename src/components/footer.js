@@ -28,10 +28,10 @@ const Footer = () => {
           <div className="sm:w-1/4 w-3/4 flex flex-col space-y-2">
             <img
               loading="lazy"
-              href={process.env.PUBLIC_URL + "/img/logo.svg"}
+              href={process.env.REACT_APP_BACKEND_URL + "/client/img/logo.svg"}
               alt="logo"
               className=" w-12"
-              src={process.env.PUBLIC_URL + "/img/logo.svg"}
+              src={process.env.REACT_APP_BACKEND_URL + "/client/img/logo.svg"}
             />
             <span>
               Chances are if you're an NFT art Collector, you've got some hidden
@@ -41,35 +41,35 @@ const Footer = () => {
           <div className="sm:w-1/4 w-3/4 flex flex-wrap space-x-1">
             <div className="bg-[#2e283d] border-[#442f7b] border rounded-full p-2 hover:bg-[#493f64] transition-all cursor-pointer">
               <img
-                src={process.env.PUBLIC_URL + "/img/twitter.svg"}
+                src={process.env.REACT_APP_BACKEND_URL + "/client/img/twitter.svg"}
                 alt=""
                 className="w-4 h-4 text-white"
               />
             </div>
             <div className="bg-[#2e283d] border-[#442f7b] border rounded-full p-2 hover:bg-[#493f64] transition-all cursor-pointer">
               <img
-                src={process.env.PUBLIC_URL + "/img/facebook.svg"}
+                src={process.env.REACT_APP_BACKEND_URL + "/client/img/facebook.svg"}
                 alt=""
                 className="w-4 h-4 text-white"
               />
             </div>
             <div className="bg-[#2e283d] border-[#442f7b] border rounded-full p-2 hover:bg-[#493f64] transition-all cursor-pointer">
               <img
-                src={process.env.PUBLIC_URL + "/img/instagram.svg"}
+                src={process.env.REACT_APP_BACKEND_URL + "/client/img/instagram.svg"}
                 alt=""
                 className="w-4 h-4 text-white"
               />
             </div>
             <div className="bg-[#2e283d] border-[#442f7b] border rounded-full p-2 hover:bg-[#493f64] transition-all cursor-pointer">
               <img
-                src={process.env.PUBLIC_URL + "/img/discord.svg"}
+                src={process.env.REACT_APP_BACKEND_URL + "/client/img/discord.svg"}
                 alt=""
                 className="w-4 h-4 text-white"
               />
             </div>
             <div className="bg-[#2e283d] border-[#442f7b] border rounded-full p-2 hover:bg-[#493f64] transition-all cursor-pointer">
               <img
-                src={process.env.PUBLIC_URL + "/img/linkedin.svg"}
+                src={process.env.REACT_APP_BACKEND_URL + "/client/img/linkedin.svg"}
                 alt=""
                 className="w-4 h-4 text-white"
               />

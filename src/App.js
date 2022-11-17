@@ -58,7 +58,7 @@ export const main_routes = [
     title: "Home",
     description: "Home",
     component: <Home />,
-    path: "/home",
+    path: "/client/home",
     isEnabled: true,
     appendDivider: true,
   },
@@ -67,7 +67,7 @@ export const main_routes = [
     title: "Products",
     description: "products",
     component: <Home />,
-    path: "/products",
+    path: "/client/products",
     isEnabled: true,
     appendDivider: true,
   },
@@ -76,7 +76,7 @@ export const main_routes = [
     title: "Process",
     description: "process",
     component: <Home />,
-    path: "/process",
+    path: "/client/process",
     isEnabled: true,
     appendDivider: true,
   },
@@ -85,7 +85,7 @@ export const main_routes = [
     title: "Place Order",
     description: "place order",
     component: <OrderSummary />,
-    path: "/order_summary",
+    path: "/client/order_summary",
     isEnabled: true,
     appendDivider: true,
   },
@@ -143,9 +143,9 @@ function App() {
         <Routes>
           {/* <Layout> */}
           <Route
-            path="/"
+            path="/client/"
             // element={<Navigate to="/category" replace />}
-            element={<Navigate to="/profile" replace />}
+            element={<Navigate to="/client/profile" replace />}
           />
           {main_routes.map((route) => (
             <Route
@@ -154,10 +154,10 @@ function App() {
               element={route.component}
             />
           ))}
-          <Route key="profile" path="profile" element={<Profile />} />
+          <Route key="profile" path="client/profile" element={<Profile />} />
           <Route
             key="category"
-            path="category"
+            path="client/category"
             element={
               is_Connected ? (
                 <Category />
@@ -170,12 +170,12 @@ function App() {
           />
           <Route
             key="customizedArt"
-            path="customizedArt"
+            path="client/customizedArt"
             element={<CustomizedArt />}
           />
           <Route
             key="preview"
-            path="preview"
+            path="client/preview"
             element={
               is_Connected ? (
                 <Preview />
@@ -188,7 +188,7 @@ function App() {
           />
           <Route
             key="payment"
-            path="payment"
+            path="client/payment"
             element={
               is_Connected ? (
                 <Payment />
@@ -201,7 +201,7 @@ function App() {
           />
           <Route
             key="order_summary"
-            path="order_summary"
+            path="client/order_summary"
             element={
               is_Connected ? (
                 <OrderSummary />

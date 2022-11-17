@@ -221,7 +221,7 @@ const ActivityPart = () => {
                   <div className=" flex justify-start items-center w-3/12">
                     <img
                       loading="lazy"
-                      src={process.env.PUBLIC_URL + "/img/" + item.img}
+                      src={process.env.REACT_APP_BACKEND_URL + "/client/img/" + item.img}
                       alt=""
                       className="w-16 h-16 rounded-full"
                     />
@@ -232,7 +232,7 @@ const ActivityPart = () => {
                       <div className="flex justify-end text-2xl">
                         <img
                           loading="lazy"
-                          src={process.env.PUBLIC_URL + "/img/eth_icon.svg"}
+                          src={process.env.REACT_APP_BACKEND_URL + "/client/img/eth_icon.svg"}
                           alt=""
                           className=" inline-block w-7 h-7"
                         />

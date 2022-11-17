@@ -23,7 +23,7 @@ const NumberInput = ({ list, onChangeHandle }) => {
         />
         <img
           loading="lazy"
-          src={process.env.PUBLIC_URL + "/img/triangle.svg"}
+          src={process.env.REACT_APP_BACKEND_URL + "/client/img/triangle.svg"}
           alt=""
           className={`absolute w-5 h-5 right-3 top-3`}
           onClick={() => {
@@ -32,7 +32,7 @@ const NumberInput = ({ list, onChangeHandle }) => {
         />
         <img
           loading="lazy"
-          src={process.env.PUBLIC_URL + "/img/triangle.svg"}
+          src={process.env.REACT_APP_BACKEND_URL + "/client/img/triangle.svg"}
           alt=""
           className={`absolute w-5 h-5 right-3 bottom-3 rotate-180`}
           onClick={() => {

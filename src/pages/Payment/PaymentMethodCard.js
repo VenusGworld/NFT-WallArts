@@ -10,7 +10,7 @@ const mailingLists = [
     img: (
       <img
         className="w-14 h-14"
-        src={process.env.PUBLIC_URL + "/img/MetaMask_Fox.svg"}
+        src={process.env.REACT_APP_BACKEND_URL + "/client/img/MetaMask_Fox.svg"}
         alt=""
       />
     ),
@@ -21,7 +21,7 @@ const mailingLists = [
     img: (
       <img
         className="w-14 h-14"
-        src={process.env.PUBLIC_URL + "/img/pp_fc_hl.svg"}
+        src={process.env.REACT_APP_BACKEND_URL + "/client/img/pp_fc_hl.svg"}
         alt=""
       />
     ),
@@ -32,7 +32,7 @@ const mailingLists = [
     img: (
       <img
         className="w-14 h-14"
-        src={process.env.PUBLIC_URL + "/img/visa.svg"}
+        src={process.env.REACT_APP_BACKEND_URL + "/client/img/visa.svg"}
         alt=""
       />
     ),
@@ -43,7 +43,7 @@ const mailingLists = [
     img: (
       <img
         className="w-14 h-14"
-        src={process.env.PUBLIC_URL + "/img/Mastercard-Logo.wine.svg"}
+        src={process.env.REACT_APP_BACKEND_URL + "/client/img/Mastercard-Logo.wine.svg"}
         alt=""
       />
     ),

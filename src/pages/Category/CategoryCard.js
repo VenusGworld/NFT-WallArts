@@ -9,7 +9,7 @@ const CategoryCard = ({ img, name, desc, id }) => {
       onClick={() => {
         // navigate("/customizedArt");
         navigate({
-          pathname: "/customizedArt",
+          pathname: "/client/customizedArt",
           search: `?category=${id}`,
         });
       }}

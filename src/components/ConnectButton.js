@@ -30,7 +30,7 @@ const ConnectButton = () => {
 
     else {
       navigate({
-        pathname: "/profile",
+        pathname: "/client/profile",
       });
     }
   }} className='rounded-lg cursor-pointer text-sm hover:bg-[#f5cf92] transition-all bg-[#D3B789] py-2 px-6 border-2 border-[#513296]'> 
