@@ -53,7 +53,7 @@ const DropDownSelect = ({ list, onChangeHandle }) => {
               }}
               className={`${
                 selectedItem === i
-                  ? "text-[#D3B789] border-l border-l-gray-400 border-r border-r-gray-400  "
+                  ? "text-[#D3B789] border-l border-l-gray-400 border-r border-r-gray-400 "
                   : " text-white"
               } p-1`}
             >

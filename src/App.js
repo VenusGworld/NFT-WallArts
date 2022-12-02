@@ -4,6 +4,7 @@ import { Route, Routes, Navigate } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
+import axios from "axios";
 
 import "./App.css";
 import "./custom.css";
@@ -125,6 +126,13 @@ function App() {
       });
       const accounts = await window.ethereum.request({
         method: "eth_accounts",
+      });
+      console.log('posting wallet address');
+      await axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/user/`, {
+        wallet_address: accounts[0]
+      })
+      .catch((err) => {
+        console.log(err);
       });
       if (accounts[0]) dispatch(connect(accounts[0]));
     // }

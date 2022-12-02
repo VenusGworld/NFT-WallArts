@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { connect, connectedAccount, isConnected, setChain } from '../store/accountReducer';
 import { useETHPrice } from '../hooks/useEthPrice';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 const ConnectButton = () => {
   const is_Connected = useSelector(isConnected);
@@ -23,6 +24,10 @@ const ConnectButton = () => {
       const accounts = await window.ethereum.request({
         method: "eth_accounts",
       });
+      console.log('posting wallet addres');
+      await axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/user/`, {
+        wallet_address: accounts[0]
+      })
       if (accounts[0]) dispatch(connect(accounts[0]));
       // const price_eth = useETHPrice(window.ethereum)
       // dispatch(setEthPrice(price_eth))
