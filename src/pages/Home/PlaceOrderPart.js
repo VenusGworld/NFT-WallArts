@@ -13,7 +13,7 @@ const PlaceOrderPart = () => {
       <div className="absolute w-full top-0 px-[7%] py-[5%] ">
         <div className="flex w-full justify-between items-end">
           <div className="flex items-end space-x-5 text-start">
-            <span className=" text-xl sm:texl-4xl inline-block">Place Order</span>
+            <span className=" text-xl sm:text-4xl inline-block">Place Order</span>
             <img
               loading="lazy"
               src={process.env.REACT_APP_BACKEND_URL + "/client/img/home/delivery 1.svg"}

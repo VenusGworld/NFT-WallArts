@@ -1,114 +1,38 @@
 import React, { useState } from "react";
 import { useEffect } from "react";
-import { Area, AreaChart, CartesianGrid, XAxis, YAxis } from "recharts";
+import { useNavigate } from "react-router-dom";
+// import { Area, AreaChart, CartesianGrid, XAxis, YAxis } from "recharts";
 // import { Items } from '.';
 
 import Board from "../../components/Board";
 import { RoundedButtonSM, RoundedDropDownSelect } from "../../components/Input";
-
-export const Activities = [
-  {
-    img: "image 4.png",
-    name: "Aui dolorem eum",
-    price: 5,
-    quantity: "1",
-    from: "Jeffry Benton",
-    to: "Aida Bugg",
-    time: "10 min",
-  },
-  {
-    img: "image 16.png",
-    name: "Annoyances accepted",
-    price: 2,
-    quantity: "1",
-    from: "Abraham Marubutt",
-    to: "Peg Legge",
-    time: "3 min",
-  },
-  {
-    img: "image 19.png",
-    name: "Facere possimus",
-    price: 3,
-    quantity: "1",
-    from: "Georgi Liu",
-    to: "Allie Grater",
-    time: "2 min",
-  },
-  {
-    img: "image 16.png",
-    name: "Lorem Ipsume",
-    price: 10,
-    quantity: "1",
-    from: "Robert Lee",
-    to: "Olive Yew",
-    time: "11 min",
-  },
-  {
-    img: "image 19.png",
-    name: "Aui dolorem eum",
-    price: 3.5,
-    quantity: "1",
-    from: "Grant Dong",
-    to: "Jeffry Benton",
-    time: "7 min",
-  },
-  {
-    img: "image 19.png",
-    name: "Facere possimus",
-    price: 1,
-    quantity: "1",
-    from: "Jeffry Benton",
-    to: "MICHAEL Jin",
-    time: "20 min",
-  },
-  {
-    img: "image 16.png",
-    name: "Lorem Ipsume",
-    price: 0.3,
-    quantity: "1",
-    from: "Olive Yew",
-    to: "Georgi Liu",
-    time: "30 min",
-  },
-  {
-    img: "image 4.png",
-    name: "Aui dolorem eum",
-    price: 11,
-    quantity: "1",
-    from: "Jackson Bill",
-    to: "Robert Lee",
-    time: "15 min",
-  },
-  {
-    img: "image 16.png",
-    name: "Annoyances accepted",
-    price: 5,
-    quantity: "1",
-    from: "Scalett Ohara",
-    to: "Billy Graham",
-    time: "10 min",
-  },
-];
+import { useETHPrice } from "../../hooks/useEthPrice";
+import { useOrder } from "../../hooks/useOrder";
+import { useOrderStatus } from "../../hooks/useOrderStatus";
 
 const ActivityPart = () => {
   const [selectedPage, selectPage] = useState(0);
-  useEffect(() => {}, []);
+  const orders = useOrder();
+  const orderStatus = useOrderStatus();
+  const navigate = useNavigate();
 
-  const generateChartData = (v) => {
-    let arr = [];
-    for (let index = v; index >= 0; index -= v / 30) {
-      let date = new Date();
-      date.setDate(new Date().getDate() - index);
-      arr.push({
-        date: date.getMonth() + 1 + "/" + date.getDate(),
-        value: Math.floor(1 + Math.random() * 90) % 20,
-      });
-    }
-    return arr;
-    //
-  };
+  const eth_price = useETHPrice(window.ethereum);
 
-  const [chartData, setChartData] = useState(generateChartData(90));
+  // const generateChartData = (v) => {
+  //   let arr = [];
+  //   for (let index = v; index >= 0; index -= v / 30) {
+  //     let date = new Date();
+  //     date.setDate(new Date().getDate() - index);
+  //     arr.push({
+  //       date: date.getMonth() + 1 + "/" + date.getDate(),
+  //       value: Math.floor(1 + Math.random() * 90) % 20,
+  //     });
+  //   }
+  //   return arr;
+  //   //
+  // };
+
+  // const [chartData, setChartData] = useState(generateChartData(90));
 
   return (
     <div className="w-[90%] flex flex-col space-y-10">
@@ -137,7 +61,7 @@ const ActivityPart = () => {
           />
         </div>
       </div>
-      <Board>
+      {/* <Board>
         <div className="flex flex-col justify-center w-full h-full space-y-4">
           <div className="flex space-x-8">
             <div className="w-1/4">
@@ -176,7 +100,6 @@ const ActivityPart = () => {
           </div>
           <div className="flex justify-center items-center w-full h-full">
             <div className="w-full">
-              {/* <ResponsiveContainer width="100%"> */}
               <AreaChart width={1000} height={400} data={chartData}>
                 <defs>
                   <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
@@ -199,47 +122,71 @@ const ActivityPart = () => {
                   fill="url(#colorUv)"
                 />
               </AreaChart>
-              {/* </ResponsiveContainer> */}
             </div>
           </div>
         </div>
-      </Board>
+      </Board> */}
       <div className=" my-32">
         <div className="flex justify-center items-start  text-white px-11 py-2">
           <div className=" flex justify-start w-3/12">Item</div>
           <div className=" flex justify-center w-2/12">Price</div>
           <div className=" flex justify-center w-1/12">Quantity</div>
-          <div className=" flex justify-center w-2/12">From</div>
-          <div className=" flex justify-center w-2/12">To</div>
+          <div className=" flex justify-center w-2/12">Size</div>
+          <div className=" flex justify-center w-2/12">Status</div>
           <div className=" flex justify-center w-2/12">Time</div>
         </div>
         <div className="flex flex-col space-y-3">
-          {Activities.map((item, i) => {
+          {orders?.data?.data?.map((item, i) => {
             return (
-              <Board key={i}>
+              <Board key={i} onClick={() => {
+                navigate({
+                  pathname: "/client/order_summary",
+                  search: `?order_id=${item._id}`,
+                });
+              }}>
                 <div className="flex md:flex-row w-full text-xl flex-wrap cursor-pointer hover:px-0 px-3 transition-all">
                   <div className=" flex justify-start items-center w-3/12">
                     <img
                       loading="lazy"
-                      src={process.env.REACT_APP_BACKEND_URL + "/client/img/" + item.img}
+                      src={item?.image_for_printing}
                       alt=""
                       className="w-16 h-16 rounded-full"
                     />
-                    <div className=" ml-3">{item.name}</div>
+                    <div className=" ml-3">{item?.name_for_printing}</div>
                   </div>
                   <div className=" flex justify-center w-2/12 flex-col items-center">
                     <div className="flex flex-col justify-end">
                       <div className="flex justify-end text-2xl">
                         <img
                           loading="lazy"
-                          src={process.env.REACT_APP_BACKEND_URL + "/client/img/eth_icon.svg"}
+                          src={
+                            process.env.REACT_APP_BACKEND_URL +
+                            "/client/img/eth_icon.svg"
+                          }
                           alt=""
                           className=" inline-block w-7 h-7"
                         />
-                        {item.price}
+                        {item?.item_info?.priceType === "eth"
+                          ? Number(
+                              item?.quantity * item?.item_info?.price
+                              // * ((100 - discount) / 100)
+                            ).toFixed(3) + "ETH"
+                          : null}
                       </div>
                       <div className=" text-[#b6b3e0] text-lg">
-                        ${Number(item.price * 1459)}
+                        ${
+                          item?.item_info?.priceType === "eth"
+                            ? (
+                                item?.quantity *
+                                item?.item_info?.price *
+                                eth_price.data
+                              )
+                                // * ((100 - discount) / 100)
+
+                                .toFixed(3)
+                            : item?.quantity * item?.item_info?.price
+                          // ((100 - discount) / 100).toFixed(3)}{" "}
+                        }
                       </div>
                     </div>
                   </div>
@@ -247,17 +194,41 @@ const ActivityPart = () => {
                     {item.quantity}
                   </div>
                   <div className=" flex justify-center items-center w-2/12">
-                    <span className="w-16 overflow-hidden text-ellipsis whitespace-nowrap">
-                      {item.from}
+                    <span className="w-16 whitespace-nowrap">
+                      {item?.item_info?.width}X{item?.item_info?.height}cm
                     </span>
                   </div>
                   <div className=" flex justify-center items-center w-2/12">
                     <span className=" w-16 overflow-hidden text-ellipsis whitespace-nowrap">
-                      {item.to}
+                      {orderStatus.isLoading
+                        ? []
+                        : orderStatus?.data?.data
+                            .filter(
+                              (status) =>
+                                status._id ===
+                                item?.order_statuses[
+                                  item?.order_statuses?.length - 1
+                                ]?.order_status_id
+                            )
+                            .map((status, i) => (
+                              <span key={i}>{status?.name}</span>
+                            ))}
                     </span>
                   </div>
                   <div className=" flex justify-center items-center w-2/12">
-                    {item.time}
+                    <span>
+                      {new Date(
+                        item?.order_statuses[
+                          item?.order_statuses?.length - 1
+                        ]?.ordered_time
+                      ).toLocaleDateString() +
+                        " " +
+                        new Date(
+                          item?.order_statuses[
+                            item?.order_statuses?.length - 1
+                          ]?.ordered_time
+                        ).toLocaleTimeString()}
+                    </span>
                   </div>
                 </div>
               </Board>

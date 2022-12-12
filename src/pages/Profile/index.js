@@ -8,8 +8,11 @@ import FilterPart from "./FilterPart";
 import ItemsPart from "./ItemsPart";
 import { isConnected, connectedAccount } from "../../store/accountReducer";
 import axios from "axios";
+import { useSearchParams } from "react-router-dom";
 
 const Profile = () => {
+  const [searchParams] = useSearchParams();
+
   const [filterExpanded, expandFilter] = useState(false);
   const [itemsExpanded, expandItems] = useState(true);
   const is_Connected = useSelector(isConnected);
@@ -32,6 +35,14 @@ const Profile = () => {
   const alchemy = new Alchemy(config);
 
   useEffect(() => {
+    if(searchParams.get('id')) {
+      if(searchParams.get('id') === 'profile_section' && itemsExpanded) {
+        expandItems(false)
+      }
+      let releventDiv = document.getElementById(searchParams.get('id'));
+      releventDiv.scrollIntoView({behavior: "smooth"});
+    }
+
     if (is_Connected) {
       fetchNFTs();
       fetchUserDataByAddress();
@@ -131,7 +142,7 @@ const Profile = () => {
                 "/client/img/sandbox_mark.svg"
               }
               alt=""
-              className=" w-32 h-32 scale-125"
+              className=" w-32 h-32 rounded-full"
             />
           )}
           <div className=" absolute top-1/2 left-1/2 group-hover:block hidden -translate-x-1/2 -translate-y-1/2">
@@ -327,7 +338,7 @@ const Profile = () => {
             <div className="text-gray-400">Total Volume</div>
           </div>
         </div>
-        <div className="relative my-10 flex space-x-5">
+        <div className="relative my-10 flex space-x-5" id="profile_section">
           <RoundedButtonMD
             text="Items"
             onButtonClick={() => {
@@ -342,7 +353,7 @@ const Profile = () => {
             }}
             active={!itemsExpanded}
           />
-          <div className=" absolute md:-right-24 -right-10">
+          <div className=" absolute md:-right-24 -right-10" id="nfts">
             <RoundedButtonSM
               icon={
                 <img
@@ -364,7 +375,7 @@ const Profile = () => {
         </div>
         {filterExpanded && <FilterPart />}
         {itemsExpanded && <ItemsPart Items={nfts} />}
-        {!itemsExpanded && <ActivityPart />}
+        {!itemsExpanded && <ActivityPart  />}
       </div>
     </div>
   );

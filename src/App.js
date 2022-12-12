@@ -1,10 +1,9 @@
 import React, { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { Route, Routes, Navigate } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
-import axios from "axios";
 
 import "./App.css";
 import "./custom.css";
@@ -12,9 +11,7 @@ import Header from "./components/header";
 
 // import "react-toastify/dist/ReactToastify.css";
 import {
-  connect,
   isConnected,
-  setChain,
   // connectedAccount,
 } from "./store/accountReducer";
 import Profile from "./pages/Profile";
@@ -85,8 +82,8 @@ export const main_routes = [
     key: "place_order",
     title: "Place Order",
     description: "place order",
-    component: <OrderSummary />,
-    path: "/client/order_summary",
+    // component: <OrderSummary />,
+    path: "/client/profile_",
     isEnabled: true,
     appendDivider: true,
   },
@@ -94,12 +91,10 @@ export const main_routes = [
 
 function App() {
   const is_Connected = useSelector(isConnected);
-  // const connected_account = useSelector(connectedAccount);
-  const dispatch = useDispatch();
 
   useEffect(() => {
     // if (!is_Connected) {
-      connectWallet();
+      
     // }
     //eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -116,27 +111,7 @@ function App() {
     // await dispatch(initializeSelected());
   };
 
-  const connectWallet = async () => {
-    // if (!is_Connected) {
-      await window.ethereum.send("eth_requestAccounts");
-      dispatch(setChain(Number(window.ethereum?.networkVersion)));
-      await window.ethereum.request({
-        method: "wallet_requestPermissions",
-        params: [{ eth_accounts: {} }],
-      });
-      const accounts = await window.ethereum.request({
-        method: "eth_accounts",
-      });
-      console.log('posting wallet address');
-      await axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/user/`, {
-        wallet_address: accounts[0]
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-      if (accounts[0]) dispatch(connect(accounts[0]));
-    // }
-  };
+  
 
   return (
     <QueryClientProvider client={queryClient}>
@@ -155,13 +130,19 @@ function App() {
             // element={<Navigate to="/category" replace />}
             element={<Navigate to="/client/profile" replace />}
           />
-          {main_routes.map((route) => (
+          {main_routes.map((route) => {
+            if(route.key === 'place_order') return(<Route
+              path="/client/profile_"
+              // element={<Navigate to="/category" replace />}
+              element={<Navigate to="/client/profile" replace />}
+            />)
+            return(
             <Route
               key={route.key}
               path={route.path}
               element={route.component}
             />
-          ))}
+          )})}
           <Route key="profile" path="client/profile" element={<Profile />} />
           <Route
             key="category"

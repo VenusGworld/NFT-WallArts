@@ -1,10 +1,12 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import { RectButton } from "../../components/Input";
 import ChooseFormatPart from "./ChooseFormatPart";
 import PlaceOrderPart from "./PlaceOrderPart";
 import ProcessPart from "./ProcessPart";
 
 const Home = () => {
+  const navigate = useNavigate();
   return (
     <div className="h-full relative mt-24 bg-[#0b041b]">
       <div className=" relative w-full">
@@ -42,7 +44,12 @@ const Home = () => {
             some hidden masterpieces gathering dust in your crypto wallet.
           </div>
           <div className="sm:w-1/2 w-full">
-            <RectButton text={"Create My NFT Display"} />
+            <RectButton text={"Create My NFT Display"} onButtonClick={() => {
+               navigate({
+                pathname: "/client/profile",
+                search: `?id=${'nfts'}`,
+              });
+            }}/>
           </div>
         </div>
         {/* body */}
@@ -65,7 +72,12 @@ const Home = () => {
           </div>
           <ChooseFormatPart/>
           <div className="sm:w-1/5 w-1/2 text-black">
-            <RectButton text={"Create My NFT Display"} />
+            <RectButton text={"Create My NFT Display"}  onButtonClick={() => {
+               navigate({
+                pathname: "/client/profile",
+                search: `?id=${'nfts'}`,
+              });
+            }}/>
           </div>
           <ProcessPart/>
           <PlaceOrderPart/>

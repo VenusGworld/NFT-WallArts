@@ -57,7 +57,6 @@ const PreviewPart = ({ orderClickHandle }) => {
           <RoundedButtonMD
             text="Adding Cart"
             onButtonClick={() => {
-              // navigate("/order_summary");
               orderClickHandle(false);
             }}
             active
@@ -66,7 +65,6 @@ const PreviewPart = ({ orderClickHandle }) => {
           <RoundedButtonMD
             text="Order Now"
             onButtonClick={() => {
-              // navigate("/order_summary");
               orderClickHandle(true);
             }}
             active

@@ -1,10 +1,22 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useSearchParams } from "react-router-dom";
+import { useOrder } from "../../hooks/useOrder";
 
 import PreviewPart from "./PreviewPart";
 import TimeLinePart from "./TimeLinePart";
 
 const OrderSummary = () => {
+  const orders = useOrder();
   const [selectedOrderIndex,selectOrder] = useState(0);
+  const [searchParams] = useSearchParams();
+  
+  useEffect(() => {
+    orders?.data?.data?.forEach((item, i) => {
+      if(item?._id === searchParams.get('order_id')) selectOrder(i)
+    })
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchParams.get('order_id')])
+  
   return (
     <div className="w-full h-full mt-20 relative text-white">
       <div className="bg-[#363f54] w-full p-10 relative flex flex-col justify-start items-start">
