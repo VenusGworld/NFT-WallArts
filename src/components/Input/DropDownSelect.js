@@ -1,9 +1,15 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
+import { useDetectClickOutside } from "react-detect-click-outside";
 
 const DropDownSelect = ({ list, onChangeHandle }) => {
+  const handleClickOutside = () => {
+    setExpanded(!expanded);
+  };
+  const ref = useDetectClickOutside({ onTriggered: handleClickOutside });
   const [expanded, setExpanded] = useState(true);
   const [selectedItem, selectItem] = useState(0);
+ 
 
   return (
     <div
@@ -15,6 +21,7 @@ const DropDownSelect = ({ list, onChangeHandle }) => {
         className={`relative w-full cursor-pointer px-7 py-5 ${
           expanded ? " bg-[#57637C] overflow-hidden " : "  bg-[#4a5367] "
         }`}
+        ref={ref}
         onClick={() => {
           setExpanded(!expanded);
         }}

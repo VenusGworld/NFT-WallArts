@@ -1,11 +1,12 @@
 import React, { useState } from "react";
+import { useDetectClickOutside } from "react-detect-click-outside";
 
 const NumberList = [
   {
     flag: (
-      <img src={process.env.REACT_APP_BACKEND_URL + "/client/img/united-states.svg"} alt="" />
+      <img src={process.env.REACT_APP_BACKEND_URL + "/client/img/united-states.svg"} alt="" className="h-8 w-8 rounded-full mr-2"/>
     ),
-    prefix: 380,
+    prefix: 1,
   },
   {
     flag: (
@@ -61,9 +62,13 @@ const NumberList = [
 ];
 
 const RoundedPhoneNumberInput = ({ placeholder, label, defaultValue, onChangeHandle }) => {
+  const handleClickOutside = () => {
+    if(!expanded) setExpanded(!expanded);
+  };
   const [value, setValue] = useState(defaultValue);
   const [expanded, setExpanded] = useState(true);
   const [selectedItem, selectItem] = useState(0);
+  const ref = useDetectClickOutside({ onTriggered: handleClickOutside });
 
   return (
     <div className="flex relative">
@@ -72,6 +77,7 @@ const RoundedPhoneNumberInput = ({ placeholder, label, defaultValue, onChangeHan
         onClick={() => {
           setExpanded(!expanded);
         }}
+        ref={ref}
       >
         <span className=" text-sm">{label}</span>
         <div className="bg-[#444E66] px-5 py-3 rounded-full w-full relative border border-[#818895] flex space-x-2">

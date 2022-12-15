@@ -59,7 +59,7 @@ const Payment = () => {
     address: "",
     apt_suiteNo: "",
     postalCode: "",
-    paymentMethod: "visa",
+    paymentMethod: "crypto",
     country: initialCountry,
     state: initialState,
     city: initialCity,
@@ -266,7 +266,8 @@ const Payment = () => {
   const signer = provider.getSigner();
   const stripeButton = useRef(null);
   const submitOrder = async () => {
-    if(paymentInfo.paymentMethod === 'crypto') {
+    console.log('paymentInfo.paymentMethod', paymentInfo.paymentMethod);
+    if (paymentInfo.paymentMethod === "crypto") {
       const balance = await provider.getBalance(connected_account);
       const balanceInEther = ethers.utils.formatEther(balance);
       let temp = 0;
@@ -287,9 +288,11 @@ const Payment = () => {
             `Sent ${temp}ETH to ${process.env.REACT_APP_ADMIN_ADDRESS} successfully!`
           );
           let temp_arr = [];
-          ordered_products?.orderedProducts.forEach((item) => {
+          ordered_products?.orderedProducts.forEach((item, index) => {
+            console.log(index, item)
             temp_arr.push({
               ...item,
+              payment_type: paymentInfo.paymentMethod,
               transaction_hash:
                 process.env.REACT_APP_ETHERSCAN_HASH_URL + tx.hash,
             });
@@ -318,7 +321,7 @@ const Payment = () => {
         }
       }
     }
-    if(paymentInfo.paymentMethod === 'visa') {
+    if (paymentInfo.paymentMethod === "visa" || paymentInfo.paymentMethod === "mastercard") {
       stripeButton.current.click();
     }
   };
@@ -682,12 +685,14 @@ const Payment = () => {
           <div className="xl:w-[40%] w-full mx-auto">
             <PreviewPart
               stripeRef={stripeButton}
+              payMethod={paymentInfo.paymentMethod}
               amount={() => {
                 let temp = 0;
                 ordered_products?.orderedProducts.forEach((item) => {
                   temp = Number(Number(temp) + Number(item.total_price_eth));
                 });
-                temp*=eth_price.data;
+                temp = Number(temp * eth_price.data).toFixed(1);
+                // console.log('temp', temp)
                 return temp;
               }}
               orderClickHandle={async (isOrder) => {

@@ -1,7 +1,12 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
+import { useDetectClickOutside } from "react-detect-click-outside";
 
 const RoundedDropDownSelect = ({ list, onChangeHandle, label, value }) => {
+  const handleClickOutside = () => {
+    if(!expanded) setExpanded(!expanded);
+  };
+  const ref = useDetectClickOutside({ onTriggered: handleClickOutside });
   const [expanded, setExpanded] = useState(true);
   const [selectedItem, selectItem] = useState(value>0?value:0);
   useEffect(() => {
@@ -23,6 +28,7 @@ const RoundedDropDownSelect = ({ list, onChangeHandle, label, value }) => {
         className={`relative w-full rounded-full cursor-pointer px-7 py-4 ${
           !expanded ? " bg-[#57637C] overflow-hidden " : "  bg-[#4a5367] "
         } border border-[#818895]`}
+        ref={ref}
         onClick={() => {
           setExpanded(!expanded);
         }}

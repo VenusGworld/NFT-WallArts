@@ -8,7 +8,7 @@ import { useETHPrice } from "../../hooks/useEthPrice";
 import PreviewCard from "./PreviewCard";
 import Checkout from "../../components/CheckOut";
 
-const PreviewPart = ({ orderClickHandle, stripeRef, amount }) => {
+const PreviewPart = ({ orderClickHandle, stripeRef, amount, payMethod }) => {
   // const navigate = useNavigate();
   const ordered_products = useSelector(orderedProducts);
   let temp = 0;
@@ -77,6 +77,7 @@ const PreviewPart = ({ orderClickHandle, stripeRef, amount }) => {
             description={'Only the Book'}
             amount={amount()}
             stripeRef={stripeRef}
+            payMethod={payMethod}
           />
         </div>
       </div>

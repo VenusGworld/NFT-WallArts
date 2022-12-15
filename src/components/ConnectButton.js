@@ -11,7 +11,7 @@ const ConnectButton = () => {
   const dispatch = useDispatch();
   const price_eth = useETHPrice(window.ethereum);
   const navigate = useNavigate();
-  if(!price_eth.isLoading) console.log(price_eth.data,window.ethereum)
+  // if(!price_eth.isLoading) console.log(price_eth.data,window.ethereum)
 
   useEffect(() => {
     connectWallet();
@@ -23,7 +23,7 @@ const ConnectButton = () => {
   })
 
   window.ethereum.on('networkChanged', function (networkId) {
-    console.log('networkChanged', networkId)
+    // console.log('networkChanged', networkId)
     connectWallet();
   })
   
