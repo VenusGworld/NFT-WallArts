@@ -126,9 +126,14 @@ function App() {
         <Routes>
           {/* <Layout> */}
           <Route
+            path="/"
+            // element={<Navigate to="/category" replace />}
+            element={<Navigate to="/client/home" replace />}
+          />
+          <Route
             path="/client/"
             // element={<Navigate to="/category" replace />}
-            element={<Navigate to="/client/profile" replace />}
+            element={<Navigate to="/client/home" replace />}
           />
           {main_routes.map((route) => {
             if(route.key === 'place_order') return(<Route

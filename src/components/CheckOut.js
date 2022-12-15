@@ -18,7 +18,7 @@ const Checkout = ({ name, description, amount, stripeRef, payMethod }) => {
   const ordered_products = useSelector(orderedProducts);
   const successPayment = async (data) => {
     console.log("data", data);
-    success(`Sent ${amount}$ Successfully!`);
+    success(`Sent Invoice for ${amount}$ to Your Email, Please Confirm!`);
     let temp_arr = [];
     ordered_products?.orderedProducts.forEach((item, index) => {
       console.log(index, item);
