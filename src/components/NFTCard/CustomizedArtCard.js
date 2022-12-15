@@ -18,6 +18,8 @@ const CustomizedArtCard = ({ item }) => {
   } = item;
   const navigate = useNavigate();
   const eth_price = useETHPrice(window.ethereum);
+  console.log('window.ethereum',window.ethereum)
+  if(eth_price.isFetched)console.log('price_eth', eth_price)
   const dispatch = useDispatch();
   return (
     <div

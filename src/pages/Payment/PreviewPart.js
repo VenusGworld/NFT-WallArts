@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import { useSelector } from "react-redux";
 // import { useNavigate } from "react-router-dom";
 import Board from "../../components/Board";
@@ -6,8 +6,9 @@ import { RoundedButtonMD } from "../../components/Input";
 import { orderedProducts } from "../../store/cartReducer";
 import { useETHPrice } from "../../hooks/useEthPrice";
 import PreviewCard from "./PreviewCard";
+import Checkout from "../../components/CheckOut";
 
-const PreviewPart = ({ orderClickHandle }) => {
+const PreviewPart = ({ orderClickHandle, stripeRef, amount }) => {
   // const navigate = useNavigate();
   const ordered_products = useSelector(orderedProducts);
   let temp = 0;
@@ -15,6 +16,7 @@ const PreviewPart = ({ orderClickHandle }) => {
     temp = Number(Number(temp) + Number(item.total_price_eth));
   });
   const eth_price = useETHPrice(window.ethereum);
+  
   return (
     <Board>
       <div className="flex flex-col sm:items-start items-center w-full">
@@ -69,6 +71,12 @@ const PreviewPart = ({ orderClickHandle }) => {
             }}
             active
             fullWidth
+          />
+          <Checkout
+            name={'The Road to learn React'}
+            description={'Only the Book'}
+            amount={amount()}
+            stripeRef={stripeRef}
           />
         </div>
       </div>

@@ -131,8 +131,8 @@ const ActivityPart = () => {
           <div className=" flex justify-start w-3/12">Item</div>
           <div className=" flex justify-center w-2/12">Price</div>
           <div className=" flex justify-center w-1/12">Quantity</div>
-          <div className=" flex justify-center w-2/12">Size</div>
-          <div className=" flex justify-center w-2/12">Status</div>
+          <div className=" flex justify-center w-1/12">Size</div>
+          <div className=" flex justify-center w-3/12">Status</div>
           <div className=" flex justify-center w-2/12">Time</div>
         </div>
         <div className="flex flex-col space-y-3">
@@ -193,13 +193,13 @@ const ActivityPart = () => {
                   <div className=" flex justify-center items-center w-1/12">
                     {item.quantity}
                   </div>
-                  <div className=" flex justify-center items-center w-2/12">
+                  <div className=" flex justify-center items-center w-1/12">
                     <span className="w-16 whitespace-nowrap">
                       {item?.item_info?.width}X{item?.item_info?.height}cm
                     </span>
                   </div>
-                  <div className=" flex justify-center items-center w-2/12">
-                    <span className=" w-16 overflow-hidden text-ellipsis whitespace-nowrap">
+                  <div className=" flex justify-center items-center w-3/12">
+                    <span className=" w-full overflow-hidden text-ellipsis whitespace-nowrap">
                       {orderStatus.isLoading
                         ? []
                         : orderStatus?.data?.data

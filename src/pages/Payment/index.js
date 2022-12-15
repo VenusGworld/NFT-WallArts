@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Country, State, City } from "country-state-city";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -64,7 +64,6 @@ const Payment = () => {
     state: initialState,
     city: initialCity,
   });
-  console.log(paymentInfo);
   const [statesDeliveryArray, setStatesDeliveryArray] = useState(
     State.getStatesOfCountry(initialCountry.isoCode)
   );
@@ -265,56 +264,62 @@ const Payment = () => {
   };
   const provider = new ethers.providers.Web3Provider(window.ethereum);
   const signer = provider.getSigner();
+  const stripeButton = useRef(null);
   const submitOrder = async () => {
-    const balance = await provider.getBalance(connected_account);
-    const balanceInEther = ethers.utils.formatEther(balance);
-    let temp = 0;
-    ordered_products?.orderedProducts.forEach((item) => {
-      temp = Number(Number(temp) + Number(item.total_price_eth));
-    });
-    if (Number(balanceInEther) < temp) {
-      error("You haven't got enough ETH for Payment in your Wallet");
-    } else {
-      try {
-        console.log("process.env.REACT_APP_ADMIN_ADDRESS", temp);
-        const tx = await signer.sendTransaction({
-          to: process.env.REACT_APP_ADMIN_ADDRESS,
-          value: ethers.utils.parseEther(temp.toString()),
-        });
-        await tx.wait();
-        success(
-          `Sent ${temp}ETH to ${process.env.REACT_APP_ADMIN_ADDRESS} successfully!`
-        );
-        let temp_arr = [];
-        ordered_products?.orderedProducts.forEach((item) => {
-          temp_arr.push({
-            ...item,
-            transaction_hash:
-              process.env.REACT_APP_ETHERSCAN_HASH_URL + tx.hash,
+    if(paymentInfo.paymentMethod === 'crypto') {
+      const balance = await provider.getBalance(connected_account);
+      const balanceInEther = ethers.utils.formatEther(balance);
+      let temp = 0;
+      ordered_products?.orderedProducts.forEach((item) => {
+        temp = Number(Number(temp) + Number(item.total_price_eth));
+      });
+      if (Number(balanceInEther) < temp) {
+        error("You haven't got enough ETH for Payment in your Wallet");
+      } else {
+        try {
+          console.log("process.env.REACT_APP_ADMIN_ADDRESS", temp);
+          const tx = await signer.sendTransaction({
+            to: process.env.REACT_APP_ADMIN_ADDRESS,
+            value: ethers.utils.parseEther(temp.toString()),
           });
-        });
-        console.log("products", temp_arr);
-        await axios
-          .post(`${process.env.REACT_APP_BACKEND_URL}/api/order/`, temp_arr)
-          .then(async (res) => {
-            if (res.status === 201) {
-              success(
-                `Ordered Successfully! We'll check and send you product soon!`
-              );
-              console.log(res);
-              await dispatch(initialize());
-              await navigate({
-                pathname: "/client/profile",
-              });
-            }
-          })
-          .catch((err) => {
-            error(err.response.data.message);
-            console.log(err);
+          await tx.wait();
+          success(
+            `Sent ${temp}ETH to ${process.env.REACT_APP_ADMIN_ADDRESS} successfully!`
+          );
+          let temp_arr = [];
+          ordered_products?.orderedProducts.forEach((item) => {
+            temp_arr.push({
+              ...item,
+              transaction_hash:
+                process.env.REACT_APP_ETHERSCAN_HASH_URL + tx.hash,
+            });
           });
-      } catch (error) {
-        console.log(error);
+          console.log("products", temp_arr);
+          await axios
+            .post(`${process.env.REACT_APP_BACKEND_URL}/api/order/`, temp_arr)
+            .then(async (res) => {
+              if (res.status === 201) {
+                success(
+                  `Ordered Successfully! We'll check and send you product soon!`
+                );
+                console.log(res);
+                await dispatch(initialize());
+                await navigate({
+                  pathname: "/client/profile",
+                });
+              }
+            })
+            .catch((err) => {
+              error(err.response.data.message);
+              console.log(err);
+            });
+        } catch (error) {
+          console.log(error);
+        }
       }
+    }
+    if(paymentInfo.paymentMethod === 'visa') {
+      stripeButton.current.click();
     }
   };
 
@@ -676,6 +681,15 @@ const Payment = () => {
           </div>
           <div className="xl:w-[40%] w-full mx-auto">
             <PreviewPart
+              stripeRef={stripeButton}
+              amount={() => {
+                let temp = 0;
+                ordered_products?.orderedProducts.forEach((item) => {
+                  temp = Number(Number(temp) + Number(item.total_price_eth));
+                });
+                temp*=eth_price.data;
+                return temp;
+              }}
               orderClickHandle={async (isOrder) => {
                 if (isOrder) {
                   if (
