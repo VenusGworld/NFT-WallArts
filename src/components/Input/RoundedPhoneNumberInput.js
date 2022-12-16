@@ -1,85 +1,28 @@
 import React, { useState } from "react";
-import { useDetectClickOutside } from "react-detect-click-outside";
-
-const NumberList = [
-  {
-    flag: (
-      <img src={process.env.REACT_APP_BACKEND_URL + "/client/img/united-states.svg"} alt="" className="h-8 w-8 rounded-full mr-2"/>
-    ),
-    prefix: 1,
-  },
-  {
-    flag: (
-      <svg
-        aria-hidden="true"
-        className="h-8 w-8 rounded-full mr-2"
-        xmlns="http://www.w3.org/2000/svg"
-        id="flag-icon-css-de"
-        viewBox="0 0 512 512"
-      >
-        <path fill="#ffce00" d="M0 341.3h512V512H0z"></path>
-        <path d="M0 0h512v170.7H0z"></path>
-        <path fill="#d00" d="M0 170.7h512v170.6H0z"></path>
-      </svg>
-    ),
-    prefix: 420,
-  },
-  {
-    flag: (
-      <svg
-        aria-hidden="true"
-        className="h-8 w-8 rounded-full mr-2"
-        xmlns="http://www.w3.org/2000/svg"
-        id="flag-icon-css-it"
-        viewBox="0 0 512 512"
-      >
-        <g fillRule="evenodd" strokeWidth="1pt">
-          <path fill="#fff" d="M0 0h512v512H0z"></path>
-          <path fill="#009246" d="M0 0h170.7v512H0z"></path>
-          <path fill="#ce2b37" d="M341.3 0H512v512H341.3z"></path>
-        </g>
-      </svg>
-    ),
-    prefix: 18,
-  },
-  {
-    flag: (
-      <svg
-        aria-hidden="true"
-        className="h-8 w-8 rounded-full mr-2"
-        xmlns="http://www.w3.org/2000/svg"
-        id="flag-icon-css-cn"
-        viewBox="0 0 512 512"
-      >
-        <defs>
-          <path id="a" fill="#ffde00" d="M1-.3L-.7.8 0-1 .6.8-1-.3z"></path>
-        </defs>
-        <path fill="#de2910" d="M0 0h512v512H0z"></path>
-      </svg>
-    ),
-    prefix: 260,
-  },
-];
+import 'react-phone-number-input/style.css'
+import PhoneInput from 'react-phone-number-input'
 
 const RoundedPhoneNumberInput = ({ placeholder, label, defaultValue, onChangeHandle }) => {
-  const handleClickOutside = () => {
-    if(!expanded) setExpanded(!expanded);
-  };
   const [value, setValue] = useState(defaultValue);
-  const [expanded, setExpanded] = useState(true);
-  const [selectedItem, selectItem] = useState(0);
-  const ref = useDetectClickOutside({ onTriggered: handleClickOutside });
 
   return (
-    <div className="flex relative">
-      <div
+    <div className="flex relative flex-col space-y-2 w-full cursor-pointer items-start justify-start">
+      <span className=" text-sm">{label}</span>
+      <PhoneInput
+      withCountryCallingCode
+      smartCaret
+      focusInputOnCountrySelection
+      placeholder="Enter phone number"
+      value={value}
+      onChange={e => {onChangeHandle(e); setValue(e)}}/>
+      {/* <div
         className="flex flex-col justify-start items-start space-y-2 w-full cursor-pointer"
         onClick={() => {
           setExpanded(!expanded);
         }}
         ref={ref}
       >
-        <span className=" text-sm">{label}</span>
+        
         <div className="bg-[#444E66] px-5 py-3 rounded-full w-full relative border border-[#818895] flex space-x-2">
           <div className="flex justify-center items-center space-x-2">
             <div>{NumberList[selectedItem]["flag"]}</div>
@@ -100,6 +43,8 @@ const RoundedPhoneNumberInput = ({ placeholder, label, defaultValue, onChangeHan
               setValue(e.target.value);
               onChangeHandle(NumberList[selectedItem]["prefix"]+e.target.value)
             }}
+            style={{WebkitAppearance: 'none'}}
+            type='Number'
             className=" overflow-hidden pl-2 border-l border-[#818895] bg-[#444E66] text-white mr-2"
           />
         </div>
@@ -135,7 +80,7 @@ const RoundedPhoneNumberInput = ({ placeholder, label, defaultValue, onChangeHan
             </div>
           ))}
         </div>
-      }
+      } */}
     </div>
   );
 };

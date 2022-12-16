@@ -1,7 +1,13 @@
 import React from "react";
 
 const PreviewCard = ({ info }) => {
-  const { image_for_printing, name_for_printing, item_info, quantity, total_price_eth } = info;
+  const {
+    image_for_printing,
+    name_for_printing,
+    item_info,
+    quantity,
+    total_price_eth,
+  } = info;
   return (
     <div className="flex sm:space-x-5 flex-col sm:flex-row w-full">
       <div className="rounded-2xl flex justify-center items-center w-28">
@@ -16,7 +22,9 @@ const PreviewCard = ({ info }) => {
         <div className="flex justify-between w-full">
           <div className="flex flex-col items-start">
             <span className="text-sm text-[#BFC8DD]">Frame Size</span>
-            <span>{item_info?.width}X{item_info?.height}cm</span>
+            <span>
+              {item_info?.width}X{item_info?.height}cm
+            </span>
           </div>
           <div className="flex flex-col items-end">
             <span className="text-sm text-[#BFC8DD]">Quantity</span>
@@ -33,8 +41,8 @@ const PreviewCard = ({ info }) => {
           ))}
         </div>
         <div className="flex space-x-3 items-center">
-        <span className="text-sm text-[#BFC8DD]">Price</span>
-        <span>{Number(total_price_eth).toFixed(3)} ETH</span>
+          <span className="text-sm text-[#BFC8DD]">Price</span>
+          <span>{Number(total_price_eth).toFixed(3)} ETH</span>
         </div>
       </div>
     </div>

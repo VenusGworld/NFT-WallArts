@@ -48,6 +48,34 @@
   background: rgb(128 128 128 / 90%) !important;
 }
 
+.PhoneInput--PhoneInputCountryFlag-height {
+  width: 30px;
+}
+
+input.PhoneInputInput {
+  background: #444e66;
+  padding: 12px 20px;
+  width: 100%;
+  position: relative;
+  border: 1px #818895 solid;
+  border-radius: 9999px;
+}
+
+.PhoneInputCountrySelect {
+  background: #444e66;
+}
+
+.PhoneInputCountryIcon.PhoneInputCountryIcon--border {
+  width: 50px;
+  height: 50px;
+  border-radius: 9999px;
+  border: 1px gray solid;
+}
+
+.PhoneInputCountryIconImg {
+  border-radius: 9999px;
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);

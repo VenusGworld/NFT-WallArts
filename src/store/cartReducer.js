@@ -15,11 +15,14 @@ export const cartSlice = createSlice({
     },
     initialize(state) {
       state.orderedProducts = [];
+    },
+    setCart: (state, action) => {
+      state.orderedProducts = action.payload;
     }
   },
 })
 
-export const { addingCart, initialize, clearResults } = cartSlice.actions;
+export const { addingCart, initialize, clearResults, setCart } = cartSlice.actions;
 
 export const orderedProducts = (state) => state.cart;
 

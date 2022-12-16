@@ -367,6 +367,7 @@ const Payment = () => {
                   <div className=" w-[90%] sm:w-[45%] mb-5">
                     <RoundedTextInput
                       label="Email"
+                      type='email'
                       onChangeHandle={(v) => {
                         setContactInfo({ ...contactInfo, email: v });
                       }}
