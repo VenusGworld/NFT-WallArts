@@ -52,11 +52,14 @@ const Profile = () => {
   //fetchNFTs();
   // }, [])
 
-  const fetchUserDataByAddress = () => {
-    axios
-      .get(
-        `${process.env.REACT_APP_BACKEND_URL}/api/user/address/${connected_account}`
-      )
+  const fetchUserDataByAddress = async () => {
+    await axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/user/`, {
+      wallet_address: connected_account
+    })
+    // axios
+    //   .get(
+    //     `${process.env.REACT_APP_BACKEND_URL}/api/user/address/${connected_account}`
+    //   )
       .then((res) => {
         console.log("res", res);
         if (res.status === 200) {
@@ -276,10 +279,11 @@ const Profile = () => {
               console.log(editableBio);
             }}
             title='Bio'
+            value={(user?.bio && user?.bio !== '') ? user?.bio : "Add Your Bio"}
             defaultValue={user.bio}
           >
             {/* {user.bio} */}
-            {/* {user?.bio ? user?.bio : "Your Bio"} */}
+            {/* {(user?.bio && user?.bio !== '') ? user?.bio : "Add Your Bio"} */}
           </textarea>
           {editableBio ? (
               <div
@@ -319,7 +323,7 @@ const Profile = () => {
         </div>
         <div className=" w-fit bg-[#313949] flex text-white rounded-full md:px-16 py-2 px-10">
           <div className="flex flex-col flex-1 items-center justify-center">
-            <div className=" text-3xl text-white">4,870</div>
+            <div className=" text-3xl text-white">{nfts.length}</div>
             <div className="text-gray-400">Items</div>
           </div>
           <div className="mx-6 border bg-white border-white flex justify-center items-center"></div>
