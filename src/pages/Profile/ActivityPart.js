@@ -140,7 +140,7 @@ const ActivityPart = () => {
             return (
               <Board key={i} onClick={() => {
                 navigate({
-                  pathname: "/client/order_summary",
+                  pathname: "/order_summary",
                   search: `?order_id=${item._id}`,
                 });
               }}>
@@ -160,8 +160,7 @@ const ActivityPart = () => {
                         <img
                           loading="lazy"
                           src={
-                            process.env.REACT_APP_BACKEND_URL +
-                            "/client/img/eth_icon.svg"
+                            process.env.PUBLIC_URL + "/img/eth_icon.svg"
                           }
                           alt=""
                           className=" inline-block w-7 h-7"

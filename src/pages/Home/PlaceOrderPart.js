@@ -6,7 +6,7 @@ const PlaceOrderPart = () => {
     <div className={`flex w-[80%] relative`}>
       <img
         loading="lazy"
-        src={process.env.REACT_APP_BACKEND_URL + "/client/img/home/home_4.png"}
+        src={process.env.PUBLIC_URL + "/img/home/home_4.png"}
         alt="profile_banner"
         width="100%"
       />
@@ -16,7 +16,7 @@ const PlaceOrderPart = () => {
             <span className=" text-xl sm:text-4xl inline-block">Place Order</span>
             <img
               loading="lazy"
-              src={process.env.REACT_APP_BACKEND_URL + "/client/img/home/delivery 1.svg"}
+              src={process.env.PUBLIC_URL + "/img/home/delivery 1.svg"}
               alt="profile_banner"
               width="50px"
             />

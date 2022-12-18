@@ -308,7 +308,7 @@ const Payment = () => {
                 console.log(res);
                 await dispatch(initialize());
                 await navigate({
-                  pathname: "/client/profile",
+                  pathname: "/profile",
                 });
               }
             })
@@ -716,7 +716,7 @@ const Payment = () => {
                   if (res) {
                     success("Added Product to Cart");
                     navigate({
-                      pathname: "/client/profile",
+                      pathname: "/profile",
                     });
                   }
                 }

@@ -9,7 +9,7 @@ const SearchBar = ({ placeholder }) => {
       />
       <img
         loading="lazy"
-        src={process.env.REACT_APP_BACKEND_URL + "/client/img/search.svg"}
+        src={process.env.PUBLIC_URL + "/img/search.svg"}
         className="w-5 h-5 inline-block absolute right-2 top-1/2 -translate-y-1/2"
         alt="globe"
       />

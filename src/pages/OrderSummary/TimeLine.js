@@ -13,7 +13,7 @@ const TimeLine = ({ info, last }) => {
         <span>{description}</span>
         <div>
           <img
-            src={process.env.REACT_APP_BACKEND_URL + "/client/img/clock.svg"}
+            src={process.env.PUBLIC_URL + "/img/clock.svg"}
             alt=""
             className=" mr-2 inline-block"
           />

@@ -12,7 +12,7 @@ const Home = () => {
       <div className=" relative w-full">
         <img
           loading="lazy"
-          src={process.env.REACT_APP_BACKEND_URL + "/client/img/home/home_1.png"}
+          src={process.env.PUBLIC_URL + "/img/home/home_1.png"}
           alt="profile_banner"
           width="100%"
         />
@@ -20,7 +20,7 @@ const Home = () => {
           <div className="relative w-28">
             <img
               loading="lazy"
-              src={process.env.REACT_APP_BACKEND_URL + "/client/img/home/Vector (3).svg"}
+              src={process.env.PUBLIC_URL + "/img/home/Vector (3).svg"}
               alt="profile_banner"
               width="100%"
             />
@@ -46,7 +46,7 @@ const Home = () => {
           <div className="sm:w-1/2 w-full">
             <RectButton text={"Create My NFT Display"} onButtonClick={() => {
                navigate({
-                pathname: "/client/profile",
+                pathname: "/profile",
                 search: `?id=${'nfts'}`,
               });
             }}/>
@@ -58,7 +58,7 @@ const Home = () => {
             <div className="relative w-40 text-center text-black">
               <img
                 loading="lazy"
-                src={process.env.REACT_APP_BACKEND_URL + "/client/img/home/Vector (3).svg"}
+                src={process.env.PUBLIC_URL + "/img/home/Vector (3).svg"}
                 alt="profile_banner"
                 width="100%"
               />
@@ -74,7 +74,7 @@ const Home = () => {
           <div className="sm:w-1/5 w-1/2 text-black">
             <RectButton text={"Create My NFT Display"}  onButtonClick={() => {
                navigate({
-                pathname: "/client/profile",
+                pathname: "/profile",
                 search: `?id=${'nfts'}`,
               });
             }}/>

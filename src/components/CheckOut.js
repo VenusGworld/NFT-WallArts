@@ -40,7 +40,7 @@ const Checkout = ({ name, description, amount, stripeRef, payMethod }) => {
           console.log(res);
           await dispatch(initialize());
           await navigate({
-            pathname: "/client/profile",
+            pathname: "/profile",
           });
         }
       })
@@ -103,7 +103,7 @@ const Checkout = ({ name, description, amount, stripeRef, payMethod }) => {
       amount={fromEuroToCent(amount)}
       token={onToken(amount, description)}
       currency={CURRENCY}
-      image={process.env.REACT_APP_BACKEND_URL + "/client/img/logo.svg"}
+      image={process.env.PUBLIC_URL + "/img/logo.svg"}
       stripeKey={
         setting?.data?.data?.is_payment_test ||
         setting?.data?.data?.is_payment_test === undefined

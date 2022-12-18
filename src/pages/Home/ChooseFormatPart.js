@@ -42,7 +42,7 @@ const ChooseFormatPart = () => {
       <div className="sm:w-[48%] w-full">
         <img
           loading="lazy"
-          src={process.env.REACT_APP_BACKEND_URL + "/client/img/home/home_2.png"}
+          src={process.env.PUBLIC_URL + "/img/home/home_2.png"}
           alt="profile_banner"
           width="100%"
         />

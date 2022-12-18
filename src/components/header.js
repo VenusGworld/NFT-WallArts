@@ -14,7 +14,7 @@ const Header = () => {
   // const navigate = useNavigate();
   return (
     <div className=" fixed z-[1001] w-full top-0">
-      <div className=" border-none bg-gradient-to-r from-[#2d263b] to-[#221b33] hd-nm border-theme-24 -mx-3 sm:-mx-8 px-3 sm:px-8 p-0">
+      <div className=" border-none bg-[#221b33] hd-nm border-theme-24 -mx-3 sm:-mx-8 px-3 sm:px-8 p-0">
         <div
           className="flex items-center h-24 p-1 justify-between w-full px-10"
           style={{
@@ -26,10 +26,10 @@ const Header = () => {
             <div className="ml-10 flex-1">
               <img
                 loading="lazy"
-                href={process.env.REACT_APP_BACKEND_URL + "/client/img/logo.svg"}
+                href={process.env.PUBLIC_URL + "/img/logo.svg"}
                 alt="logo"
                 className=" w-12"
-                src={process.env.REACT_APP_BACKEND_URL + "/client/img/logo.svg"}
+                src={process.env.PUBLIC_URL + "/img/logo.svg"}
               />
             </div>
             <div className=" flex-1 p-[7px 0px 0 40px] font-medium text-xs text-center md:flex hidden mx-2 items-center">
@@ -54,7 +54,7 @@ const Header = () => {
               <div>
                 <img
                   loading="lazy"
-                  src={process.env.REACT_APP_BACKEND_URL + "/client/img/globe_icon.svg"}
+                  src={process.env.PUBLIC_URL + "/img/globe_icon.svg"}
                   className="w-5 h-5 mr-2 text-white inline-block"
                   alt="globe"
                 />

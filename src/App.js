@@ -56,7 +56,7 @@ export const main_routes = [
     title: "Home",
     description: "Home",
     component: <Home />,
-    path: "/client/home",
+    path: "/home",
     isEnabled: true,
     appendDivider: true,
   },
@@ -65,7 +65,7 @@ export const main_routes = [
     title: "Products",
     description: "products",
     component: <Home />,
-    path: "/client/products",
+    path: "/products",
     isEnabled: true,
     appendDivider: true,
   },
@@ -74,7 +74,7 @@ export const main_routes = [
     title: "Process",
     description: "process",
     component: <Home />,
-    path: "/client/process",
+    path: "/process",
     isEnabled: true,
     appendDivider: true,
   },
@@ -83,7 +83,7 @@ export const main_routes = [
     title: "Place Order",
     description: "place order",
     // component: <OrderSummary />,
-    path: "/client/profile_",
+    path: "/profile_",
     isEnabled: true,
     appendDivider: true,
   },
@@ -128,18 +128,14 @@ function App() {
           <Route
             path="/"
             // element={<Navigate to="/category" replace />}
-            element={<Navigate to="/client/home" replace />}
-          />
-          <Route
-            path="/client/"
-            // element={<Navigate to="/category" replace />}
-            element={<Navigate to="/client/home" replace />}
+            element={<Navigate to="/home" replace />}
           />
           {main_routes.map((route) => {
             if(route.key === 'place_order') return(<Route
-              path="/client/profile_"
+              key={'/profile_'}
+              path="/profile_"
               // element={<Navigate to="/category" replace />}
-              element={<Navigate to="/client/profile" replace />}
+              element={<Navigate to="/profile" replace />}
             />)
             return(
             <Route
@@ -148,10 +144,10 @@ function App() {
               element={route.component}
             />
           )})}
-          <Route key="profile" path="client/profile" element={<Profile />} />
+          <Route key="profile" path="/profile" element={<Profile />} />
           <Route
             key="category"
-            path="client/category"
+            path="/category"
             element={
               is_Connected ? (
                 <Category />
@@ -164,12 +160,12 @@ function App() {
           />
           <Route
             key="customizedArt"
-            path="client/customizedArt"
+            path="/customizedArt"
             element={<CustomizedArt />}
           />
           <Route
             key="preview"
-            path="client/preview"
+            path="/preview"
             element={
               is_Connected ? (
                 <Preview />
@@ -182,7 +178,7 @@ function App() {
           />
           <Route
             key="payment"
-            path="client/payment"
+            path="/payment"
             element={
               is_Connected ? (
                 <Payment />
@@ -195,7 +191,7 @@ function App() {
           />
           <Route
             key="order_summary"
-            path="client/order_summary"
+            path="/order_summary"
             element={
               is_Connected ? (
                 <OrderSummary />

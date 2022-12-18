@@ -19,7 +19,7 @@ const PreviewPart = ({selectOrder, selectedOrder}) => {
           {orders?.data?.data?.map((item, i) => {
             return <PreviewCard isSelected={selectedOrder===i} onClickHandle={() => {
               navigate({
-                pathname: "/client/order_summary",
+                pathname: "/order_summary",
                 search: `?order_id=${item._id}`,
               }, {replace: true});
             }} info={item} key={i} status={

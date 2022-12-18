@@ -55,7 +55,7 @@ const CalendarInput = ({ list, onChangeHandle }) => {
         {formatDate(date)}
         <img
           loading="lazy"
-          src={process.env.REACT_APP_BACKEND_URL + "/client/img/calendar.svg"}
+          src={process.env.PUBLIC_URL + "/img/calendar.svg"}
           alt=""
           className={`absolute w-5 h-5 right-3 top-1/2 -translate-y-1/2`}
         />
@@ -71,7 +71,7 @@ const CalendarInput = ({ list, onChangeHandle }) => {
             nextLabel={
               <img
                 loading="lazy"
-                src={process.env.REACT_APP_BACKEND_URL + "/client/img/triangle.svg"}
+                src={process.env.PUBLIC_URL + "/img/triangle.svg"}
                 alt=""
                 className={`w-5 h-5 -my-1 mx-2 rotate-90`}
               />
@@ -79,7 +79,7 @@ const CalendarInput = ({ list, onChangeHandle }) => {
             prevLabel={
               <img
                 loading="lazy"
-                src={process.env.REACT_APP_BACKEND_URL + "/client/img/triangle.svg"}
+                src={process.env.PUBLIC_URL + "/img/triangle.svg"}
                 alt=""
                 className={`w-5 h-5 -my-1 mx-2 -rotate-90`}
               />

@@ -13,7 +13,7 @@ const CustomizedArt = () => {
         <div className="relative">
           <img
             loading="lazy"
-            src={process.env.REACT_APP_BACKEND_URL + "/client/img/image40.png"}
+            src={process.env.PUBLIC_URL + "/img/image40.png"}
             className="w-full object-cover"
             alt="background"
           />

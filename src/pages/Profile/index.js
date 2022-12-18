@@ -102,7 +102,7 @@ const Profile = () => {
     <div className="h-full relative mt-20 bg-[#363F54]">
       <img
         loading="lazy"
-        src={process.env.REACT_APP_BACKEND_URL + "/client/img/img1 1.png"}
+        src={process.env.PUBLIC_URL + "/img/img1 1.png"}
         alt="profile_banner"
         width="100%"
       />
@@ -141,8 +141,7 @@ const Profile = () => {
             <img
               loading="lazy"
               src={
-                process.env.REACT_APP_BACKEND_URL +
-                "/client/img/sandbox_mark.svg"
+                process.env.PUBLIC_URL + "/img/sandbox_mark.svg"
               }
               alt=""
               className=" w-32 h-32 rounded-full"
@@ -236,15 +235,14 @@ const Profile = () => {
               </div>
             ) : null}
           </div>
-          <img
+          {/* <img
             loading="lazy"
             src={
-              process.env.REACT_APP_BACKEND_URL +
-              "/client/img/verified_icon.svg"
+              process.env.PUBLIC_URL + "/img/verified_icon.svg"
             }
             alt=""
             className=" absolute w-9 h-9 top-0 sm:-right-24 -right-10"
-          />
+          /> */}
         </div>
         <div className=" text-gray-400">
           Joined: {new Date(user?.date_joined).toLocaleString()}
@@ -332,7 +330,7 @@ const Profile = () => {
               <img
                 loading="lazy"
                 src={
-                  process.env.REACT_APP_BACKEND_URL + "/client/img/eth_icon.svg"
+                  process.env.PUBLIC_URL + "/img/eth_icon.svg"
                 }
                 alt=""
                 className=" inline-block w-8 h-8"
@@ -363,8 +361,7 @@ const Profile = () => {
                 <img
                   loading="lazy"
                   src={
-                    process.env.REACT_APP_BACKEND_URL +
-                    "/client/img/filter_icon.svg"
+                    process.env.PUBLIC_URL + "/img/filter_icon.svg"
                   }
                   className="w-3 h-3 text-black inline-block"
                   alt="filter"
