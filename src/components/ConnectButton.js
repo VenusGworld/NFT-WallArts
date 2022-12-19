@@ -22,7 +22,7 @@ const ConnectButton = () => {
   const dispatch = useDispatch();
   const [user, setUser] = useState({});
   const navigate = useNavigate();
-  // if(!price_eth.isLoading) console.log(price_eth.data,window.ethereum)
+  // if(!price_eth.isLoading) console.log(price_eth.data,window?.ethereum)
   useEffect(() => {
     connectWallet();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -46,33 +46,33 @@ const ConnectButton = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [connected_account, is_Connected]);
 
-  window.ethereum.on("accountsChanged", function () {
+  window?.ethereum.on("accountsChanged", function () {
     connectWallet();
   });
 
-  window.ethereum.on("networkChanged", function (networkId) {
+  window?.ethereum.on("networkChanged", function (networkId) {
     // console.log('networkChanged', networkId)
     connectWallet();
   });
 
-  window.ethereum.on("chainChanged", (_chainId) => {
+  window?.ethereum.on("chainChanged", (_chainId) => {
     dispatch(setChain(Number(_chainId)));
   });
 
   const connectWallet = async () => {
-    const account = await window.ethereum.request({
+    const account = await window?.ethereum.request({
       method: "eth_accounts",
     });
     // console.log(process.env.REACT_APP_SHOULD_CONNECTED_CHAIN, NETWORKS[process.env.REACT_APP_SHOULD_CONNECTED_CHAIN].chainId !== connected_chain, '0x'+NETWORKS[process.env.REACT_APP_SHOULD_CONNECTED_CHAIN].chainId.toString(16))
     if (!is_Connected || account[0] !== connected_account) {
-      await window.ethereum.send("eth_requestAccounts");
-      dispatch(setChain(Number(window.ethereum?.networkVersion)));
-      await window.ethereum.request({
+      await window?.ethereum.send("eth_requestAccounts");
+      dispatch(setChain(Number(window?.ethereum?.networkVersion)));
+      await window?.ethereum.request({
         method: "wallet_requestPermissions",
         params: [{ eth_accounts: {}}]
         
       });
-      const accounts = await window.ethereum.request({
+      const accounts = await window?.ethereum.request({
         method: "eth_accounts",
       });
       await axios
@@ -89,9 +89,9 @@ const ConnectButton = () => {
           console.log(err);
         });
     }
-    else if(NETWORKS[process.env.REACT_APP_SHOULD_CONNECTED_CHAIN].chainId !== connected_chain) {
+    if(NETWORKS[process.env.REACT_APP_SHOULD_CONNECTED_CHAIN].chainId !== connected_chain) {
       try {
-        await window.ethereum.request({
+        await window?.ethereum.request({
           method: 'wallet_switchEthereumChain',
           params: [{ chainId: '0x'+NETWORKS[process.env.REACT_APP_SHOULD_CONNECTED_CHAIN].chainId.toString(16), }],
         });
@@ -99,7 +99,7 @@ const ConnectButton = () => {
         // This error code indicates that the chain has not been added to MetaMask.
         if (switchError.code === 4902) {
           try {
-            await window.ethereum.request({
+            await window?.ethereum.request({
               method: 'wallet_addEthereumChain',
               params: [
                 {
@@ -144,18 +144,18 @@ const ConnectButton = () => {
       ) : null}
       <div
         onClick={async () => {
-          const account = await window.ethereum.request({
+          const account = await window?.ethereum.request({
             method: "eth_accounts",
           });
 
           if (!is_Connected || account[0] !== connected_account) {
-            await window.ethereum.send("eth_requestAccounts");
-            dispatch(setChain(Number(window.ethereum?.networkVersion)));
-            await window.ethereum.request({
+            await window?.ethereum.send("eth_requestAccounts");
+            dispatch(setChain(Number(window?.ethereum?.networkVersion)));
+            await window?.ethereum.request({
               method: "wallet_requestPermissions",
               params: [{ eth_accounts: {} }],
             });
-            const accounts = await window.ethereum.request({
+            const accounts = await window?.ethereum.request({
               method: "eth_accounts",
             });
             console.log("posting wallet address");
@@ -169,7 +169,7 @@ const ConnectButton = () => {
             })
             .catch((err) => {});;
             if (accounts[0]) dispatch(connect(accounts[0]));
-            // const price_eth = useETHPrice(window.ethereum)
+            // const price_eth = useETHPrice(window?.ethereum)
             // dispatch(setEthPrice(price_eth))
           } else {
             navigate(
