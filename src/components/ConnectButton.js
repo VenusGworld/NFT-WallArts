@@ -23,7 +23,6 @@ const ConnectButton = () => {
   const [user, setUser] = useState({});
   const navigate = useNavigate();
   // if(!price_eth.isLoading) console.log(price_eth.data,window.ethereum)
-
   useEffect(() => {
     connectWallet();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -215,7 +214,13 @@ const ConnectButton = () => {
             }
       </div>
 
-      <span className=" inline-block w-7 ml-5 text-gray-300 relative mx-5">
+      <span className=" inline-block w-7 ml-5 text-gray-300 relative mx-5 hover:text-gray-400 cursor-pointer"
+        onClick={() => {
+          navigate({
+            pathname: "/order_summary",
+          });
+        }}
+      >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
@@ -231,9 +236,9 @@ const ConnectButton = () => {
           />
         </svg>
         <span style={{borderWidth: '5px', fontSize: '9px'}} className=" absolute text-center -top-2 px-1 w-fit h-6 bg-red-700 border border-[#221b33] rounded-full">{
-          orders?.data?.data.filter((order, i) => {
+          (orders?.data?.data)? orders?.data?.data.filter((order, i) => {
             return(order?.order_statuses[order?.order_statuses.length-1]?.order_status_id !== orderStatus?.data?.data[orderStatus?.data?.data.length-1]._id)
-          }).length
+          }).length : 0
         }</span>
       </span>
     </div>

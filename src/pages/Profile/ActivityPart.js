@@ -152,7 +152,7 @@ const ActivityPart = () => {
                       alt=""
                       className="w-16 h-16 rounded-full"
                     />
-                    <div className=" ml-3">{item?.name_for_printing}</div>
+                    <div className=" ml-3 overflow-x-auto">{item?.name_for_printing}</div>
                   </div>
                   <div className=" flex justify-center w-2/12 flex-col items-center">
                     <div className="flex flex-col justify-end">

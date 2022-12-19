@@ -22,7 +22,7 @@ const Profile = () => {
   const [editableUserName, seteditableUserName] = useState(false);
   const [userName, setUserName] = useState("");
   const [editableBio, seteditableBio] = useState(false);
-  const [bio, setBio] = useState("");
+  const [bio, setBio] = useState("Add Your Bio");
 
   const imgButton = useRef(null);
   // const [pageKey, setpageKey] = useState("");
@@ -268,18 +268,20 @@ const Profile = () => {
             style={{ resize: "none" }}
             className="bg-[#363f54] h-12 w-full text-center my-1 text-gray-400 text-sm break-words"
             onChange={(v) => {
+              console.log('v?.target.value', v?.target.value)
               if (
                 v?.target.value !== user.bio
               ) {
                 seteditableBio(true);
                 setBio(v?.target.value);
               } else seteditableBio(false);
-              console.log(editableBio);
+              // console.log(editableBio);
             }}
             title='Bio'
-            value={(user?.bio && user?.bio !== '') ? user?.bio : "Add Your Bio"}
+            value= {(user?.bio && user?.bio !== '' && !editableBio) ? user?.bio : bio}
             defaultValue={user.bio}
           >
+          
             {/* {user.bio} */}
             {/* {(user?.bio && user?.bio !== '') ? user?.bio : "Add Your Bio"} */}
           </textarea>
