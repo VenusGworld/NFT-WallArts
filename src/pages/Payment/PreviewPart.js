@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 // import { useNavigate } from "react-router-dom";
 import Board from "../../components/Board";
@@ -102,7 +102,7 @@ const PreviewPart = ({ orderClickHandle, stripeRef, amount, payMethod }) => {
           <Checkout
             name={'The Road to learn React'}
             description={'Only the Book'}
-            amount={Number(temp * eth_price.data).toFixed(1)}
+            amount={Number(Number(temp * eth_price.data).toFixed(1))}
             stripeRef={stripeRef}
             payMethod={payMethod}
           />

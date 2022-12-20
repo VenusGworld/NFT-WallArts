@@ -14,7 +14,7 @@ const Checkout = ({ name, description, amount, stripeRef, payMethod }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   // console.log((setting?.data?.data?.is_payment_test || setting?.data?.data?.is_payment_test ===undefined)?process.env.REACT_APP_STRIPE_TEST_PUBLISHABLE:process.env.REACT_APP_STRIPE_LIVE_PUBLISHABLE);
-  const fromEuroToCent = (amount) => amount * 100;
+  const fromEuroToCent = (amount) => Number(Number(amount * 100).toFixed(1));
   const ordered_products = useSelector(orderedProducts);
   const successPayment = async (data) => {
     console.log("data", data);
@@ -88,6 +88,7 @@ const Checkout = ({ name, description, amount, stripeRef, payMethod }) => {
         source: token.id,
         currency: CURRENCY,
         amount: fromEuroToCent(amount),
+        // amount: amount,
       })
       .then((data) => {
         return successPayment(data);
@@ -95,12 +96,14 @@ const Checkout = ({ name, description, amount, stripeRef, payMethod }) => {
       .catch((data) => {
         return errorPayment(data);
       });
+    console.log('amount', amount, typeof amount)
   if (setting.isLoading) <></>;
   return (
     <StripeCheckout
       name={"Payment"}
       description={"Description"}
       amount={fromEuroToCent(amount)}
+      // amount={amount}
       token={onToken(amount, description)}
       currency={CURRENCY}
       image={process.env.PUBLIC_URL + "/img/logo.svg"}

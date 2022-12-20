@@ -5,6 +5,13 @@ export const selectedReducer = createSlice({
   initialState: {
     nft_img: "",
     nft_name: "",
+
+    nft_description: "",
+    nft_contractAddress: "",
+    nft_tokenId: "",
+    nft_symbol: "",
+    nft_totalSupply: "",
+
     item_data: {},
     quantity: 0
   },
@@ -12,6 +19,11 @@ export const selectedReducer = createSlice({
     setNFTData: (state, action) => {
       state.nft_img = action.payload.image;
       state.nft_name = action.payload.title;
+      state.nft_description = action.payload.description;
+      state.nft_contractAddress = action.payload.contract;
+      state.nft_tokenId = action.payload.id;
+      state.nft_symbol = action.payload.symbol;
+      state.nft_totalSupply = action.payload.total;
     },
     setItem: (state, action) => {
       state.item_data = action.payload;

@@ -1,5 +1,5 @@
 import React from "react";
-import { useState, useEffect, useRef } from "react";
+import { useState } from "react";
 import { useDetectClickOutside } from "react-detect-click-outside";
 
 const DropDownSelect = ({ list, onChangeHandle }) => {

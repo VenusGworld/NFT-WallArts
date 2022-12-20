@@ -1,5 +1,5 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import { RectButton } from "../../components/Input";
 import ChooseFormatPart from "./ChooseFormatPart";
 import PlaceOrderPart from "./PlaceOrderPart";
@@ -7,6 +7,21 @@ import ProcessPart from "./ProcessPart";
 
 const Home = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  let target_process = React.createRef();
+  let target_product = React.createRef();
+  useEffect(() => {
+    scrollToTarget(location.pathname === '/products' ? target_product : (location.pathname === '/process' ? target_process : null))
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [location.pathname])
+
+  const scrollToTarget = (targetRef) => {
+    if (targetRef) setTimeout(() => {
+      targetRef.scrollIntoView({
+        behavior: 'smooth'
+      })
+    }, 10);
+  }
   return (
     <div className="h-full relative mt-24 bg-[#0b041b]">
       <div className=" relative w-full">
@@ -30,12 +45,12 @@ const Home = () => {
           </div>
           <div className=" md:text-5xl text-xl text-start font-bold leading-loose">
             <span className="inline-block mb-7">Bring Your{" "}
-            <span className="relative text-[#572dff] border border-[#572dff] rounded-md bg-[#b4acbc] z-10 px-1 pt-1">
-              NFT
-              <span className=" absolute left-2 top-2 h-full text-[#572dff00] border border-[#572dff] rounded-md px-1 pt-1 -z-10">
+              <span className="relative text-[#572dff] border border-[#572dff] rounded-md bg-[#b4acbc] z-10 px-1 pt-1">
                 NFT
-              </span>
-            </span>{" "}
+                <span className=" absolute left-2 top-2 h-full text-[#572dff00] border border-[#572dff] rounded-md px-1 pt-1 -z-10">
+                  NFT
+                </span>
+              </span>{" "}
             </span>
             <span>Artwork to Life</span>
           </div>
@@ -45,15 +60,17 @@ const Home = () => {
           </div>
           <div className="sm:w-1/2 w-full">
             <RectButton text={"Create My NFT Display"} onButtonClick={() => {
-               navigate({
+              navigate({
                 pathname: "/profile",
                 search: `?id=${'nfts'}`,
               });
-            }}/>
+            }} />
           </div>
         </div>
         {/* body */}
+
         <div className=" py-12 px-5 flex flex-col text-white items-center space-y-12">
+          <div ref={ref => { target_product = ref }} className='mb-10' />
           <div className="flex flex-col space-y-3 items-center mt-24">
             <div className="relative w-40 text-center text-black">
               <img
@@ -70,17 +87,21 @@ const Home = () => {
             <span className=" text-xs font-thin text-gray-400">Breathe life into your digital artwork by choosing a format that suits your interior space.</span>
             <span className=" text-xs font-thin text-gray-400">Leave it to us - We'll upscale your NFT to bring you the finest quality print.</span>
           </div>
-          <ChooseFormatPart/>
+
+          <ChooseFormatPart />
+          <div ref={ref => { target_process = ref }} className='mb-10' />
           <div className="sm:w-1/5 w-1/2 text-black">
-            <RectButton text={"Create My NFT Display"}  onButtonClick={() => {
-               navigate({
+            <RectButton text={"Create My NFT Display"} onButtonClick={() => {
+              navigate({
                 pathname: "/profile",
                 search: `?id=${'nfts'}`,
               });
-            }}/>
+            }} />
           </div>
-          <ProcessPart/>
-          <PlaceOrderPart/>
+
+          <ProcessPart />
+
+          <PlaceOrderPart />
         </div>
       </div>
     </div>

@@ -1,23 +1,38 @@
+// import axios from "axios";
+// import React, { useEffect } from "react";
 import React from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { setNFTData } from "../../store/selectedReducer";
-import RoundedButtonBG from "../Input/RoundedButton_bg";
+// import RoundedButtonBG from "../Input/RoundedButton_bg";
 
 const ProfileNFTCard = ({ item }) => {
   const {
     rawMetadata,
-    title,
-    like,
-    auction,
+    tokenId,
+    description,
+    // like,
+    // auction,
     sale,
     price,
     sold,
-    highestBid,
-    endsIn,
+    // highestBid,
+    contract,
+    // endsIn,
   } = item;
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  // useEffect(() => {
+  //   axios
+  //       .get(`https://api.opensea.io/api/v1/asset/${contract?.address}/${tokenId}/validate`)
+  //       .then((res) => {
+  //         console.log('ssssssss', contract, res)
+  //       })
+  //       .catch((err) => {
+  //         console.log(err);
+  //       });
+  // }, [])
+  
   return (
     <div
       className="md:w-[48%] xl:w-[30%] w-[90%] shadow-2xl flex flex-col my-4 hover:scale-105 transition-all cursor-pointer"
@@ -28,7 +43,12 @@ const ProfileNFTCard = ({ item }) => {
               "ipfs://",
               "https://ipfs.moralis.io:2053/ipfs/"
             ),
-            title,
+            title: contract?.name,
+            description,
+            contract: contract?.address,
+            id: tokenId,
+            symbol: contract?.symbol,
+            total: contract?.totalSupply
           })
         );
         await navigate({
@@ -52,7 +72,7 @@ const ProfileNFTCard = ({ item }) => {
         <div className="flex flex-col justify-between text-sm w-full">
           <div className="flex justify-between">
             <div>Name</div>
-            <div className="flex items-center">
+            {/* <div className="flex items-center">
               <img
                 loading="lazy"
                 src={
@@ -62,10 +82,26 @@ const ProfileNFTCard = ({ item }) => {
                 className="w-5 h-5 mr-1 inline-block"
               />
               <div className=" inline-block">{like}</div>
-            </div>
+            </div> */}
           </div>
           <div className="my-2 flex justify-start sm:text-xl text-base font-bold">
-            {title}
+            {contract?.name} (<span>{contract?.symbol}</span>)
+          </div>
+          <div className="flex justify-between">
+            <div className="flex justify-center items-center space-x-2"><div className="">Total supply:</div>
+              <div className="my-2 sm:text-base text-sm">
+                {contract?.totalSupply}
+              </div></div>
+            <div className="flex justify-center items-center space-x-2"><div className="">Id:</div>
+              <div className="my-2 sm:text-base text-sm">
+                {tokenId}
+              </div></div>
+          </div>
+          <div className="flex justify-between">
+            <div>Description</div>
+          </div>
+          <div className="my-2 flex justify-start sm:text-base text-sm h-[100px] overflow-y-auto">
+            {description}
           </div>
           {sale && (
             <div className="flex flex-col">
@@ -79,7 +115,7 @@ const ProfileNFTCard = ({ item }) => {
               </div>
             </div>
           )}
-          {auction && (
+          {/* {auction && (
             <div className="flex flex-col">
               <div className="my-3 flex justify-between text-sm text-gray-500">
                 <div>Current Highest Bid </div>
@@ -90,12 +126,12 @@ const ProfileNFTCard = ({ item }) => {
                 <div className=" text-[#D3B789]">{endsIn}</div>
               </div>
             </div>
-          )}
-          {!sale && !auction && (
+          )} */}
+          {/* {!sale && !auction && (
             <div className=" h-20 flex justify-center items-center py-4">
               <RoundedButtonBG active text="List Here" />
             </div>
-          )}
+          )} */}
         </div>
       </div>
     </div>

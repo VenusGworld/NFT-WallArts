@@ -70,7 +70,6 @@ const Profile = () => {
   };
 
   const handleImage = async (e) => {
-    console.log("user", profileImage);
     await setProfileImage(e.target.files[0]);
     let formData = new FormData();
     formData.append("image", e.target.files[0]);
@@ -95,8 +94,6 @@ const Profile = () => {
 
     setNfts(nfts.ownedNfts);
   };
-
-  console.log("user", user);
 
   return (
     <div className="h-full relative mt-20 bg-[#363F54]">
@@ -193,7 +190,6 @@ const Profile = () => {
                   seteditableUserName(true);
                   setUserName(v?.target.value);
                 } else seteditableUserName(false);
-                console.log(editableUserName);
               }}
             />
 
@@ -268,7 +264,6 @@ const Profile = () => {
             style={{ resize: "none" }}
             className="bg-[#363f54] h-12 w-full text-center my-1 text-gray-400 text-sm break-words"
             onChange={(v) => {
-              console.log('v?.target.value', v?.target.value)
               if (
                 v?.target.value !== user.bio
               ) {

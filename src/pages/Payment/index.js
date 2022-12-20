@@ -231,6 +231,12 @@ const Payment = () => {
       formData.item_info = selected_data?.item_data;
       formData.image_for_printing = selected_data?.nft_img;
       formData.name_for_printing = selected_data?.nft_name;
+      formData.nft_description = selected_data?.nft_description;
+      formData.nft_contractAddress = selected_data?.nft_contractAddress;
+      formData.nft_tokenId = selected_data?.nft_tokenId;
+      formData.nft_symbol = selected_data?.nft_symbol;
+      formData.nft_totalSupply = selected_data?.nft_totalSupply;
+
       let dis = 0;
       if (selected_data?.item_data?.isBulk) {
         let min = 100000;
@@ -266,7 +272,7 @@ const Payment = () => {
   const signer = provider.getSigner();
   const stripeButton = useRef(null);
   const submitOrder = async () => {
-    console.log('paymentInfo.paymentMethod', paymentInfo.paymentMethod);
+    // console.log('paymentInfo.paymentMethod', paymentInfo.paymentMethod);
     if (paymentInfo.paymentMethod === "crypto") {
       const balance = await provider.getBalance(connected_account);
       const balanceInEther = ethers.utils.formatEther(balance);
