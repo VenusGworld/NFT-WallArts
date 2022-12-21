@@ -6,6 +6,7 @@ import {
   isConnected,
   setChain,
   connectedChain,
+  clearResults
 } from "../store/accountReducer";
 import { useNavigate } from "react-router-dom";
 import { NETWORKS } from "../constant/constants";
@@ -24,7 +25,8 @@ const ConnectButton = () => {
   const navigate = useNavigate();
   // if(!price_eth.isLoading) console.log(price_eth.data,window?.ethereum)
   useEffect(() => {
-    connectWallet();
+    dispatch(clearResults());
+    // connectWallet();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -119,7 +121,7 @@ const ConnectButton = () => {
 
   return (
     <div className="flex flex-row-reverse items-center">
-      {Object.keys(NETWORKS).map((oneKey, i) => {
+      {/* {Object.keys(NETWORKS).map((oneKey, i) => {
         if (NETWORKS[oneKey]?.chainId === connected_chain && is_Connected)
           return (
             <div
@@ -141,7 +143,7 @@ const ConnectButton = () => {
         >
           Unknown Chain
         </div>
-      ) : null}
+      ) : null} */}
       <div
         onClick={async () => {
           const account = await window?.ethereum.request({
@@ -183,10 +185,10 @@ const ConnectButton = () => {
             );
           }
         }}
-        className="cursor-pointer text-sm hover:bg-[#f5cf92] transition-all p-1 rounded-full border bg-green-900 border-gray-200"
+        className="cursor-pointer group text-sm hover:bg-[#f5cf92] transition-all p-1 rounded-full border bg-green-900 border-gray-200"
       >
         {!is_Connected
-          ? "Connect Wallet":( user?.avatar ? (
+          ? <span className=" group-hover:text-black transition-all text-white">{"     Connect Wallet    "}</span>:( user?.avatar ? (
             <img
               loading="lazy"
               src={
