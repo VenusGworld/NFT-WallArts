@@ -10,16 +10,17 @@ import {
 import { useNavigate } from "react-router-dom";
 import { NETWORKS } from "../constant/constants";
 import axios from "axios";
-import { useOrder } from "../hooks/useOrder";
-import { useOrderStatus } from "../hooks/useOrderStatus";
+// import { useOrder } from "../hooks/useOrder";
+// import { useOrderStatus } from "../hooks/useOrderStatus";
 import { toast } from "react-toastify";
+import { orderedProducts } from "../store/cartReducer";
 
 const ConnectButton = () => {
   const is_Connected = useSelector(isConnected);
   const connected_chain = useSelector(connectedChain);
   const connected_account = useSelector(connectedAccount);
-  const orders = useOrder();
-  const orderStatus = useOrderStatus();
+  // const orders = useOrder();
+  // const orderStatus = useOrderStatus();
   const dispatch = useDispatch();
   const [user, setUser] = useState({});
   const navigate = useNavigate();
@@ -124,7 +125,7 @@ const ConnectButton = () => {
     }}
   };
   // console.log(Object.keys(NETWORKS).find(x => {console.log(NETWORKS[x]); return NETWORKS[x]?.chainId === connected_chain}), 'sdfsdfsdfsfddddddd', connected_chain)
-
+  const ordered_products = useSelector(orderedProducts);
   return (
     <div className="flex flex-row-reverse items-center">
       {/* {Object.keys(NETWORKS).map((oneKey, i) => {
@@ -225,7 +226,7 @@ const ConnectButton = () => {
       <span className=" inline-block w-7 ml-5 text-gray-300 relative mx-5 hover:text-gray-400 cursor-pointer"
         onClick={() => {is_Connected?
           navigate({
-            pathname: "/order_summary",
+            pathname: "/payment",
           }):error('Connect Wallet First!')
         }}
       >
@@ -244,9 +245,7 @@ const ConnectButton = () => {
           />
         </svg>
         <span style={{borderWidth: '5px', fontSize: '9px'}} className=" absolute text-center -top-2 px-1 w-fit h-6 bg-red-700 border border-[#221b33] rounded-full">{
-          (orders?.data?.data)? orders?.data?.data.filter((order, i) => {
-            return(order?.order_statuses[order?.order_statuses.length-1]?.order_status_id !== orderStatus?.data?.data[orderStatus?.data?.data.length-1]._id)
-          }).length : 0
+          (ordered_products?.orderedProducts)? ordered_products?.orderedProducts.length : 0
         }</span>
       </span>
     </div>

@@ -31,6 +31,17 @@ export const selectedReducer = createSlice({
     setQuantity: (state, action) => {
       state.quantity = action.payload;
     },
+    initialize(state) {
+      state.nft_img = "";
+      state.nft_name = "";
+      state.nft_description = "";
+      state.nft_contractAddress = "";
+      state.nft_tokenId = "";
+      state.nft_symbol = "";
+      state.nft_totalSupply = "";
+      state.item_data = {};
+      state.quantity = 0;
+    },
     clearResults() {
     }
   },

@@ -5,6 +5,7 @@ import { useSetting } from "../hooks/useSetting";
 import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
 import { initialize, orderedProducts } from "../store/cartReducer";
+import { initialize as clearSelected } from "../store/selectedReducer";
 import { useNavigate } from "react-router-dom";
 
 const CURRENCY = "USD";
@@ -39,6 +40,8 @@ const Checkout = ({ name, description, amount, stripeRef, payMethod }) => {
           );
           console.log(res);
           await dispatch(initialize());
+          await dispatch(clearSelected());
+          
           await navigate({
             pathname: "/profile",
           });

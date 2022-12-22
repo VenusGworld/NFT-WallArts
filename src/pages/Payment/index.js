@@ -16,7 +16,7 @@ import PreviewPart from "./PreviewPart";
 import { connectedAccount } from "../../store/accountReducer";
 // import { useOrderStatus } from "../../hooks/useOrderStatus";
 import axios from "axios";
-import { selectedData } from "../../store/selectedReducer";
+import { initialize as clearSelected, selectedData } from "../../store/selectedReducer";
 import {
   addingCart,
   initialize,
@@ -24,6 +24,7 @@ import {
 } from "../../store/cartReducer";
 import { useETHPrice } from "../../hooks/useEthPrice";
 import { ethers } from "ethers";
+import PreviewSelectedProduct from "./PreviewSelectedProduct";
 
 const Payment = () => {
   const connected_account = useSelector(connectedAccount);
@@ -84,6 +85,7 @@ const Payment = () => {
   );
   const [isCrypto, setIsCrypto] = useState(true);
   const [isSameAddress, setIsSameAddress] = useState(true);
+
   useEffect(() => {
     setStatesDeliveryArray(
       State.getStatesOfCountry(deliveryInfo.country.isoCode)
@@ -165,106 +167,111 @@ const Payment = () => {
   };
   const addToCart = async () => {
     let arr = [];
-
-    if (!isCrypto && !isSameAddress) {
-      arr = [
-        { v: paymentInfo.firstName, err_msg: "Payment Information First Name" },
-        { v: paymentInfo.lastName, err_msg: "Payment Information Last Name" },
-        { v: paymentInfo.address, err_msg: "Payment Information Address" },
-        {
-          v: paymentInfo.apt_suiteNo,
-          err_msg: "Payment Information Apt / Suite No.",
-        },
-        {
-          v: paymentInfo.postalCode,
-          err_msg: "Payment Information Postal Code",
-        },
-      ];
+    if (Object.keys(selected_data?.item_data).length === 0) {
+      error('Order a Product First For Adding Cart!');
+      return false;
     }
-    let { firstName, lastName, phoneNo, email } = contactInfo;
-    let { address, apt_suiteNo, postalCode, country, state, city } =
-      deliveryInfo;
-    let shouldBeCheckedValues = [
-      { v: firstName, err_msg: "Contact Information First Name" },
-      { v: lastName, err_msg: "Contact Information Last Name" },
-      { v: phoneNo, err_msg: "Contact Information Phone Number" },
-      { v: email, err_msg: "Contact Information Email" },
-      { v: address, err_msg: "Delivery Information Address" },
-      { v: apt_suiteNo, err_msg: "Delivery Information Apt / Suite No." },
-      { v: postalCode, err_msg: "Delivery Information Postal Code" },
-      ...arr,
-    ];
-    if (checkInputFormValidation(shouldBeCheckedValues)) {
-      const formData = {};
-      formData.item_id = selected_data?.item_data?._id;
-      formData.quantity = selected_data?.quantity;
-      formData.user_wallet_address = connected_account;
-      formData.contact_first_name = firstName;
-      formData.contact_last_name = lastName;
-      formData.contact_phone_number = phoneNo;
-      formData.contact_email = email;
-      formData.delivery_address = address;
-      formData.delivery_apt_suite_No = apt_suiteNo;
-      formData.delivery_country = country.isoCode;
-      formData.delivery_state = state.isoCode;
-      formData.delivery_city = city.name;
-      formData.delivery_postal_code = postalCode;
-      formData.payment_first_name =
-        isSameAddress || isCrypto ? firstName : paymentInfo.firstName;
-      formData.payment_last_name =
-        isSameAddress || isCrypto ? lastName : paymentInfo.lastName;
-      formData.payment_address =
-        isSameAddress || isCrypto ? address : paymentInfo.address;
-      formData.payment_apt_suite_No =
-        isSameAddress || isCrypto ? apt_suiteNo : paymentInfo.apt_suiteNo;
-      formData.payment_type = paymentInfo.paymentMethod;
-      formData.payment_country =
-        isSameAddress || isCrypto
-          ? country.isoCode
-          : paymentInfo.country.isoCode;
-      formData.payment_state =
-        isSameAddress || isCrypto ? state.isoCode : paymentInfo.state.isoCode;
-      formData.payment_city =
-        isSameAddress || isCrypto ? city.name : paymentInfo.city.name;
-      formData.payment_postal_code =
-        isSameAddress || isCrypto ? postalCode : paymentInfo.postalCode;
-      formData.item_info = selected_data?.item_data;
-      formData.image_for_printing = selected_data?.nft_img;
-      formData.name_for_printing = selected_data?.nft_name;
-      formData.nft_description = selected_data?.nft_description;
-      formData.nft_contractAddress = selected_data?.nft_contractAddress;
-      formData.nft_tokenId = selected_data?.nft_tokenId;
-      formData.nft_symbol = selected_data?.nft_symbol;
-      formData.nft_totalSupply = selected_data?.nft_totalSupply;
-
-      let dis = 0;
-      if (selected_data?.item_data?.isBulk) {
-        let min = 100000;
-        selected_data?.item_data?.bulk_pricing.forEach((p) => {
-          if (
-            Number(selected_data?.quantity) - p.quantity >= 0 &&
-            min > Number(selected_data?.quantity) - p.quantity
-          ) {
-            min = Number(selected_data?.quantity) - p.quantity;
-            dis = p.discount;
-          }
-        });
+    else {
+      if (!isCrypto && !isSameAddress) {
+        arr = [
+          { v: paymentInfo.firstName, err_msg: "Payment Information First Name" },
+          { v: paymentInfo.lastName, err_msg: "Payment Information Last Name" },
+          { v: paymentInfo.address, err_msg: "Payment Information Address" },
+          {
+            v: paymentInfo.apt_suiteNo,
+            err_msg: "Payment Information Apt / Suite No.",
+          },
+          {
+            v: paymentInfo.postalCode,
+            err_msg: "Payment Information Postal Code",
+          },
+        ];
       }
-      formData.total_price_eth =
-        selected_data?.item_data?.priceType === "eth"
-          ? Number(
+      let { firstName, lastName, phoneNo, email } = contactInfo;
+      let { address, apt_suiteNo, postalCode, country, state, city } =
+        deliveryInfo;
+      let shouldBeCheckedValues = [
+        { v: firstName, err_msg: "Contact Information First Name" },
+        { v: lastName, err_msg: "Contact Information Last Name" },
+        { v: phoneNo, err_msg: "Contact Information Phone Number" },
+        { v: email, err_msg: "Contact Information Email" },
+        { v: address, err_msg: "Delivery Information Address" },
+        { v: apt_suiteNo, err_msg: "Delivery Information Apt / Suite No." },
+        { v: postalCode, err_msg: "Delivery Information Postal Code" },
+        ...arr,
+      ];
+      if (checkInputFormValidation(shouldBeCheckedValues)) {
+        const formData = {};
+        formData.item_id = selected_data?.item_data?._id;
+        formData.quantity = selected_data?.quantity;
+        formData.user_wallet_address = connected_account;
+        formData.contact_first_name = firstName;
+        formData.contact_last_name = lastName;
+        formData.contact_phone_number = phoneNo;
+        formData.contact_email = email;
+        formData.delivery_address = address;
+        formData.delivery_apt_suite_No = apt_suiteNo;
+        formData.delivery_country = country.isoCode;
+        formData.delivery_state = state.isoCode;
+        formData.delivery_city = city.name;
+        formData.delivery_postal_code = postalCode;
+        formData.payment_first_name =
+          isSameAddress || isCrypto ? firstName : paymentInfo.firstName;
+        formData.payment_last_name =
+          isSameAddress || isCrypto ? lastName : paymentInfo.lastName;
+        formData.payment_address =
+          isSameAddress || isCrypto ? address : paymentInfo.address;
+        formData.payment_apt_suite_No =
+          isSameAddress || isCrypto ? apt_suiteNo : paymentInfo.apt_suiteNo;
+        formData.payment_type = paymentInfo.paymentMethod;
+        formData.payment_country =
+          isSameAddress || isCrypto
+            ? country.isoCode
+            : paymentInfo.country.isoCode;
+        formData.payment_state =
+          isSameAddress || isCrypto ? state.isoCode : paymentInfo.state.isoCode;
+        formData.payment_city =
+          isSameAddress || isCrypto ? city.name : paymentInfo.city.name;
+        formData.payment_postal_code =
+          isSameAddress || isCrypto ? postalCode : paymentInfo.postalCode;
+        formData.item_info = selected_data?.item_data;
+        formData.image_for_printing = selected_data?.nft_img;
+        formData.name_for_printing = selected_data?.nft_name;
+        formData.nft_description = selected_data?.nft_description;
+        formData.nft_contractAddress = selected_data?.nft_contractAddress;
+        formData.nft_tokenId = selected_data?.nft_tokenId;
+        formData.nft_symbol = selected_data?.nft_symbol;
+        formData.nft_totalSupply = selected_data?.nft_totalSupply;
+
+        let dis = 0;
+        if (selected_data?.item_data?.isBulk) {
+          let min = 100000;
+          selected_data?.item_data?.bulk_pricing.forEach((p) => {
+            if (
+              Number(selected_data?.quantity) - p.quantity >= 0 &&
+              min > Number(selected_data?.quantity) - p.quantity
+            ) {
+              min = Number(selected_data?.quantity) - p.quantity;
+              dis = p.discount;
+            }
+          });
+        }
+        formData.total_price_eth =
+          selected_data?.item_data?.priceType === "eth"
+            ? Number(
               selected_data?.quantity *
-                selected_data?.item_data?.price *
-                ((100 - dis) / 100)
+              selected_data?.item_data?.price *
+              ((100 - dis) / 100)
             )
-          : Number(
+            : Number(
               selected_data?.quantity *
-                selected_data?.item_data?.price *
-                ((100 - dis) / 100)
+              selected_data?.item_data?.price *
+              ((100 - dis) / 100)
             ) / eth_price.data;
-      // console.log('form_data', formData);
-      await dispatch(addingCart(formData));
-      return true;
+        // console.log('form_data', formData);
+        await dispatch(addingCart(formData));
+        return true;
+      }
     }
     return false;
   };
@@ -295,7 +302,7 @@ const Payment = () => {
           );
           let temp_arr = [];
           ordered_products?.orderedProducts.forEach((item, index) => {
-            console.log(index, item)
+            console.log(index, item);
             temp_arr.push({
               ...item,
               payment_type: paymentInfo.paymentMethod,
@@ -313,6 +320,7 @@ const Payment = () => {
                 );
                 console.log(res);
                 await dispatch(initialize());
+                await dispatch(clearSelected());
                 await navigate({
                   pathname: "/profile",
                 });
@@ -327,7 +335,10 @@ const Payment = () => {
         }
       }
     }
-    if (paymentInfo.paymentMethod === "visa" || paymentInfo.paymentMethod === "mastercard") {
+    if (
+      paymentInfo.paymentMethod === "visa" ||
+      paymentInfo.paymentMethod === "mastercard"
+    ) {
       stripeButton.current.click();
     }
   };
@@ -373,7 +384,7 @@ const Payment = () => {
                   <div className=" w-[90%] sm:w-[45%] mb-5">
                     <RoundedTextInput
                       label="Email"
-                      type='email'
+                      type="email"
                       onChangeHandle={(v) => {
                         setContactInfo({ ...contactInfo, email: v });
                       }}
@@ -410,8 +421,8 @@ const Payment = () => {
                           (x) => x.name === deliveryInfo.country.name
                         ) > 0
                           ? countries.findIndex(
-                              (x) => x.name === deliveryInfo.country.name
-                            )
+                            (x) => x.name === deliveryInfo.country.name
+                          )
                           : 0
                       }
                       list={countries.map((v) => ({
@@ -424,9 +435,9 @@ const Payment = () => {
                           ...deliveryInfo,
                           country:
                             countries[
-                              countries.findIndex((x) => x.isoCode === v) > 0
-                                ? countries.findIndex((x) => x.isoCode === v)
-                                : 0
+                            countries.findIndex((x) => x.isoCode === v) > 0
+                              ? countries.findIndex((x) => x.isoCode === v)
+                              : 0
                             ],
                         });
                         // setCountryDelivery(countries[countries.findIndex((x) => x.isoCode === v)]);
@@ -441,8 +452,8 @@ const Payment = () => {
                           (x) => x.name === deliveryInfo.state.name
                         ) > 0
                           ? statesDeliveryArray.findIndex(
-                              (x) => x.name === deliveryInfo.state.name
-                            )
+                            (x) => x.name === deliveryInfo.state.name
+                          )
                           : 0
                       }
                       list={statesDeliveryArray.map((v) => ({
@@ -455,13 +466,13 @@ const Payment = () => {
                           ...deliveryInfo,
                           state:
                             statesDeliveryArray[
-                              statesDeliveryArray.findIndex(
+                            statesDeliveryArray.findIndex(
+                              (x) => x.isoCode === v
+                            ) > 0
+                              ? statesDeliveryArray.findIndex(
                                 (x) => x.isoCode === v
-                              ) > 0
-                                ? statesDeliveryArray.findIndex(
-                                    (x) => x.isoCode === v
-                                  )
-                                : 0
+                              )
+                              : 0
                             ],
                         });
                         // setCountryDelivery(countries[countries.findIndex((x) => x.isoCode === v)]);
@@ -476,8 +487,8 @@ const Payment = () => {
                           (x) => x.name === deliveryInfo.city.name
                         ) > 0
                           ? citiesDeliveryArray.findIndex(
-                              (x) => x.name === deliveryInfo.city.name
-                            )
+                            (x) => x.name === deliveryInfo.city.name
+                          )
                           : 0
                       }
                       list={citiesDeliveryArray.map((v) => ({
@@ -493,8 +504,8 @@ const Payment = () => {
                               (x) => x.isoCode === v
                             ) > 0
                               ? citiesDeliveryArray.findIndex(
-                                  (x) => x.isoCode === v
-                                )
+                                (x) => x.isoCode === v
+                              )
                               : 0
                           ],
                         });
@@ -541,9 +552,8 @@ const Payment = () => {
                   </div>
                 )}
                 <div
-                  className={`sm:flex-row flex-col flex-wrap justify-between ${
-                    !isSameAddress && !isCrypto ? " flex" : " hidden"
-                  }`}
+                  className={`sm:flex-row flex-col flex-wrap justify-between ${!isSameAddress && !isCrypto ? " flex" : " hidden"
+                    }`}
                 >
                   <div className=" w-[90%] sm:w-[45%] mb-5">
                     <RoundedTextInput
@@ -585,8 +595,8 @@ const Payment = () => {
                           (x) => x.name === paymentInfo.country.name
                         ) > 0
                           ? countries.findIndex(
-                              (x) => x.name === paymentInfo.country.name
-                            )
+                            (x) => x.name === paymentInfo.country.name
+                          )
                           : 0
                       }
                       list={countries.map((v) => ({
@@ -599,9 +609,9 @@ const Payment = () => {
                           ...paymentInfo,
                           country:
                             countries[
-                              countries.findIndex((x) => x.isoCode === v) > 0
-                                ? countries.findIndex((x) => x.isoCode === v)
-                                : 0
+                            countries.findIndex((x) => x.isoCode === v) > 0
+                              ? countries.findIndex((x) => x.isoCode === v)
+                              : 0
                             ],
                         });
                         // setCountryDelivery(countries[countries.findIndex((x) => x.isoCode === v)]);
@@ -616,8 +626,8 @@ const Payment = () => {
                           (x) => x.name === paymentInfo.state.name
                         ) > 0
                           ? statesPaymentArray.findIndex(
-                              (x) => x.name === paymentInfo.state.name
-                            )
+                            (x) => x.name === paymentInfo.state.name
+                          )
                           : 0
                       }
                       list={statesPaymentArray.map((v) => ({
@@ -630,13 +640,13 @@ const Payment = () => {
                           ...paymentInfo,
                           state:
                             statesPaymentArray[
-                              statesPaymentArray.findIndex(
+                            statesPaymentArray.findIndex(
+                              (x) => x.isoCode === v
+                            ) > 0
+                              ? statesPaymentArray.findIndex(
                                 (x) => x.isoCode === v
-                              ) > 0
-                                ? statesPaymentArray.findIndex(
-                                    (x) => x.isoCode === v
-                                  )
-                                : 0
+                              )
+                              : 0
                             ],
                         });
                         // setCountryDelivery(countries[countries.findIndex((x) => x.isoCode === v)]);
@@ -651,8 +661,8 @@ const Payment = () => {
                           (x) => x.name === paymentInfo.city.name
                         ) > 0
                           ? citiesPaymentArray.findIndex(
-                              (x) => x.name === paymentInfo.city.name
-                            )
+                            (x) => x.name === paymentInfo.city.name
+                          )
                           : 0
                       }
                       list={citiesPaymentArray.map((v) => ({
@@ -668,8 +678,8 @@ const Payment = () => {
                               (x) => x.isoCode === v
                             ) > 0
                               ? citiesPaymentArray.findIndex(
-                                  (x) => x.isoCode === v
-                                )
+                                (x) => x.isoCode === v
+                              )
                               : 0
                           ],
                         });
@@ -689,7 +699,8 @@ const Payment = () => {
               </div>
             </div>
           </div>
-          <div className="xl:w-[40%] w-full mx-auto">
+          <div className="xl:w-[40%] w-full mx-auto space-y-5">
+            <PreviewSelectedProduct data={selected_data} />
             <PreviewPart
               stripeRef={stripeButton}
               payMethod={paymentInfo.paymentMethod}
@@ -719,6 +730,7 @@ const Payment = () => {
                 } else {
                   let res = await addToCart();
                   console.log("res", res);
+                  await dispatch(clearSelected());
                   if (res) {
                     success("Added Product to Cart");
                     navigate({

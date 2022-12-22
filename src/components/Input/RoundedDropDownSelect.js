@@ -64,16 +64,7 @@ const RoundedDropDownSelect = ({ list, onChangeHandle, label, value }) => {
       }
     }
   }, [expanded, word, list, currentIndex]);
-  // useEffect(() => {
-  //   if (expanded) {
 
-  //   }
-  //   else {
-  //     for (let index = 0; index < list.length; index++) {
-  //       optionRef.current[index].style.backgroundColor = "inherit"
-  //     }
-  //   }
-  // }, [word, expanded, list])
   return (
     <div
       ref={selectRef}
