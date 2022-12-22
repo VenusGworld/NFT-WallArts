@@ -66,12 +66,12 @@ const Preview = () => {
                     src={selected_data?.nft_img}
                     alt=""
                   />
-                  <img
+                  {/* <img
                     loading="lazy"
                     src={process.env.PUBLIC_URL + "/img/360-view1.svg"}
                     alt=""
                     className="absolute bottom-5 right-3"
-                  />
+                  /> */}
                 </div>
                 <div className="w-2/5 bg-[#444E66] px-6 py-10 flex flex-col space-y-10">
                   <div className="flex">

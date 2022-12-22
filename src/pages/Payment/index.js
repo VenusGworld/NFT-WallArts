@@ -721,7 +721,6 @@ const Payment = () => {
                     let res = await addToCart();
                     console.log("res", res);
                     if (res) {
-                      success("Added Product to Cart");
                       submitOrder();
                     }
                   } else {
@@ -732,7 +731,6 @@ const Payment = () => {
                   console.log("res", res);
                   await dispatch(clearSelected());
                   if (res) {
-                    success("Added Product to Cart");
                     navigate({
                       pathname: "/profile",
                     });

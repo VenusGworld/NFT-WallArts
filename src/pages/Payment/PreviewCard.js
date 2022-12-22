@@ -1,4 +1,5 @@
 import React from "react";
+import CategoryItem from "../../components/CategoryItem";
 
 const PreviewCard = ({ info }) => {
   const {
@@ -8,6 +9,7 @@ const PreviewCard = ({ info }) => {
     quantity,
     total_price_eth,
   } = info;
+  console.log('infor', info);
   return (
     <div className="flex sm:space-x-5 flex-col sm:flex-row w-full">
       <div className="rounded-2xl flex justify-center items-center w-28">
@@ -18,7 +20,10 @@ const PreviewCard = ({ info }) => {
         />
       </div>
       <div className="flex flex-col w-[60%]">
-        <span className=" text-xl text-start">{name_for_printing}</span>
+        <div className="flex items-end">
+          <span className="flex text-xl text-start">{name_for_printing}</span>
+          <CategoryItem id={item_info?.category_id} />
+        </div>
         <div className="flex justify-between w-full">
           <div className="flex flex-col items-start">
             <span className="text-sm text-[#BFC8DD]">Frame Size</span>

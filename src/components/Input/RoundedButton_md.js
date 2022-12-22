@@ -1,6 +1,6 @@
 import React from "react";
 
-const RoundedButtonMD = ({ active, text, onButtonClick, icon, fullWidth }) => {
+const RoundedButtonMD = ({ active, text, onButtonClick, icon, fullWidth, className }) => {
   return (
     <div
       className={`hover:bg-opacity-70 transition-all ${
@@ -9,11 +9,11 @@ const RoundedButtonMD = ({ active, text, onButtonClick, icon, fullWidth }) => {
         active
           ? " bg-[#D3B789] text-[#313949]"
           : "bg-[#444E66] text-white border border-[#95a9d1]"
-      } rounded-full px-7 py-2`}
+      } rounded-full px-7 py-2 ${className?className:""}`}
       onClick={onButtonClick}
     >
-      {text}
-      {icon}
+      <span>{text}
+      {icon}</span>
     </div>
   );
 };

@@ -30,7 +30,7 @@ const CustomizedArt = () => {
               <div className="xl:text-5xl lg:text-3xl md:text-2xl text-lg font-bold inline-block my-5">
                 Select your size
               </div>
-              <div className="flex flex-wrap justify-between w-full">
+              <div className="flex flex-wrap w-full space-x-5 justify-center">
                 {/* {data.map((item, i) => (
                   <ItemCard item={item} key={i} />
                 ))} */}
