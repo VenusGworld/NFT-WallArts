@@ -105,7 +105,7 @@ const Profile = () => {
       />
       <div className=" p-20 flex flex-col justify-center items-center">
         <div
-          className="group rounded-full bg-[#00AEEF] border-4 border-white p-8 -mt-36 hover:brightness-50 transition-all cursor-pointer"
+          className="group rounded-full border-4 border-white -mt-36 hover:brightness-50 transition-all cursor-pointer"
           onClick={() => {
             imgButton.current.click();
           }}
@@ -122,7 +122,7 @@ const Profile = () => {
             <img
               src={URL.createObjectURL(profileImage)}
               alt=""
-              className=" w-32 h-32 object-contain rounded-full"
+              className=" w-40 h-40 object-contain rounded-full"
             />
           ) : is_Connected && user?.avatar ? (
             <img
@@ -132,7 +132,7 @@ const Profile = () => {
                 `/images/avatars/${user?.avatar}`
               }
               alt=""
-              className=" w-32 h-32 rounded-full"
+              className=" w-40 h-40 rounded-full"
             />
           ) : (
             <img
@@ -141,7 +141,7 @@ const Profile = () => {
                 process.env.PUBLIC_URL + "/img/sandbox_mark.svg"
               }
               alt=""
-              className=" w-32 h-32 rounded-full"
+              className=" w-40 h-40 rounded-full"
             />
           )}
           <div className=" absolute top-1/2 left-1/2 group-hover:block hidden -translate-x-1/2 -translate-y-1/2">

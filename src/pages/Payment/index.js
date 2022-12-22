@@ -82,7 +82,7 @@ const Payment = () => {
       State.getStatesOfCountry(initialCountry.isoCode)[0].isoCode
     )
   );
-  const [isCrypto, setIsCrypto] = useState(false);
+  const [isCrypto, setIsCrypto] = useState(true);
   const [isSameAddress, setIsSameAddress] = useState(true);
   useEffect(() => {
     setStatesDeliveryArray(

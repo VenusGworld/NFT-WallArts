@@ -84,7 +84,7 @@ const PreviewPart = ({ orderClickHandle, stripeRef, amount, payMethod }) => {
         </div>
         <div className=" w-full flex space-x-1">
           <RoundedButtonMD
-            text="Adding Cart"
+            text="Continue Shopping"
             onButtonClick={() => {
               orderClickHandle(false);
             }}
@@ -92,7 +92,7 @@ const PreviewPart = ({ orderClickHandle, stripeRef, amount, payMethod }) => {
             fullWidth
           />
           <RoundedButtonMD
-            text="Order Now"
+            text="Checkout"
             onButtonClick={() => {
               orderClickHandle(true);
             }}
