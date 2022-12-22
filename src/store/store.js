@@ -30,13 +30,14 @@ const rootReducer = (state, action) => {
   return appReducer(state, action)
 }
 
-const persistedReducer = persistReducer(persistConfig, rootReducer)
+// const persistedReducer = persistReducer(persistConfig, rootReducer)
 
 const store = configureStore({
-  reducer: persistedReducer,
+  // reducer: persistedReducer,
+  reducer: rootReducer,
   middleware: [thunk],
 });
 
 export default store;
 
-export const persistor = persistStore(store);
+// export const persistor = persistStore(store);

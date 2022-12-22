@@ -6,13 +6,13 @@ import {
   isConnected,
   setChain,
   connectedChain,
-  clearResults
 } from "../store/accountReducer";
 import { useNavigate } from "react-router-dom";
 import { NETWORKS } from "../constant/constants";
 import axios from "axios";
 import { useOrder } from "../hooks/useOrder";
 import { useOrderStatus } from "../hooks/useOrderStatus";
+import { toast } from "react-toastify";
 
 const ConnectButton = () => {
   const is_Connected = useSelector(isConnected);
@@ -23,12 +23,18 @@ const ConnectButton = () => {
   const dispatch = useDispatch();
   const [user, setUser] = useState({});
   const navigate = useNavigate();
+  const error = (text) => {
+    toast.error(text, {
+      position: "top-right",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: 0,
+    });
+  };
   // if(!price_eth.isLoading) console.log(price_eth.data,window?.ethereum)
-  useEffect(() => {
-    dispatch(clearResults());
-    // connectWallet();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   useEffect(() => {
     if(is_Connected) {
@@ -217,10 +223,10 @@ const ConnectButton = () => {
       </div>
 
       <span className=" inline-block w-7 ml-5 text-gray-300 relative mx-5 hover:text-gray-400 cursor-pointer"
-        onClick={() => {
+        onClick={() => {is_Connected?
           navigate({
             pathname: "/order_summary",
-          });
+          }):error('Connect Wallet First!')
         }}
       >
         <svg

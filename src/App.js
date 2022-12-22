@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Route, Routes, Navigate } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import "react-toastify/dist/ReactToastify.css";
@@ -11,6 +11,7 @@ import Header from "./components/header";
 
 // import "react-toastify/dist/ReactToastify.css";
 import {
+  clearResults,
   isConnected,
   // connectedAccount,
 } from "./store/accountReducer";
@@ -91,12 +92,11 @@ export const main_routes = [
 
 function App() {
   const is_Connected = useSelector(isConnected);
-
+  const dispatch = useDispatch();
   useEffect(() => {
-    // if (!is_Connected) {
-
-    // }
-    //eslint-disable-next-line react-hooks/exhaustive-deps
+    dispatch(clearResults());
+    // connectWallet();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {

@@ -53,6 +53,7 @@ const Profile = () => {
   // }, [])
 
   const fetchUserDataByAddress = async () => {
+    // console.log('connected_account', connected_account)
     await axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/user/`, {
       wallet_address: connected_account
     })
@@ -61,7 +62,7 @@ const Profile = () => {
     //     `${process.env.REACT_APP_BACKEND_URL}/api/user/address/${connected_account}`
     //   )
       .then((res) => {
-        console.log("res", res);
+        // console.log("res", res);
         if (res.status === 200) {
           setUser(res?.data?.data);
         }
@@ -89,7 +90,6 @@ const Profile = () => {
 
   const fetchNFTs = async () => {
     const nfts = await alchemy.nft.getNftsForOwner(connected_account, {
-      pageSize: 9,
     }); //connected_account);
 
     setNfts(nfts.ownedNfts);

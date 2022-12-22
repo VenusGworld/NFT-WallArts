@@ -5,13 +5,13 @@ import { useNavigate } from "react-router-dom";
 // import { Items } from '.';
 
 import Board from "../../components/Board";
-import { RoundedButtonSM, RoundedDropDownSelect } from "../../components/Input";
+import { RoundedDropDownSelect } from "../../components/Input";
 import { useETHPrice } from "../../hooks/useEthPrice";
 import { useOrder } from "../../hooks/useOrder";
 import { useOrderStatus } from "../../hooks/useOrderStatus";
 
 const ActivityPart = () => {
-  const [selectedPage, selectPage] = useState(0);
+  // const [selectedPage, selectPage] = useState(0);
   const orders = useOrder();
   const orderStatus = useOrderStatus();
   const navigate = useNavigate();
@@ -135,7 +135,7 @@ const ActivityPart = () => {
           <div className=" flex justify-center w-3/12">Status</div>
           <div className=" flex justify-center w-2/12">Time</div>
         </div>
-        <div className="flex flex-col space-y-3">
+        <div className="flex flex-col space-y-3 h-[500px] overflow-y-auto p-10 rounded-lg">
           {orders?.data?.data?.map((item, i) => {
             return (
               <Board key={i} onClick={() => {
@@ -233,52 +233,6 @@ const ActivityPart = () => {
               </Board>
             );
           })}
-        </div>
-        <div className="flex space-x-1 my-3 items-center justify-center">
-          <RoundedButtonSM
-            text={1}
-            active={selectedPage === 0}
-            onButtonClick={() => {
-              selectPage(0);
-            }}
-          />
-          <RoundedButtonSM
-            text={2}
-            active={selectedPage === 1}
-            onButtonClick={() => {
-              selectPage(1);
-            }}
-          />
-          <RoundedButtonSM
-            text={3}
-            active={selectedPage === 2}
-            onButtonClick={() => {
-              selectPage(2);
-            }}
-          />
-          <RoundedButtonSM
-            text={4}
-            active={selectedPage === 3}
-            onButtonClick={() => {
-              selectPage(3);
-            }}
-          />
-          <RoundedButtonSM
-            text={5}
-            active={selectedPage === 4}
-            onButtonClick={() => {
-              selectPage(4);
-            }}
-          />
-          <div
-            className=" text-[#D3B789] mx-3 cursor-pointer"
-            onClick={() => {
-              if (selectedPage === 4) selectPage(0);
-              else selectPage(selectedPage + 1);
-            }}
-          >
-            Next
-          </div>
         </div>
       </div>
     </div>

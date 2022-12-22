@@ -8,18 +8,20 @@ import { setNFTData } from "../../store/selectedReducer";
 
 const ProfileNFTCard = ({ item }) => {
   const {
-    rawMetadata,
+    // rawMetadata,
     tokenId,
     description,
+    media,
     // like,
-    // auction,
-    sale,
-    price,
-    sold,
+    title,
+    // sale,
+    // price,
+    // sold,
     // highestBid,
     contract,
     // endsIn,
   } = item;
+  // console.log('item', item);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   // useEffect(() => {
@@ -32,18 +34,14 @@ const ProfileNFTCard = ({ item }) => {
   //         console.log(err);
   //       });
   // }, [])
-  
   return (
     <div
       className="md:w-[48%] xl:w-[30%] w-[90%] shadow-2xl flex flex-col my-4 hover:scale-105 transition-all cursor-pointer"
       onClick={async () => {
         await dispatch(
           setNFTData({
-            image: rawMetadata?.image?.replace(
-              "ipfs://",
-              "https://ipfs.moralis.io:2053/ipfs/"
-            ),
-            title: contract?.name,
+            image: media[0]?.gateway,
+            title: contract?.name?contract?.name:(title?title:''),
             description,
             contract: contract?.address,
             id: tokenId,
@@ -59,10 +57,7 @@ const ProfileNFTCard = ({ item }) => {
       <div className="w-full h-full">
         <img
           loading="lazy"
-          src={rawMetadata?.image?.replace(
-            "ipfs://",
-            "https://ipfs.moralis.io:2053/ipfs/"
-          )}
+          src={media[0]?.gateway}
           alt=""
           className="w-full"
         />
@@ -84,8 +79,8 @@ const ProfileNFTCard = ({ item }) => {
               <div className=" inline-block">{like}</div>
             </div> */}
           </div>
-          <div className="my-2 flex justify-start sm:text-xl text-base font-bold">
-            {contract?.name} (<span>{contract?.symbol}</span>)
+          <div className="my-2 flex flex-col justify-start sm:text-xl text-base font-bold break-words text-start">
+            <span className="flex">{contract?.name?contract?.name:(title?title:'')}</span><span className="flex text-sm">{contract?.symbol}</span> 
           </div>
           <div className="flex justify-between">
             <div className="flex justify-center items-center space-x-2"><div className="">Total supply:</div>
@@ -94,16 +89,16 @@ const ProfileNFTCard = ({ item }) => {
               </div></div>
             <div className="flex justify-center items-center space-x-2"><div className="">Id:</div>
               <div className="my-2 sm:text-base text-sm">
-                {tokenId}
+                {tokenId?tokenId:''}
               </div></div>
           </div>
           <div className="flex justify-between">
             <div>Description</div>
           </div>
-          <div className="my-2 flex justify-start sm:text-base text-sm h-[100px] overflow-y-auto">
-            {description}
+          <div className="my-2 flex justify-start sm:text-base text-sm h-[100px] break-words overflow-y-auto">
+            {description?description:''}
           </div>
-          {sale && (
+          {/* {sale && (
             <div className="flex flex-col">
               <div className="my-3 flex justify-between text-sm text-gray-500">
                 <div>Price</div>
@@ -114,7 +109,7 @@ const ProfileNFTCard = ({ item }) => {
                 <div>{sold}</div>
               </div>
             </div>
-          )}
+          )} */}
           {/* {auction && (
             <div className="flex flex-col">
               <div className="my-3 flex justify-between text-sm text-gray-500">
