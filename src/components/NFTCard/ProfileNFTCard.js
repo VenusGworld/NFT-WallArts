@@ -4,6 +4,7 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { setNFTData } from "../../store/selectedReducer";
+import { RoundedButtonBG } from "../Input";
 // import RoundedButtonBG from "../Input/RoundedButton_bg";
 
 const ProfileNFTCard = ({ item }) => {
@@ -37,22 +38,6 @@ const ProfileNFTCard = ({ item }) => {
   return (
     <div
       className="md:w-[48%] xl:w-[30%] w-[90%] shadow-2xl flex flex-col my-4 hover:scale-105 transition-all cursor-pointer"
-      onClick={async () => {
-        await dispatch(
-          setNFTData({
-            image: media[0]?.gateway,
-            title: contract?.name?contract?.name:(title?title:''),
-            description,
-            contract: contract?.address,
-            id: tokenId,
-            symbol: contract?.symbol,
-            total: contract?.totalSupply
-          })
-        );
-        await navigate({
-          pathname: "/category",
-        });
-      }}
     >
       <div className="w-full h-full">
         <img
@@ -80,7 +65,7 @@ const ProfileNFTCard = ({ item }) => {
             </div> */}
           </div>
           <div className="my-2 flex flex-col justify-start sm:text-xl text-base font-bold break-words text-start">
-            <span className="flex">{contract?.name?contract?.name:(title?title:'')}</span><span className="flex text-sm">{contract?.symbol}</span> 
+            <span className="flex">{contract?.name ? contract?.name : (title ? title : '')}</span><span className="flex text-sm">{contract?.symbol}</span>
           </div>
           <div className="flex justify-between">
             <div className="flex justify-center items-center space-x-2"><div className="">Total supply:</div>
@@ -89,15 +74,15 @@ const ProfileNFTCard = ({ item }) => {
               </div></div>
             <div className="flex justify-center items-center space-x-2"><div className="">Id:</div>
               <div className="my-2 sm:text-base text-sm">
-                {tokenId?tokenId:''}
+                {tokenId ? tokenId : ''}
               </div></div>
           </div>
-          <div className="flex justify-between">
+          {/* <div className="flex justify-between">
             <div>Description</div>
           </div>
           <div className="my-2 flex justify-start sm:text-base text-sm h-[100px] break-words overflow-y-auto">
             {description?description:''}
-          </div>
+          </div> */}
           {/* {sale && (
             <div className="flex flex-col">
               <div className="my-3 flex justify-between text-sm text-gray-500">
@@ -122,11 +107,26 @@ const ProfileNFTCard = ({ item }) => {
               </div>
             </div>
           )} */}
-          {/* {!sale && !auction && (
+          {
             <div className=" h-20 flex justify-center items-center py-4">
-              <RoundedButtonBG active text="List Here" />
+              <RoundedButtonBG active text="Select" onButtonClick={async () => {
+                await dispatch(
+                  setNFTData({
+                    image: media[0]?.gateway,
+                    title: contract?.name ? contract?.name : (title ? title : ''),
+                    description,
+                    contract: contract?.address,
+                    id: tokenId,
+                    symbol: contract?.symbol,
+                    total: contract?.totalSupply
+                  })
+                );
+                await navigate({
+                  pathname: "/category",
+                });
+              }} />
             </div>
-          )} */}
+          }
         </div>
       </div>
     </div>

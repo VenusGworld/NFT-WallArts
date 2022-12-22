@@ -10,10 +10,11 @@ import RoundedPhoneNumberInput from "./RoundedPhoneNumberInput";
 import RoundedDropDownSelect from "./RoundedDropDownSelect";
 import RadioGroup from "./RadioGroup";
 import RectButton from "./RectButton";
-
+import RoundedButtonBG from "./RoundedButton_bg"
 export {
   RoundedButtonMD,
   RoundedButtonSM,
+  RoundedButtonBG,
   SearchBar,
   ToggleButton,
   DropDownSelect,

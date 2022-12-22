@@ -105,7 +105,7 @@ const Profile = () => {
       />
       <div className=" p-20 flex flex-col justify-center items-center">
         <div
-          className="group rounded-full border-4 border-white -mt-36 hover:brightness-50 transition-all cursor-pointer"
+          className="group rounded-full -mt-36 hover:brightness-50 transition-all cursor-pointer"
           onClick={() => {
             imgButton.current.click();
           }}
@@ -179,13 +179,22 @@ const Profile = () => {
                 />
               </svg>
             </div>
+            
             <input
               className=" bg-[#363f54] overflow-x-auto w-fit text-center"
-              defaultValue={user.name ? user.name : user.wallet_address}
+              defaultValue={user.name ? user.name : user.wallet_address && user.wallet_address?.length>0?(user.wallet_address.substring(0, 5) +
+             "..." +
+             user.wallet_address.substring(
+               user.wallet_address.length - 4,
+               user.wallet_address.length)):""}
               onChange={(v) => {
                 if (
                   v?.target.value !==
-                  (user.name ? user.name : user.wallet_address)
+                  user.wallet_address && user.wallet_address?.length>0?((user.name ? user.name : user.wallet_address.substring(0, 5) +
+             "..." +
+             user.wallet_address.substring(
+               user.wallet_address.length - 4,
+               user.wallet_address.length))):""
                 ) {
                   seteditableUserName(true);
                   setUserName(v?.target.value);
@@ -316,7 +325,7 @@ const Profile = () => {
               </div>
             ) : null}
         </div>
-        <div className=" w-fit bg-[#313949] flex text-white rounded-full md:px-16 py-2 px-10">
+        {/* <div className=" w-fit bg-[#313949] flex text-white rounded-full md:px-16 py-2 px-10">
           <div className="flex flex-col flex-1 items-center justify-center">
             <div className=" text-3xl text-white">{nfts.length}</div>
             <div className="text-gray-400">Items</div>
@@ -336,10 +345,10 @@ const Profile = () => {
             </div>
             <div className="text-gray-400">Total Volume</div>
           </div>
-        </div>
+        </div> */}
         <div className="relative my-10 flex space-x-5" id="profile_section">
           <RoundedButtonMD
-            text="Items"
+            text="NFTs"
             onButtonClick={() => {
               expandItems(true);
             }}
