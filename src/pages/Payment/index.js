@@ -21,6 +21,7 @@ import {
   addingCart,
   initialize,
   orderedProducts,
+  setCart,
 } from "../../store/cartReducer";
 import { useETHPrice } from "../../hooks/useEthPrice";
 import { ethers } from "ethers";
@@ -173,17 +174,41 @@ const Payment = () => {
     return flag;
   };
   /////////////////////////////////////////
+  const [orderedDataForCard, setOrderedDataForCard] = useState([])
+  const provider = new ethers.providers.Web3Provider(window.ethereum);
+  const signer = provider.getSigner();
+  const stripeButton = useRef(null);
+
   const addToCart = async () => {
     if (Object.keys(selected_data?.item_data).length === 0) {
       // error('Order a Product First For Adding Cart!');
       // return false;
     }
     else {
-
+      let flag = false;
+      let products_arr = [];
+      ordered_products?.orderedProducts.forEach((item) => {
+        if(
+          item?.item_id === selected_data?.item_data?._id &&
+          item?.image_for_printing === selected_data?.nft_img
+          ) {
+            products_arr.push({
+              ...item, 
+              quantity: Number(item?.quantity) + Number(selected_data?.quantity)
+            })
+            flag = true;
+          }
+          else products_arr.push({
+            ...item
+          })
+      })
+      if(flag) {
+        dispatch(setCart(products_arr))
+        return 
+      }
       const formData = {};
       formData.item_id = selected_data?.item_data?._id;
       formData.quantity = selected_data?.quantity;
-
       formData.item_info = selected_data?.item_data;
       formData.image_for_printing = selected_data?.nft_img;
       formData.name_for_printing = selected_data?.nft_name;
@@ -224,10 +249,7 @@ const Payment = () => {
     }
     // return false;
   };
-  const [orderedDataForCard, setOrderedDataForCard] = useState([])
-  const provider = new ethers.providers.Web3Provider(window.ethereum);
-  const signer = provider.getSigner();
-  const stripeButton = useRef(null);
+
   const submitOrder = async () => {
     let arr = [];
     if(ordered_products?.orderedProducts.length === 0) {

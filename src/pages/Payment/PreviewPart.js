@@ -40,12 +40,12 @@ const PreviewPart = ({ orderClickHandle, stripeRef, amount, payMethod, orderedDa
             </svg>
           </span>
         </span>
-        <div className="flex flex-col space-y-5 mb-5 w-full">
+        <div className="flex flex-col space-y-5 mb-5 w-full justify-center items-center">
           {ordered_products?.orderedProducts.map((item, i) => {
-            return <div className="w-full flex items-center">
+            return <div className="w-fit flex items-center flex-wrap flex-row-reverse relative">
               <PreviewCard info={item} key={i} />
               <div
-            className=" text-red-400 px-2 cursor-pointer hover:text-red-600 transition-all"
+            className=" text-red-400 px-2 cursor-pointer hover:text-red-600 transition-all absolute bottom-2"
             onClick={async () => {
               if(window.confirm('Are you sure to remove this Product from Cart?')) {
                 let arr = []
