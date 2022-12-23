@@ -55,16 +55,17 @@ const Preview = () => {
         </div>
         <div className="bg-[#363f54] w-full p-10 relative flex flex-col justify-start items-start -mt-[8%]">
           <div className="w-[80%] mx-auto">
-            <div className="flex flex-col justify-start items-start">
+            <div className="flex flex-col justify-start items-start w-full">
               <div className="xl:text-5xl lg:text-3xl md:text-2xl text-lg font-bold inline-block my-5 h-full">
                 Preview
               </div>
-              <div className="flex items-start space-x-5 relative justify-center h-full">
-                <div className="w-3/5 bg-white h-full relative">
+              <div className="flex items-start space-x-5 relative justify-center h-full w-full">
+                <div className="w-3/5 flex justify-center h-full relative border rounded-lg">
                   <img
                     loading="lazy"
                     src={selected_data?.nft_img}
                     alt=""
+                    className="w-full rounded-lg"
                   />
                   {/* <img
                     loading="lazy"
@@ -234,7 +235,7 @@ const Preview = () => {
                   </div>
                   <div className="flex flex-col items-start space-y-2 w-full">
                     <RoundedButtonMD
-                      text="See Next"
+                      text="Adding Cart"
                       onButtonClick={async () => {
                         await dispatch(setQuantity(quantity))
                         navigate({

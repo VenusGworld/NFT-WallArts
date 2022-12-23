@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Alchemy, Network } from "alchemy-sdk";
 import { useSelector } from "react-redux";
 
@@ -9,6 +9,7 @@ import ItemsPart from "./ItemsPart";
 import { isConnected, connectedAccount } from "../../store/accountReducer";
 import axios from "axios";
 import { useSearchParams } from "react-router-dom";
+import ChooseAvatar from "./ChooseAvatar";
 
 const Profile = () => {
   const [searchParams] = useSearchParams();
@@ -16,7 +17,7 @@ const Profile = () => {
   const [filterExpanded, expandFilter] = useState(false);
   const [itemsExpanded, expandItems] = useState(true);
   const is_Connected = useSelector(isConnected);
-  const [profileImage, setProfileImage] = useState("");
+  
   const [nfts, setNfts] = useState([]);
   const [user, setUser] = useState({});
   const [editableUserName, seteditableUserName] = useState(false);
@@ -24,7 +25,7 @@ const Profile = () => {
   const [editableBio, seteditableBio] = useState(false);
   const [bio, setBio] = useState("Add Your Bio");
 
-  const imgButton = useRef(null);
+  
   // const [pageKey, setpageKey] = useState("");
   const connected_account = useSelector(connectedAccount);
   const config = {
@@ -70,23 +71,7 @@ const Profile = () => {
       .catch((err) => {});
   };
 
-  const handleImage = async (e) => {
-    await setProfileImage(e.target.files[0]);
-    let formData = new FormData();
-    formData.append("image", e.target.files[0]);
-    await axios
-      .post(
-        `${process.env.REACT_APP_BACKEND_URL}/api/user/avatar/${user?._id}`,
-        formData
-      )
-      .then((res) => {
-        console.log("res", res);
-        if (res.status === 201) {
-
-        }
-      })
-      .catch((err) => {});
-  };
+  
 
   const fetchNFTs = async () => {
     const nfts = await alchemy.nft.getNftsForOwner(connected_account, {
@@ -103,65 +88,11 @@ const Profile = () => {
         alt="profile_banner"
         width="100%"
       />
+      
       <div className=" p-20 flex flex-col justify-center items-center">
-        <div
-          className="group rounded-full -mt-36 hover:brightness-50 transition-all cursor-pointer"
-          onClick={() => {
-            imgButton.current.click();
-          }}
-        >
-          <input
-            className=" hidden"
-            type="file"
-            accept=".png, .jpg, .jpeg"
-            name="image"
-            onChange={handleImage}
-            ref={imgButton}
-          />
-          {profileImage !== "" && profileImage ? (
-            <img
-              src={URL.createObjectURL(profileImage)}
-              alt=""
-              className=" w-40 h-40 object-contain rounded-full"
-            />
-          ) : is_Connected && user?.avatar ? (
-            <img
-              loading="lazy"
-              src={
-                process.env.REACT_APP_BACKEND_URL +
-                `/images/avatars/${user?.avatar}`
-              }
-              alt=""
-              className=" w-40 h-40 rounded-full"
-            />
-          ) : (
-            <img
-              loading="lazy"
-              src={
-                process.env.PUBLIC_URL + "/img/sandbox_mark.svg"
-              }
-              alt=""
-              className=" w-40 h-40 rounded-full"
-            />
-          )}
-          <div className=" absolute top-1/2 left-1/2 group-hover:block hidden -translate-x-1/2 -translate-y-1/2">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={1.5}
-              stroke="currentColor"
-              className="w-6 h-6"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125"
-              />
-            </svg>
-          </div>
-        </div>
+      
         <div className="relative my-5">
+        <ChooseAvatar is_Connected={is_Connected} user={user}/>
           <div className=" text-white text-4xl flex relative group items-center">
             <div className="absolute -top-8 hidden group-hover:flex left-1/2 -translate-x-1/2 p-1 bg-black transition-all rounded-lg">
               <svg
