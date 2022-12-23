@@ -7,30 +7,31 @@ import { useDispatch, useSelector } from "react-redux";
 import { initialize, orderedProducts } from "../store/cartReducer";
 import { initialize as clearSelected } from "../store/selectedReducer";
 import { useNavigate } from "react-router-dom";
+import { useETHPrice } from "../hooks/useEthPrice";
 
 const CURRENCY = "USD";
 
-const Checkout = ({ name, description, amount, stripeRef, payMethod }) => {
+const Checkout = ({ name, description, amount, stripeRef, payMethod, orderedDataForCard }) => {
   const setting = useSetting();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  // console.log((setting?.data?.data?.is_payment_test || setting?.data?.data?.is_payment_test ===undefined)?process.env.REACT_APP_STRIPE_TEST_PUBLISHABLE:process.env.REACT_APP_STRIPE_LIVE_PUBLISHABLE);
   const fromEuroToCent = (amount) => Number(Number(amount * 100).toFixed(1));
-  const ordered_products = useSelector(orderedProducts);
+  const eth_price = useETHPrice(window.ethereum);
+  function isValidEmail(email) {
+    return /\S+@\S+\.\S+/.test(email);
+  }
   const successPayment = async (data) => {
-    console.log("data", data);
     success(`Sent Invoice for ${amount}$ to Your Email, Please Confirm!`);
     let temp_arr = [];
-    ordered_products?.orderedProducts.forEach((item, index) => {
-      console.log(index, item);
+
+    orderedDataForCard.forEach((item, index) => {
       temp_arr.push({
         ...item,
         payment_type: payMethod,
         transaction_hash: process.env.REACT_APP_STRIPE_HASH_URL + data?.data?.success?.id,
-        total_price_usd: Number(data?.data?.success?.amount_captured) / 100,
+        total_price_usd: Number(Number(item.total_price_eth) * eth_price.data).toFixed(1)//Number(data?.data?.success?.amount_captured) / 100,
       });
     });
-    console.log("products", temp_arr);
     await axios
       .post(`${process.env.REACT_APP_BACKEND_URL}/api/order/`, temp_arr)
       .then(async (res) => {
@@ -38,10 +39,9 @@ const Checkout = ({ name, description, amount, stripeRef, payMethod }) => {
           success(
             `Ordered Successfully! We'll check and send you product soon!`
           );
-          console.log(res);
           await dispatch(initialize());
           await dispatch(clearSelected());
-          
+
           await navigate({
             pathname: "/profile",
           });
@@ -99,7 +99,6 @@ const Checkout = ({ name, description, amount, stripeRef, payMethod }) => {
       .catch((data) => {
         return errorPayment(data);
       });
-    console.log('amount', amount, typeof amount)
   if (setting.isLoading) <></>;
   return (
     <StripeCheckout
@@ -107,12 +106,13 @@ const Checkout = ({ name, description, amount, stripeRef, payMethod }) => {
       description={"Description"}
       amount={fromEuroToCent(amount)}
       // amount={amount}
+      email={orderedDataForCard[0]?.contact_email?(isValidEmail(orderedDataForCard[0]?.contact_email)?orderedDataForCard[0]?.contact_email:undefined):undefined}
       token={onToken(amount, description)}
       currency={CURRENCY}
       image={process.env.PUBLIC_URL + "/img/logo.svg"}
       stripeKey={
         setting?.data?.data?.is_payment_test ||
-        setting?.data?.data?.is_payment_test === undefined
+          setting?.data?.data?.is_payment_test === undefined
           ? process.env.REACT_APP_STRIPE_TEST_PUBLISHABLE
           : process.env.REACT_APP_STRIPE_LIVE_PUBLISHABLE
       }

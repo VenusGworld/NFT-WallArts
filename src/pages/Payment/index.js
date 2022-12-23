@@ -24,7 +24,7 @@ import {
 } from "../../store/cartReducer";
 import { useETHPrice } from "../../hooks/useEthPrice";
 import { ethers } from "ethers";
-import PreviewSelectedProduct from "./PreviewSelectedProduct";
+// import PreviewSelectedProduct from "./PreviewSelectedProduct";
 
 const Payment = () => {
   const connected_account = useSelector(connectedAccount);
@@ -85,6 +85,13 @@ const Payment = () => {
   );
   const [isCrypto, setIsCrypto] = useState(true);
   const [isSameAddress, setIsSameAddress] = useState(true);
+
+  useEffect(() => {
+    addToCart();
+    // console.log("res", res);
+    dispatch(clearSelected());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   useEffect(() => {
     setStatesDeliveryArray(
@@ -165,181 +172,205 @@ const Payment = () => {
     }
     return flag;
   };
+  /////////////////////////////////////////
   const addToCart = async () => {
-    let arr = [];
     if (Object.keys(selected_data?.item_data).length === 0) {
-      error('Order a Product First For Adding Cart!');
-      return false;
+      // error('Order a Product First For Adding Cart!');
+      // return false;
     }
     else {
-      if (!isCrypto && !isSameAddress) {
-        arr = [
-          { v: paymentInfo.firstName, err_msg: "Payment Information First Name" },
-          { v: paymentInfo.lastName, err_msg: "Payment Information Last Name" },
-          { v: paymentInfo.address, err_msg: "Payment Information Address" },
-          {
-            v: paymentInfo.apt_suiteNo,
-            err_msg: "Payment Information Apt / Suite No.",
-          },
-          {
-            v: paymentInfo.postalCode,
-            err_msg: "Payment Information Postal Code",
-          },
-        ];
-      }
-      let { firstName, lastName, phoneNo, email } = contactInfo;
-      let { address, apt_suiteNo, postalCode, country, state, city } =
-        deliveryInfo;
-      let shouldBeCheckedValues = [
-        { v: firstName, err_msg: "Contact Information First Name" },
-        { v: lastName, err_msg: "Contact Information Last Name" },
-        { v: phoneNo, err_msg: "Contact Information Phone Number" },
-        { v: email, err_msg: "Contact Information Email" },
-        { v: address, err_msg: "Delivery Information Address" },
-        { v: apt_suiteNo, err_msg: "Delivery Information Apt / Suite No." },
-        { v: postalCode, err_msg: "Delivery Information Postal Code" },
-        ...arr,
-      ];
-      if (checkInputFormValidation(shouldBeCheckedValues)) {
-        const formData = {};
-        formData.item_id = selected_data?.item_data?._id;
-        formData.quantity = selected_data?.quantity;
-        formData.user_wallet_address = connected_account;
-        formData.contact_first_name = firstName;
-        formData.contact_last_name = lastName;
-        formData.contact_phone_number = phoneNo;
-        formData.contact_email = email;
-        formData.delivery_address = address;
-        formData.delivery_apt_suite_No = apt_suiteNo;
-        formData.delivery_country = country.isoCode;
-        formData.delivery_state = state.isoCode;
-        formData.delivery_city = city.name;
-        formData.delivery_postal_code = postalCode;
-        formData.payment_first_name =
-          isSameAddress || isCrypto ? firstName : paymentInfo.firstName;
-        formData.payment_last_name =
-          isSameAddress || isCrypto ? lastName : paymentInfo.lastName;
-        formData.payment_address =
-          isSameAddress || isCrypto ? address : paymentInfo.address;
-        formData.payment_apt_suite_No =
-          isSameAddress || isCrypto ? apt_suiteNo : paymentInfo.apt_suiteNo;
-        formData.payment_type = paymentInfo.paymentMethod;
-        formData.payment_country =
-          isSameAddress || isCrypto
-            ? country.isoCode
-            : paymentInfo.country.isoCode;
-        formData.payment_state =
-          isSameAddress || isCrypto ? state.isoCode : paymentInfo.state.isoCode;
-        formData.payment_city =
-          isSameAddress || isCrypto ? city.name : paymentInfo.city.name;
-        formData.payment_postal_code =
-          isSameAddress || isCrypto ? postalCode : paymentInfo.postalCode;
-        formData.item_info = selected_data?.item_data;
-        formData.image_for_printing = selected_data?.nft_img;
-        formData.name_for_printing = selected_data?.nft_name;
-        formData.nft_description = selected_data?.nft_description;
-        formData.nft_contractAddress = selected_data?.nft_contractAddress;
-        formData.nft_tokenId = selected_data?.nft_tokenId;
-        formData.nft_symbol = selected_data?.nft_symbol;
-        formData.nft_totalSupply = selected_data?.nft_totalSupply;
 
-        let dis = 0;
-        if (selected_data?.item_data?.isBulk) {
-          let min = 100000;
-          selected_data?.item_data?.bulk_pricing.forEach((p) => {
-            if (
-              Number(selected_data?.quantity) - p.quantity >= 0 &&
-              min > Number(selected_data?.quantity) - p.quantity
-            ) {
-              min = Number(selected_data?.quantity) - p.quantity;
-              dis = p.discount;
-            }
-          });
-        }
-        formData.total_price_eth =
-          selected_data?.item_data?.priceType === "eth"
-            ? Number(
-              selected_data?.quantity *
-              selected_data?.item_data?.price *
-              ((100 - dis) / 100)
-            )
-            : Number(
-              selected_data?.quantity *
-              selected_data?.item_data?.price *
-              ((100 - dis) / 100)
-            ) / eth_price.data;
-        // console.log('form_data', formData);
-        await dispatch(addingCart(formData));
-        return true;
+      const formData = {};
+      formData.item_id = selected_data?.item_data?._id;
+      formData.quantity = selected_data?.quantity;
+
+      formData.item_info = selected_data?.item_data;
+      formData.image_for_printing = selected_data?.nft_img;
+      formData.name_for_printing = selected_data?.nft_name;
+      formData.nft_description = selected_data?.nft_description;
+      formData.nft_contractAddress = selected_data?.nft_contractAddress;
+      formData.nft_tokenId = selected_data?.nft_tokenId;
+      formData.nft_symbol = selected_data?.nft_symbol;
+      formData.nft_totalSupply = selected_data?.nft_totalSupply;
+
+      let dis = 0;
+      if (selected_data?.item_data?.isBulk) {
+        let min = 100000;
+        selected_data?.item_data?.bulk_pricing.forEach((p) => {
+          if (
+            Number(selected_data?.quantity) - p.quantity >= 0 &&
+            min > Number(selected_data?.quantity) - p.quantity
+          ) {
+            min = Number(selected_data?.quantity) - p.quantity;
+            dis = p.discount;
+          }
+        });
       }
+      formData.total_price_eth =
+        selected_data?.item_data?.priceType === "eth"
+          ? Number(
+            selected_data?.quantity *
+            selected_data?.item_data?.price *
+            ((100 - dis) / 100)
+          )
+          : Number(
+            selected_data?.quantity *
+            selected_data?.item_data?.price *
+            ((100 - dis) / 100)
+          ) / eth_price.data;
+      await dispatch(addingCart(formData));
+      // return true;
+      // }
     }
-    return false;
+    // return false;
   };
+  const [orderedDataForCard, setOrderedDataForCard] = useState([])
   const provider = new ethers.providers.Web3Provider(window.ethereum);
   const signer = provider.getSigner();
   const stripeButton = useRef(null);
   const submitOrder = async () => {
-    // console.log('paymentInfo.paymentMethod', paymentInfo.paymentMethod);
-    if (paymentInfo.paymentMethod === "crypto") {
-      const balance = await provider.getBalance(connected_account);
-      const balanceInEther = ethers.utils.formatEther(balance);
-      let temp = 0;
-      ordered_products?.orderedProducts.forEach((item) => {
-        temp = Number(Number(temp) + Number(item.total_price_eth));
-      });
-      if (Number(balanceInEther) < temp) {
-        error("You haven't got enough ETH for Payment in your Wallet");
-      } else {
-        try {
-          console.log("process.env.REACT_APP_ADMIN_ADDRESS", temp);
-          const tx = await signer.sendTransaction({
-            to: process.env.REACT_APP_ADMIN_ADDRESS,
-            value: ethers.utils.parseEther(temp.toString()),
-          });
-          await tx.wait();
-          success(
-            `Sent ${temp}ETH to ${process.env.REACT_APP_ADMIN_ADDRESS} successfully!`
-          );
-          let temp_arr = [];
-          ordered_products?.orderedProducts.forEach((item, index) => {
-            console.log(index, item);
-            temp_arr.push({
-              ...item,
-              payment_type: paymentInfo.paymentMethod,
-              transaction_hash:
-                process.env.REACT_APP_ETHERSCAN_HASH_URL + tx.hash,
-            });
-          });
-          console.log("products", temp_arr);
-          await axios
-            .post(`${process.env.REACT_APP_BACKEND_URL}/api/order/`, temp_arr)
-            .then(async (res) => {
-              if (res.status === 201) {
-                success(
-                  `Ordered Successfully! We'll check and send you product soon!`
-                );
-                console.log(res);
-                await dispatch(initialize());
-                await dispatch(clearSelected());
-                await navigate({
-                  pathname: "/profile",
-                });
-              }
-            })
-            .catch((err) => {
-              error(err.response.data.message);
-              console.log(err);
-            });
-        } catch (error) {
-          console.log(error);
-        }
-      }
+    let arr = [];
+    if(ordered_products?.orderedProducts.length === 0) {
+      error("You haven't got any Product in cart. Order First!");
+      return
     }
-    if (
-      paymentInfo.paymentMethod === "visa" ||
-      paymentInfo.paymentMethod === "mastercard"
-    ) {
-      stripeButton.current.click();
+    if (!isCrypto && !isSameAddress) {
+      arr = [
+        { v: paymentInfo.firstName, err_msg: "Payment Information First Name" },
+        { v: paymentInfo.lastName, err_msg: "Payment Information Last Name" },
+        { v: paymentInfo.address, err_msg: "Payment Information Address" },
+        {
+          v: paymentInfo.apt_suiteNo,
+          err_msg: "Payment Information Apt / Suite No.",
+        },
+        {
+          v: paymentInfo.postalCode,
+          err_msg: "Payment Information Postal Code",
+        },
+      ];
+    }
+    let { firstName, lastName, phoneNo, email } = contactInfo;
+    let { address, apt_suiteNo, postalCode, country, state, city } =
+      deliveryInfo;
+    let shouldBeCheckedValues = [
+      { v: firstName, err_msg: "Contact Information First Name" },
+      { v: lastName, err_msg: "Contact Information Last Name" },
+      { v: phoneNo, err_msg: "Contact Information Phone Number" },
+      { v: email, err_msg: "Contact Information Email" },
+      { v: address, err_msg: "Delivery Information Address" },
+      { v: apt_suiteNo, err_msg: "Delivery Information Apt / Suite No." },
+      { v: postalCode, err_msg: "Delivery Information Postal Code" },
+      ...arr,
+    ];
+
+    if (checkInputFormValidation(shouldBeCheckedValues)) {
+      let orderedProducts = ordered_products?.orderedProducts;
+      let array = [];
+      orderedProducts?.forEach((item) => {
+        array.push({
+          ...item,
+          user_wallet_address: connected_account,
+          contact_first_name: firstName,
+          contact_last_name: lastName,
+          contact_phone_number: phoneNo,
+          contact_email: email,
+          delivery_address: address,
+          delivery_apt_suite_No: apt_suiteNo,
+          delivery_country: country.isoCode,
+          delivery_state: state.isoCode,
+          delivery_city: city.name,
+          delivery_postal_code: postalCode,
+          payment_first_name:
+            isSameAddress || isCrypto ? firstName : paymentInfo.firstName,
+          payment_last_name:
+            isSameAddress || isCrypto ? lastName : paymentInfo.lastName,
+          payment_address:
+            isSameAddress || isCrypto ? address : paymentInfo.address,
+          payment_apt_suite_No:
+            isSameAddress || isCrypto ? apt_suiteNo : paymentInfo.apt_suiteNo,
+          payment_type: paymentInfo.paymentMethod,
+          payment_country:
+            isSameAddress || isCrypto
+              ? country.isoCode
+              : paymentInfo.country.isoCode,
+          payment_state:
+            isSameAddress || isCrypto ? state.isoCode : paymentInfo.state.isoCode,
+          payment_city:
+            isSameAddress || isCrypto ? city.name : paymentInfo.city.name,
+          payment_postal_code:
+            isSameAddress || isCrypto ? postalCode : paymentInfo.postalCode,
+        })
+
+      })
+      // ordered_products?.orderedProducts.forEach((item))
+      if (
+        window.confirm("Are you sure to CheckOut?")
+      ) {
+        await setOrderedDataForCard(array);
+        if (paymentInfo.paymentMethod === "crypto") {
+          const balance = await provider.getBalance(connected_account);
+          const balanceInEther = ethers.utils.formatEther(balance);
+          let temp = 0;
+          array.forEach((item) => {
+            temp = Number(Number(temp) + Number(item.total_price_eth));
+          });
+          if (Number(balanceInEther) < temp) {
+            error("You haven't got enough ETH for Payment in your Wallet");
+          } else {
+            try {
+              const tx = await signer.sendTransaction({
+                to: process.env.REACT_APP_ADMIN_ADDRESS,
+                value: ethers.utils.parseEther(temp.toString()),
+              });
+              await tx.wait();
+              success(
+                `Sent ${temp}ETH to ${process.env.REACT_APP_ADMIN_ADDRESS} successfully!`
+              );
+              let temp_arr = [];
+              array.forEach((item, index) => {
+                // console.log(index, item);
+                temp_arr.push({
+                  ...item,
+                  payment_type: paymentInfo.paymentMethod,
+                  transaction_hash:
+                    process.env.REACT_APP_ETHERSCAN_HASH_URL + tx.hash,
+                });
+              });
+              // console.log("products", temp_arr);
+              await axios
+                .post(`${process.env.REACT_APP_BACKEND_URL}/api/order/`, temp_arr)
+                .then(async (res) => {
+                  if (res.status === 201) {
+                    success(
+                      `Ordered Successfully! We'll check and send you product soon!`
+                    );
+                    // console.log(res);
+                    await dispatch(initialize());
+                    // await dispatch(clearSelected());
+                    await navigate({
+                      pathname: "/profile",
+                    });
+                  }
+                })
+                .catch((err) => {
+                  error(err.response.data.message);
+                  console.log(err);
+                });
+            } catch (error) {
+              console.log(error);
+            }
+          }
+        }
+        if (
+          paymentInfo.paymentMethod === "visa" ||
+          paymentInfo.paymentMethod === "mastercard"
+        ) {
+          stripeButton.current.click();
+        }
+      } else {
+
+      }
+
     }
   };
 
@@ -700,10 +731,11 @@ const Payment = () => {
             </div>
           </div>
           <div className="xl:w-[40%] w-full mx-auto space-y-5">
-            <PreviewSelectedProduct data={selected_data} />
+            {/* <PreviewSelectedProduct data={selected_data} /> */}
             <PreviewPart
               stripeRef={stripeButton}
               payMethod={paymentInfo.paymentMethod}
+              orderedDataForCard={orderedDataForCard}
               amount={() => {
                 let temp = 0;
                 ordered_products?.orderedProducts.forEach((item) => {
@@ -715,26 +747,16 @@ const Payment = () => {
               }}
               orderClickHandle={async (isOrder) => {
                 if (isOrder) {
-                  if (
-                    window.confirm("Are you sure to Order this product too?")
-                  ) {
-                    let res = await addToCart();
-                    console.log("res", res);
-                    if (res) {
-                      submitOrder();
-                    }
-                  } else {
-                    submitOrder();
-                  }
+                  submitOrder();
                 } else {
-                  let res = await addToCart();
-                  console.log("res", res);
-                  await dispatch(clearSelected());
-                  if (res) {
-                    navigate({
-                      pathname: "/profile",
-                    });
-                  }
+                  // let res = await addToCart();
+                  // console.log("res", res);
+                  // await dispatch(clearSelected());
+                  // if (res) {
+                  navigate({
+                    pathname: "/profile",
+                  });
+                  // }
                 }
               }}
             />

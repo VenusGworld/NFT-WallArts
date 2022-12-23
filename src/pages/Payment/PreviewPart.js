@@ -8,7 +8,7 @@ import { useETHPrice } from "../../hooks/useEthPrice";
 import PreviewCard from "./PreviewCard";
 import Checkout from "../../components/CheckOut";
 
-const PreviewPart = ({ orderClickHandle, stripeRef, amount, payMethod }) => {
+const PreviewPart = ({ orderClickHandle, stripeRef, amount, payMethod, orderedDataForCard }) => {
   // const navigate = useNavigate();
   const ordered_products = useSelector(orderedProducts);
   const dispatch = useDispatch();
@@ -47,11 +47,13 @@ const PreviewPart = ({ orderClickHandle, stripeRef, amount, payMethod }) => {
               <div
             className=" text-red-400 px-2 cursor-pointer hover:text-red-600 transition-all"
             onClick={async () => {
-              let arr = []
-              ordered_products?.orderedProducts.forEach((element, j) => {
-                if(i !== j) arr.push(element);
-              });
-              dispatch(setCart(arr));
+              if(window.confirm('Are you sure to remove this Product from Cart?')) {
+                let arr = []
+                ordered_products?.orderedProducts.forEach((element, j) => {
+                  if(i !== j) arr.push(element);
+                });
+                dispatch(setCart(arr));
+              }
             }}
           >
             <svg
@@ -104,6 +106,7 @@ const PreviewPart = ({ orderClickHandle, stripeRef, amount, payMethod }) => {
           <Checkout
             name={'The Road to learn React'}
             description={'Only the Book'}
+            orderedDataForCard={orderedDataForCard}
             amount={Number(Number(temp * eth_price.data).toFixed(1))}
             stripeRef={stripeRef}
             payMethod={payMethod}

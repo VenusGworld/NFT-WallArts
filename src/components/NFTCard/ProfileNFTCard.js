@@ -29,7 +29,6 @@ const ProfileNFTCard = ({ item }) => {
   //   axios
   //       .get(`https://api.opensea.io/api/v1/asset/${contract?.address}/${tokenId}/validate`)
   //       .then((res) => {
-  //         console.log('ssssssss', contract, res)
   //       })
   //       .catch((err) => {
   //         console.log(err);

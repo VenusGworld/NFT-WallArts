@@ -9,7 +9,7 @@ const PreviewCard = ({ info }) => {
     quantity,
     total_price_eth,
   } = info;
-  console.log('infor', info);
+  // console.log('infor', info);
   return (
     <div className="flex sm:space-x-5 flex-col sm:flex-row w-full">
       <div className="rounded-2xl flex justify-center items-center w-28">
@@ -20,7 +20,7 @@ const PreviewCard = ({ info }) => {
         />
       </div>
       <div className="flex flex-col w-[60%]">
-        <div className="flex items-end">
+        <div className="flex items-center">
           <span className="flex text-xl text-start">{name_for_printing}</span>
           <CategoryItem id={item_info?.category_id} />
         </div>
