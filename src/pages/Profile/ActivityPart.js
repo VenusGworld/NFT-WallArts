@@ -38,7 +38,7 @@ const ActivityPart = () => {
     <div className="w-[90%] flex flex-col space-y-10">
       <div className="flex w-full justify-end items-end text-white">
         <div className="flex w-1/3">
-          <RoundedDropDownSelect
+          {/* <RoundedDropDownSelect
             onChangeHandle={() => {}}
             list={[
               {
@@ -58,7 +58,7 @@ const ActivityPart = () => {
                 value: 0,
               },
             ]}
-          />
+          /> */}
         </div>
       </div>
       {/* <Board>

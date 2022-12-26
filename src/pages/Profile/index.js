@@ -76,7 +76,7 @@ const Profile = () => {
   const fetchNFTs = async () => {
     const nfts = await alchemy.nft.getNftsForOwner(connected_account, {
     }); //connected_account);
-
+    console.log(nfts);
     setNfts(nfts.ownedNfts);
   };
 
@@ -293,7 +293,7 @@ const Profile = () => {
             active={!itemsExpanded}
           />
           <div className=" absolute md:-right-24 -right-10" id="nfts">
-            <RoundedButtonSM
+            {/* <RoundedButtonSM
               icon={
                 <img
                   loading="lazy"
@@ -308,10 +308,10 @@ const Profile = () => {
                 expandFilter(!filterExpanded);
               }}
               active={filterExpanded}
-            />
+            /> */}
           </div>
         </div>
-        {filterExpanded && <FilterPart />}
+        {/* {filterExpanded && <FilterPart />} */}
         {itemsExpanded && <ItemsPart Items={nfts} />}
         {!itemsExpanded && <ActivityPart  />}
       </div>
