@@ -3,13 +3,13 @@ import { useRef } from "react";
 import { useState } from "react";
 import { useDetectClickOutside } from "react-detect-click-outside";
 
-const RoundedDropDownSelect = ({ list, onChangeHandle, label, value }) => {
+const RoundedDropDownSelectSM = ({ list, onChangeHandle, label, value }) => {
   const optionRef = useRef([]);
   const selectRef = useRef(null);
   const handleClickOutside = () => {
     if (expanded) setExpanded(!expanded);
   };
-
+  
   const ref = useDetectClickOutside({ onTriggered: handleClickOutside });
   const [expanded, setExpanded] = useState(false);
   const [selectedItem, selectItem] = useState(value > 0 ? value : 0);
@@ -84,20 +84,20 @@ const RoundedDropDownSelect = ({ list, onChangeHandle, label, value }) => {
     >
       <span className=" text-sm">{label}</span>
       <div
-        className={`relative w-full rounded-full cursor-pointer px-7 py-4 ${expanded ? " bg-[#57637C] overflow-hidden " : "  bg-[#4a5367] "
+        className={`relative w-full cursor-pointer px-5 ${expanded ? " bg-[#57637C] overflow-hidden " : "  bg-[#4a5367] "
           } border border-[#818895]`}
         ref={ref}
         onClick={() => {
           setExpanded(!expanded);
         }}
       >
-        <div className="flex">
+        <div className="flex text-sm">
           {list[selectedItem]?.text && list[selectedItem]?.text}
           <img
             loading="lazy"
             src={process.env.PUBLIC_URL + "/img/triangle.svg"}
             alt=""
-            className={`absolute w-5 h-5 right-3 top-1/2 -translate-y-1/2 transition-all ${!expanded && " rotate-180"
+            className={`absolute w-3 h-3 right-1 top-1/2 -translate-y-1/2 transition-all ${!expanded && " rotate-180"
               }`}
           />
         </div>
@@ -107,7 +107,7 @@ const RoundedDropDownSelect = ({ list, onChangeHandle, label, value }) => {
           className={` ${!expanded
             ? " -top-[500px] translate-y-0 transition-all h-full "
             : " top-16"
-            } z-50 transition-all overflow-y-auto h-40 bg-[#454E61] p-4 text-white absolute -bottom-2 flex flex-col items-start w-full -left-0`}
+            } z-50 transition-all overflow-y-auto h-40 bg-[#454E61] p-4 text-white text-sm absolute -bottom-2 flex flex-col items-start w-full -left-0`}
           style={{
             boxShadow:
               "0px 4px 15px rgba(0, 0, 0, 0.25), 0px 0px 2px rgba(34, 41, 56, 0.9)",
@@ -123,7 +123,7 @@ const RoundedDropDownSelect = ({ list, onChangeHandle, label, value }) => {
                 onChangeHandle(item["value"]);
               }}
               className={`${selectedItem === i
-                ? "text-[#D3B789] border-l border-l-gray-400 border-r border-r-gray-400 "
+                ? "text-[#D3B789] border-l border-l-gray-400 border-r border-r-gray-400"
                 : " text-white"
                 } p-1 px-3 w-full`}
             >
@@ -136,4 +136,4 @@ const RoundedDropDownSelect = ({ list, onChangeHandle, label, value }) => {
   );
 };
 
-export default RoundedDropDownSelect;
+export default RoundedDropDownSelectSM;

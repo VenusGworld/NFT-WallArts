@@ -1,27 +1,36 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { useItem } from "../../hooks/useItem";
 
 import {
   NumberInput,
   RoundedButtonMD,
-  RoundedTextInput,
+  RoundedDropDownSelect,
 } from "../../components/Input";
-import { selectedData, setQuantity } from "../../store/selectedReducer";
+import { selectedData, setItem, setQuantity } from "../../store/selectedReducer";
 import { useETHPrice } from "../../hooks/useEthPrice";
+import { toast } from "react-toastify";
 
 const Preview = () => {
   const [color, setColor] = useState(0);
   const [quantity, setquantity] = useState(1);
   const [nftInfo, setnftInfo] = useState({});
   const [discount, setDiscount] = useState(0);
+
   // const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   useEffect(() => {
+    if (!selected_data?.item_data || selected_data?.item_data === undefined || selected_data?.item_data === null || Object.keys(selected_data?.item_data).length === 0) {
+      error('Select NFT and Category First!');
+      navigate({
+        pathname: "/profile"
+      });
+    }
     fetchNFTInfo();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   const eth_price = useETHPrice(window.ethereum);
   const selected_data = useSelector(selectedData);
@@ -35,7 +44,40 @@ const Preview = () => {
       });
     setnftInfo(result.data.data);
   };
-  // console.log('nftInfo', nftInfo);
+  const Items = useItem();
+  const ListItems = useMemo(() => {
+    let arr = [];
+    Items?.data?.data?.forEach((v) => {
+      let flag = false;
+      let data = {}
+      if (selected_data?.item_data?.category_id) {
+        if (v?.category_id === selected_data?.item_data?.category_id) {
+          flag = true
+          data = {
+            ...v,
+            text: v?.width + "X" + v?.height + "cm" + " "+(v?.priceType === 'eth'?Number(v?.price * eth_price.data).toFixed(1):v?.price)+" $",
+            value: v?._id
+          }
+        }
+      }
+      if (flag) arr.push(data);
+    }
+      // return arr;
+    )
+    return arr;
+  }, [selected_data, Items?.data?.data, eth_price.data]);
+  const error = (text) => {
+    toast.error(text, {
+      position: "top-right",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: 0,
+    });
+  };
+  // if(selected_data?.item_data?.category_id) const items = useItemByCategory({ category_id: selected_data?.item_data?.category_id })
   return (
     <div>
       <div className={`w-full h-full mt-20 relative text-white`}>
@@ -75,86 +117,63 @@ const Preview = () => {
                   /> */}
                 </div>
                 <div className="w-2/5 bg-[#444E66] px-6 py-10 flex flex-col space-y-10">
-                  <div className="flex">
-                    {/* <div className='flex-1'><ToggleButton label='List'/></div>
-                  <div className='flex-1'><ToggleButton label='Buy' onChangeHandle={setIsBuy}/></div> */}
-                  </div>
                   <div className="flex flex-col items-start space-y-2">
-                    <span className="text-[#818DA9]">Frame Size</span>
-                    {nftInfo.width !== undefined && <RoundedTextInput
-                      defaultValue={
-                        nftInfo?.width + "X" + nftInfo?.height + "cm"
+                    {Items?.data?.data ? 
+                    <RoundedDropDownSelect
+                      label="Frame Size"
+                      value={
+                        ListItems?.findIndex(
+                          (x) => x._id === selected_data?.item_data?._id
+                        ) > 0
+                          ? ListItems?.findIndex(
+                            (x) => x._id === selected_data?.item_data?._id
+                          )
+                          : 0
                       }
-                      onChangeHandle={()=>{}}
-                    />}
-                    
-                    {/* <RoundedDropDownSelect
-                      onChangeHandle={(v) => {}}
-                      list={[
-                        {
-                          text: "30x20cm",
-                          value: 90,
-                        },
-                        {
-                          text: "10x40cm",
-                          value: 50,
-                        },
-                        {
-                          text: "70x50cm",
-                          value: 30,
-                        },
-                        {
-                          text: "100x100cm",
-                          value: 10,
-                        },
-                      ]}
-                    /> */}
+                      list={ListItems}
+                      onChangeHandle={async (v) => {
+                        if (selected_data?.item_data?._id !== v) {
+                          setnftInfo(Items?.data?.data[Items?.data?.data?.findIndex((x) => x._id === v)])
+                          await dispatch(setItem(Items?.data?.data[Items?.data?.data?.findIndex((x) => x._id === v)]))
+                          setColor(0);
+                        }
+
+                      }}
+                    /> : <></>}
                   </div>
                   <div className="flex flex-col items-start space-y-2">
                     <span className="text-[#818DA9]">Colour</span>
                     <div className="flex items-center space-x-3">
-                      <div
-                        className={`relative bg-black p-3 rounded-full border ${
-                          color === 1
-                            ? " border-green-500 "
-                            : " border-gray-400 "
-                        } cursor-pointer inline-block`}
-                        onClick={() => {
-                          color === 1 ? setColor(0) : setColor(1);
-                        }}
-                      >
-                        {color === 1 && (
-                          <img
-                            loading="lazy"
-                            src={
-                              process.env.PUBLIC_URL + "/img/check-green.svg"
-                            }
-                            alt="check"
-                            className="w-2 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
-                          />
-                        )}
-                      </div>
-                      <div
-                        className={`relative bg-white p-3 rounded-full border  ${
-                          color === 2
-                            ? " border-green-500 "
-                            : " border-gray-400 "
-                        } cursor-pointer inline-block`}
-                        onClick={() => {
-                          color === 2 ? setColor(0) : setColor(2);
-                        }}
-                      >
-                        {color === 2 && (
-                          <img
-                            loading="lazy"
-                            src={
-                              process.env.PUBLIC_URL + "/img/check-green.svg"
-                            }
-                            alt="check"
-                            className="w-2 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
-                          />
-                        )}
-                      </div>
+                      {
+                        selected_data?.item_data?.isColor ?
+                          selected_data?.item_data?.color?.map((c, index) => {
+                            return <div
+                              key={index}
+                              className={`relative p-3 rounded-full border ${color === index
+                                ? " border-green-500 "
+                                : " border-gray-400 "
+                                } cursor-pointer inline-block`}
+                              onClick={() => {
+                                setColor(index)
+                              }}
+                              style={{
+                                backgroundColor: c
+                              }}
+                            >
+                              {color === index && (
+                                <img
+                                  loading="lazy"
+                                  src={
+                                    process.env.PUBLIC_URL + "/img/check-green.svg"
+                                  }
+                                  alt="check"
+                                  className="w-2 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
+                                />
+                              )}
+                            </div>
+                          }) : null
+                      }
+
                     </div>
                   </div>
                   <div className="flex flex-col items-start space-y-2">
@@ -179,15 +198,7 @@ const Preview = () => {
                       }}
                     />
                   </div>
-                  {/* {!isbuy && (<div className='flex flex-col space-y-3'>
-                <div className='flex flex-col items-start space-y-2'>
-                  <span className='text-[#818DA9]'>Start Date Aunction</span>
-                  <Calendar/>
-                </div>
-                <div className='flex flex-col items-start space-y-2'>
-                  <span className='text-[#818DA9]'>End Date Aunction</span>
-                  <Calendar/>
-                </div></div>)} */}
+
                   <div className="flex flex-col items-start space-y-2">
                     <span className="text-[#818DA9]">Total Price</span>
                     <div className="flex justify-between w-full">
@@ -199,24 +210,24 @@ const Preview = () => {
                         <span className=" text-[#D3B789] text-2xl">
                           {nftInfo?.priceType === "eth"
                             ? Number(
-                                quantity *
-                                  nftInfo?.price *
-                                  ((100 - discount) / 100)
-                              ).toFixed(3) + "ETH"
+                              quantity *
+                              nftInfo?.price *
+                              ((100 - discount) / 100)
+                            ).toFixed(3) + "ETH"
                             : null}
                         </span>
                         <span className=" text-white text-sm">
                           ({" "}
                           {nftInfo?.priceType === "eth"
                             ? (
-                                quantity *
-                                nftInfo?.price *
-                                ((100 - discount) / 100) *
-                                eth_price.data
-                              ).toFixed(3)
-                            : quantity *
+                              quantity *
                               nftInfo?.price *
-                              ((100 - discount) / 100).toFixed(3)}{" "}
+                              ((100 - discount) / 100) *
+                              eth_price.data
+                            ).toFixed(3)
+                            : quantity *
+                            nftInfo?.price *
+                            ((100 - discount) / 100).toFixed(3)}{" "}
                           $ )
                         </span>
                         <div>
@@ -237,6 +248,11 @@ const Preview = () => {
                     <RoundedButtonMD
                       text="Adding Cart"
                       onButtonClick={async () => {
+                        let obj = {
+                          ...selected_data?.item_data,
+                          selected_color: selected_data?.item_data?.isColor?color:null
+                        };
+                        await dispatch(setItem(obj))
                         await dispatch(setQuantity(quantity))
                         navigate({
                           pathname: "/payment"

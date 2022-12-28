@@ -8,9 +8,11 @@ import Calendar from "./Calendar";
 import RoundedTextInput from "./RoundedTextInput";
 import RoundedPhoneNumberInput from "./RoundedPhoneNumberInput";
 import RoundedDropDownSelect from "./RoundedDropDownSelect";
+import RoundedDropDownSelectSM from "./RoundedDropDownSelect_sm";
 import RadioGroup from "./RadioGroup";
 import RectButton from "./RectButton";
 import RoundedButtonBG from "./RoundedButton_bg"
+import NumberInputSM from "./NumberInput_sm";
 export {
   RoundedButtonMD,
   RoundedButtonSM,
@@ -19,10 +21,12 @@ export {
   ToggleButton,
   DropDownSelect,
   NumberInput,
+  NumberInputSM,
   Calendar,
   RoundedTextInput,
   RoundedPhoneNumberInput,
   RoundedDropDownSelect,
   RadioGroup,
-  RectButton
+  RectButton,
+  RoundedDropDownSelectSM
 };
