@@ -1,6 +1,7 @@
 // import axios from "axios";
 // import React, { useEffect } from "react";
-import React from "react";
+import axios from "axios";
+import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { setNFTData } from "../../store/selectedReducer";
@@ -25,14 +26,11 @@ const ProfileNFTCard = ({ item }) => {
   // console.log('item', item);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  // const headers = {
+  //   'X-API-KEY':"381de08380ed44c393389a1485094324" //process.env.REACT_APP_OPENSEA_API_KEY
+  // };
   // useEffect(() => {
-  //   axios
-  //       .get(`https://api.opensea.io/api/v1/asset/${contract?.address}/${tokenId}/validate`)
-  //       .then((res) => {
-  //       })
-  //       .catch((err) => {
-  //         console.log(err);
-  //       });
+    
   // }, [])
   return (
     <div
@@ -109,6 +107,16 @@ const ProfileNFTCard = ({ item }) => {
           {
             <div className=" h-20 flex justify-center items-center py-4">
               <RoundedButtonBG active text="Select" onButtonClick={async () => {
+                // await axios
+                // .get(`https://api.opensea.io/api/v1/assets/${contract?.address}/${tokenId}`,
+                // {headers}
+                // )
+                // .then((res) => {
+                //   console.log('sssssssssssssssss', res)
+                // })
+                // .catch((err) => {
+                //   console.log('sdfsdfsdfsdfsdf', err);
+                // });
                 await dispatch(
                   setNFTData({
                     image: media[0]?.gateway,
