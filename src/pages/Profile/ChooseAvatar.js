@@ -228,7 +228,7 @@ const UploadPhoto = ({ is_Connected, user }) => {
           <img
             loading="lazy"
             src={
-              process.env.PUBLIC_URL + "/img/sandbox_mark.svg"
+              process.env.PUBLIC_URL + "/img/user.png"
             }
             alt=""
             className=" w-40 h-40 rounded-full"

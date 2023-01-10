@@ -31,7 +31,7 @@ const Home = () => {
           alt="profile_banner"
           width="100%"
         />
-        <div className=" absolute top-44 flex flex-col md:left-[15%] left-[5%] md:w-1/3 w-4/5 space-y-5">
+        <div className=" absolute top-44 flex-col md:left-[15%] left-[5%] md:w-1/3 w-4/5 space-y-5">
           <div className="relative w-28">
             <img
               loading="lazy"

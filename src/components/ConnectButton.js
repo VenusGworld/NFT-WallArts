@@ -56,7 +56,8 @@ const ConnectButton = () => {
   }, [connected_account, is_Connected]);
 
   window?.ethereum.on("accountsChanged", function () {
-    connectWallet();
+    if(is_Connected)
+      connectWallet();
   });
 
   window?.ethereum.on("networkChanged", function (networkId) {
@@ -74,13 +75,13 @@ const ConnectButton = () => {
     });
     // console.log(process.env.REACT_APP_SHOULD_CONNECTED_CHAIN, NETWORKS[process.env.REACT_APP_SHOULD_CONNECTED_CHAIN].chainId !== connected_chain, '0x'+NETWORKS[process.env.REACT_APP_SHOULD_CONNECTED_CHAIN].chainId.toString(16))
     if (!is_Connected || account[0] !== connected_account) {
-      await window?.ethereum.send("eth_requestAccounts");
-      dispatch(setChain(Number(window?.ethereum?.networkVersion)));
+      // await window?.ethereum.send("eth_requestAccounts");
+      
       await window?.ethereum.request({
         method: "wallet_requestPermissions",
         params: [{ eth_accounts: {}}]
-        
       });
+      dispatch(setChain(Number(window?.ethereum?.networkVersion)));
       const accounts = await window?.ethereum.request({
         method: "eth_accounts",
       });
@@ -157,29 +158,8 @@ const ConnectButton = () => {
             method: "eth_accounts",
           });
 
-          if (!is_Connected || account[0] !== connected_account) {
-            await window?.ethereum.send("eth_requestAccounts");
-            dispatch(setChain(Number(window?.ethereum?.networkVersion)));
-            await window?.ethereum.request({
-              method: "wallet_requestPermissions",
-              params: [{ eth_accounts: {} }],
-            });
-            const accounts = await window?.ethereum.request({
-              method: "eth_accounts",
-            });
-            console.log("posting wallet address");
-            await axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/user/`, {
-              wallet_address: accounts[0],
-            }).then((res) => {
-              console.log("res", res);
-              if (res.status === 200) {
-                setUser(res?.data?.data);
-              }
-            })
-            .catch((err) => {});;
-            if (accounts[0]) dispatch(connect(accounts[0]));
-            // const price_eth = useETHPrice(window?.ethereum)
-            // dispatch(setEthPrice(price_eth))
+          if (!is_Connected|| account[0] !== connected_account) {
+            connectWallet();
           } else {
             navigate(
               {
@@ -192,10 +172,10 @@ const ConnectButton = () => {
             );
           }
         }}
-        className="cursor-pointer group text-sm hover:bg-[#f5cf92] transition-all p-1 rounded-full border bg-green-900 border-gray-200"
+        className={`cursor-pointer group text-sm bg-[#f5cf92] transition-all p-1 ${is_Connected?" rounded-full":' rounded-md'} border-2 hover:bg-green-900 border-purple-700`}
       >
         {!is_Connected
-          ? <span className=" group-hover:text-black transition-all text-white">{"     Connect Wallet    "}</span>:( user?.avatar ? (
+          ? <span className=" font-semibold text-black transition-all group-hover:text-white">{"     Connect Wallet    "}</span>:( user?.avatar ? (
             <img
               loading="lazy"
               src={
@@ -209,7 +189,7 @@ const ConnectButton = () => {
             <img
               loading="lazy"
               src={
-                process.env.PUBLIC_URL + "/img/sandbox_mark.svg"
+                process.env.PUBLIC_URL + "/img/user.png"
               }
               alt=""
               className=" w-6 h-6 rounded-full"

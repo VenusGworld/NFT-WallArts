@@ -84,7 +84,7 @@ export const main_routes = [
     title: "Place Order",
     description: "place order",
     // component: <OrderSummary />,
-    path: "/profile_",
+    path: "/profile",
     isEnabled: true,
     appendDivider: true,
   },
@@ -149,7 +149,15 @@ function App() {
               />
             )
           })}
-          <Route key="profile" path="/profile" element={<Profile />} />
+          <Route key="profile" path="/profile" element={
+              is_Connected ? (
+                <Profile />
+              ) : (
+                <div className=" flex justify-center items-center text-white text-2xl py-40 bg-slate-700">
+                  Connect Wallet First!
+                </div>
+              )
+            } />
           <Route
             key="category"
             path="/category"
