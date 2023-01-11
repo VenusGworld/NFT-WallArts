@@ -1,10 +1,9 @@
 import React, { useMemo } from "react";
-import { useDispatch, useSelector } from "react-redux";
+
 import CategoryItem from "../../components/CategoryItem";
-import { NumberInputSM, RoundedDropDownSelect, RoundedDropDownSelectSM } from "../../components/Input";
-import { useETHPrice } from "../../hooks/useEthPrice";
+import { NumberInputSM, RoundedDropDownSelectSM } from "../../components/Input";
 import { useItem } from "../../hooks/useItem";
-import { selectedData, setItem } from "../../store/selectedReducer";
+
 
 const PreviewCard = ({ info, key, onChangeItemInfo, onChangeQuantity }) => {
   const {
@@ -15,9 +14,6 @@ const PreviewCard = ({ info, key, onChangeItemInfo, onChangeQuantity }) => {
     total_price_eth,
   } = info;
   const Items = useItem();
-  const selected_data = useSelector(selectedData);
-  const eth_price = useETHPrice(window.ethereum);
-  const dispatch = useDispatch();
   // console.log('item_info',item_info)
   const ListItems = useMemo(() => {
     let arr = [];
@@ -29,7 +25,7 @@ const PreviewCard = ({ info, key, onChangeItemInfo, onChangeQuantity }) => {
           flag = true
           data = {
             ...v,
-            text: v?.width + "X" + v?.height + "cm" + " " + (v?.priceType === 'eth' ? Number(v?.price * eth_price.data).toFixed(1) : v?.price) + " $",
+            text: v?.width + "X" + v?.height + "cm" ,
             value: v?._id
           }
         }
@@ -39,10 +35,10 @@ const PreviewCard = ({ info, key, onChangeItemInfo, onChangeQuantity }) => {
       // return arr;
     )
     return arr;
-  }, [info?.item_info, Items?.data?.data, eth_price.data]);
+  }, [info?.item_info, Items?.data?.data]);
 
   return (
-    <div className="flex sm:space-x-5 flex-col sm:flex-row w-full">
+    <div className="flex sm:space-x-5 flex-col sm:flex-row w-full items-start">
       <div className="rounded-2xl flex flex-col space-y-5 justify-center items-center w-28">
         <img
           src={image_for_printing}
@@ -56,11 +52,9 @@ const PreviewCard = ({ info, key, onChangeItemInfo, onChangeQuantity }) => {
           <span className="flex text-xl text-start">{name_for_printing}</span>
 
         </div>
-        <div className="flex justify-between w-full">
+        <div className="flex justify-between w-full space-x-1">
           <div className="flex flex-col items-start w-full">
-            <span className="text-sm text-[#BFC8DD]">Frame Size</span>
             <span className="w-full">
-              {item_info?.width}X{item_info?.height}cm
               {Items?.data?.data ?
                 <RoundedDropDownSelectSM
                   label="Frame Size"
@@ -108,17 +102,18 @@ const PreviewCard = ({ info, key, onChangeItemInfo, onChangeQuantity }) => {
             />
           </div>
         </div>
-        <div className="flex space-x-3 items-center">
+        {item_info?.selected_color?<div className="flex space-x-3 items-center">
           <span className="text-sm text-[#BFC8DD]">Selected Colour</span>
           {item_info?.color.map((colour, i) => {
-            if(i === item_info?.selected_color) return(
+            if(i === item_info?.selected_color) {return(
             <div
               className={`relative bg-${colour} p-3 rounded-full border`}
               key={i}
             ></div>
+          )} else return null}
           )}
-          )}
-        </div>
+        </div>:null}
+        
         <div className="flex space-x-3 items-center">
           <span className="text-sm text-[#BFC8DD]">Price</span>
           <span>{Number(total_price_eth).toFixed(3)} ETH</span>

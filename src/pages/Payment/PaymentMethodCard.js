@@ -54,9 +54,9 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-export default function PaymentMethodCard({ onChangeHandle }) {
+export default function PaymentMethodCard({ onChangeHandle, defaultValue }) {
   const [selectedMailingLists, setSelectedMailingLists] = useState(
-    mailingLists[0]
+    (defaultValue && defaultValue!=="")?mailingLists.find(item => item.name === defaultValue):mailingLists[0]
   );
 
   return (

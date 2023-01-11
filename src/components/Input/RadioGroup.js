@@ -1,6 +1,11 @@
+import { useEffect } from "react";
 
 export default function RadioGroup({ list, onChangeHandle, checkedId }) {
   // const [clickedId, click] = useState(0);
+  useEffect(() => {
+    onChangeHandle(list[checkedId])
+  }, [list, checkedId, onChangeHandle])
+  
   return (
     <div>
       <fieldset className="mt-4">

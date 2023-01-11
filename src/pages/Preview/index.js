@@ -55,7 +55,7 @@ const Preview = () => {
           flag = true
           data = {
             ...v,
-            text: v?.width + "X" + v?.height + "cm" + " "+(v?.priceType === 'eth'?Number(v?.price * eth_price.data).toFixed(1):v?.price)+" $",
+            text: v?.width + "X" + v?.height + "cm",
             value: v?._id
           }
         }
@@ -65,7 +65,7 @@ const Preview = () => {
       // return arr;
     )
     return arr;
-  }, [selected_data, Items?.data?.data, eth_price.data]);
+  }, [selected_data, Items?.data?.data]);
   const error = (text) => {
     toast.error(text, {
       position: "top-right",
@@ -141,6 +141,7 @@ const Preview = () => {
                       }}
                     /> : <></>}
                   </div>
+                  {selected_data?.item_data?.isColor?
                   <div className="flex flex-col items-start space-y-2">
                     <span className="text-[#818DA9]">Colour</span>
                     <div className="flex items-center space-x-3">
@@ -175,7 +176,7 @@ const Preview = () => {
                       }
 
                     </div>
-                  </div>
+                  </div>:null}
                   <div className="flex flex-col items-start space-y-2">
                     <span className="text-[#818DA9]">Quantity</span>
                     <NumberInput

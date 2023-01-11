@@ -36,7 +36,7 @@ const CustomizedArtCard = ({ item }) => {
           loading="lazy"
           src={process.env.PUBLIC_URL + "/img/image41.png"}
           alt=""
-          className="w-full "
+          className="w-full h-[15vw]"
         />
         <div
           className={`absolute bg-white shadow-lg top-10 left-1/2 -translate-x-1/2 `}

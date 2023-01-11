@@ -1,16 +1,17 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import storage from "redux-persist/lib/storage";
-import { persistReducer, persistStore } from "redux-persist";
+// import { persistReducer, persistStore } from "redux-persist";
 import thunk from "redux-thunk";
 
 import accountReducer from "./accountReducer";
 import selectedReducer from "./selectedReducer";
 import cartReducer from "./cartReducer";
+import filledPaymentDeliveryInfoSlice from "./filledPaymentInfoReducer";
 
-const persistConfig = {
-  key: 'root',
-  storage,
-}
+// const persistConfig = {
+//   key: 'root',
+//   storage,
+// }
 
 const appReducer = combineReducers({
   account:
@@ -18,7 +19,9 @@ const appReducer = combineReducers({
   selectedData:
     selectedReducer,
   cart:
-    cartReducer
+    cartReducer,
+  filledPaymentInfo:
+    filledPaymentDeliveryInfoSlice
 });
 
 const rootReducer = (state, action) => {

@@ -15,7 +15,6 @@ const RoundedTextInput = ({ placeholder, label, defaultValue, onChangeHandle, ty
           defaultValue={value}
           type={type?type:'text'}
           onChange={(e) => {
-            console.log(type)
             if(type==='email') {
               if (!isValidEmail(e.target.value)) {
                 setError('Email is invalid');
@@ -23,8 +22,8 @@ const RoundedTextInput = ({ placeholder, label, defaultValue, onChangeHandle, ty
                 setError(null);
               }
             }
-              setValue(e.target.value);
-              onChangeHandle(e.target.value)
+            onChangeHandle(e.target.value)
+            setValue(e.target.value);
           }}
           className="w-full border-none bg-[#444E66] text-white mr-2"
         />

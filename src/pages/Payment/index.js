@@ -25,13 +25,15 @@ import {
 } from "../../store/cartReducer";
 import { useETHPrice } from "../../hooks/useEthPrice";
 import { ethers } from "ethers";
+import { filledPaymentDeliveryInfo, setPaymentDeliveryInfo } from "../../store/filledPaymentInfoReducer";
 // import PreviewSelectedProduct from "./PreviewSelectedProduct";
 
 const Payment = () => {
   const connected_account = useSelector(connectedAccount);
+  const filled_payment_delivery_info = useSelector(filledPaymentDeliveryInfo);
   const navigate = useNavigate();
   let countries = Country.getAllCountries();
-  const [contactInfo, setContactInfo] = useState({
+  const [contactInfo, setContactInfo] = useState((filled_payment_delivery_info?.contactInfo)?filled_payment_delivery_info.contactInfo:{
     firstName: "",
     lastName: "",
     phoneNo: "",
@@ -47,7 +49,7 @@ const Payment = () => {
     initialCountry.isoCode,
     State.getStatesOfCountry(initialCountry.isoCode)[0].isoCode
   )[0];
-  const [deliveryInfo, setDeliveryInfo] = useState({
+  const [deliveryInfo, setDeliveryInfo] = useState(filled_payment_delivery_info?.deliveryInfo?filled_payment_delivery_info?.deliveryInfo:{
     address: "",
     apt_suiteNo: "",
     postalCode: "",
@@ -55,7 +57,7 @@ const Payment = () => {
     state: initialState,
     city: initialCity,
   });
-  const [paymentInfo, setPaymentInfo] = useState({
+  const [paymentInfo, setPaymentInfo] = useState((filled_payment_delivery_info?.paymentInfo)?filled_payment_delivery_info?.paymentInfo:{
     firstName: "",
     lastName: "",
     address: "",
@@ -84,9 +86,8 @@ const Payment = () => {
       State.getStatesOfCountry(initialCountry.isoCode)[0].isoCode
     )
   );
-  const [isCrypto, setIsCrypto] = useState(true);
-  const [isSameAddress, setIsSameAddress] = useState(true);
-
+  const [isCrypto, setIsCrypto] = useState(filled_payment_delivery_info?.isCrypto !== undefined ?filled_payment_delivery_info?.isCrypto:true);
+  const [isSameAddress, setIsSameAddress] = useState(filled_payment_delivery_info?.isSameAddress !== undefined ?filled_payment_delivery_info?.isSameAddress:true);
   useEffect(() => {
     addToCart();
     // console.log("res", res);
@@ -179,6 +180,7 @@ const Payment = () => {
   const signer = provider.getSigner();
   const stripeButton = useRef(null);
 
+ 
   const addToCart = async () => {
     if (Object.keys(selected_data?.item_data).length === 0) {
       // error('Order a Product First For Adding Cart!');
@@ -413,6 +415,7 @@ const Payment = () => {
                   <div className=" w-[90%] sm:w-[45%] mb-5">
                     <RoundedTextInput
                       label="First Name"
+                      defaultValue={contactInfo.firstName}
                       onChangeHandle={(v) => {
                         setContactInfo({ ...contactInfo, firstName: v });
                       }}
@@ -421,6 +424,7 @@ const Payment = () => {
                   <div className=" w-[90%] sm:w-[45%] mb-5">
                     <RoundedTextInput
                       label="Last Name"
+                      defaultValue={contactInfo.lastName}
                       onChangeHandle={(v) => {
                         setContactInfo({ ...contactInfo, lastName: v });
                       }}
@@ -429,6 +433,7 @@ const Payment = () => {
                   <div className=" w-[90%] sm:w-[45%] mb-5">
                     <RoundedPhoneNumberInput
                       label="Phone No."
+                      defaultValue={contactInfo.phoneNo.toString()}
                       onChangeHandle={(v) => {
                         setContactInfo({ ...contactInfo, phoneNo: v });
                       }}
@@ -436,6 +441,7 @@ const Payment = () => {
                   </div>
                   <div className=" w-[90%] sm:w-[45%] mb-5">
                     <RoundedTextInput
+                    defaultValue={contactInfo.email}
                       label="Email"
                       type="email"
                       onChangeHandle={(v) => {
@@ -452,6 +458,7 @@ const Payment = () => {
                 <div className="flex sm:flex-row flex-col flex-wrap justify-between">
                   <div className=" sm:w-[45%] w-[90%] mb-5">
                     <RoundedTextInput
+                    defaultValue={deliveryInfo.address}
                       label="Address"
                       onChangeHandle={(v) => {
                         setDeliveryInfo({ ...deliveryInfo, address: v });
@@ -461,6 +468,7 @@ const Payment = () => {
                   <div className=" w-[90%] sm:w-[45%] mb-5">
                     <RoundedTextInput
                       label="Apt / Suite No."
+                      defaultValue={deliveryInfo.apt_suiteNo}
                       onChangeHandle={(v) => {
                         setDeliveryInfo({ ...deliveryInfo, apt_suiteNo: v });
                       }}
@@ -569,6 +577,7 @@ const Payment = () => {
                   <div className=" w-[90%] sm:w-[45%] mb-5">
                     <RoundedTextInput
                       label="Postal Code"
+                      defaultValue={deliveryInfo.postalCode}
                       onChangeHandle={(v) => {
                         setDeliveryInfo({ ...deliveryInfo, postalCode: v });
                       }}
@@ -580,6 +589,7 @@ const Payment = () => {
                 <span className=" text-[#D3B789] my-8">3. Payment Method</span>
                 <div className=" relative w-full">
                   <PaymentMethodCard
+                  defaultValue={paymentInfo.paymentMethod}
                     onChangeHandle={(v) => {
                       setPaymentInfo({ ...paymentInfo, paymentMethod: v });
                       if (v === "crypto") {
@@ -611,6 +621,7 @@ const Payment = () => {
                   <div className=" w-[90%] sm:w-[45%] mb-5">
                     <RoundedTextInput
                       label="First Name"
+                      defaultValue={paymentInfo.firstName}
                       onChangeHandle={(v) => {
                         setPaymentInfo({ ...paymentInfo, firstName: v });
                       }}
@@ -619,6 +630,7 @@ const Payment = () => {
                   <div className=" w-[90%] sm:w-[45%] mb-5">
                     <RoundedTextInput
                       label="Last Name"
+                      defaultValue={paymentInfo.lastName}
                       onChangeHandle={(v) => {
                         setPaymentInfo({ ...paymentInfo, lastName: v });
                       }}
@@ -627,6 +639,7 @@ const Payment = () => {
                   <div className=" w-[90%] sm:w-[45%] mb-5">
                     <RoundedTextInput
                       label="Address"
+                      defaultValue={paymentInfo.address}
                       onChangeHandle={(v) => {
                         setPaymentInfo({ ...paymentInfo, address: v });
                       }}
@@ -635,6 +648,7 @@ const Payment = () => {
                   <div className=" w-[90%] sm:w-[45%] mb-5">
                     <RoundedTextInput
                       label="Apt / Suite No."
+                      defaultValue={paymentInfo.apt_suiteNo}
                       onChangeHandle={(v) => {
                         setPaymentInfo({ ...paymentInfo, apt_suiteNo: v });
                       }}
@@ -743,6 +757,7 @@ const Payment = () => {
                   <div className=" w-[90%] sm:w-[45%] mb-5">
                     <RoundedTextInput
                       label="Postal Code"
+                      defaultValue={paymentInfo.postalCode}
                       onChangeHandle={(v) => {
                         setPaymentInfo({ ...paymentInfo, postalCode: v });
                       }}
@@ -768,6 +783,7 @@ const Payment = () => {
                 return temp;
               }}
               orderClickHandle={async (isOrder) => {
+                await dispatch(setPaymentDeliveryInfo({contactInfo, paymentInfo, deliveryInfo, isCrypto, isSameAddress}));
                 if (isOrder) {
                   submitOrder();
                 } else {
