@@ -74,7 +74,7 @@ const PreviewCard = ({ info, key, onChangeItemInfo, onChangeQuantity }) => {
                     }
 
                   }}
-                /> : <div>asdfffffffffff</div>}
+                /> : null}
             </span>
           </div>
           <div className="flex flex-col items-start">
@@ -110,7 +110,7 @@ const PreviewCard = ({ info, key, onChangeItemInfo, onChangeQuantity }) => {
               className={`relative bg-${colour} p-3 rounded-full border`}
               key={i}
             ></div>
-          )} else return null}
+          )} else return <div key={i}></div>}
           )}
         </div>:null}
         

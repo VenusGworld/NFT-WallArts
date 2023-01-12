@@ -153,8 +153,8 @@ function App() {
               is_Connected ? (
                 <Profile />
               ) : (
-                <div className=" flex justify-center items-center text-white text-2xl py-40 bg-slate-700">
-                  Connect Wallet First!
+                <div className=" flex justify-center items-center text-white text-2xl py-40 bg-slate-700 ">
+                  <span className="p-5 rounded-lg border-2 border-[#6d42b7] ">Connect Wallet First!</span>
                 </div>
               )
             } />
@@ -166,7 +166,7 @@ function App() {
                 <Category />
               ) : (
                 <div className=" flex justify-center items-center text-white text-2xl py-40 bg-slate-700">
-                  Connect Wallet First!
+                  <span className="p-5 rounded-lg border-2 border-[#6d42b7]">Connect Wallet First!</span>
                 </div>
               )
             }
@@ -184,7 +184,7 @@ function App() {
                 <Preview />
               ) : (
                 <div className=" flex justify-center items-center text-white text-2xl py-40 bg-slate-700">
-                  Connect Wallet First!
+                  <span className="p-5 rounded-lg border-2 border-[#6d42b7]">Connect Wallet First!</span>
                 </div>
               )
             }
@@ -197,7 +197,7 @@ function App() {
                 <Payment />
               ) : (
                 <div className=" flex justify-center items-center text-white text-2xl py-40 bg-slate-700">
-                  Connect Wallet First!
+                  <span className="p-5 rounded-lg border-2 border-[#6d42b7]">Connect Wallet First!</span>
                 </div>
               )
             }
@@ -210,7 +210,7 @@ function App() {
                 <OrderSummary />
               ) : (
                 <div className=" flex justify-center items-center text-white text-2xl py-40 bg-slate-700">
-                  Connect Wallet First!
+                  <span className="p-5 rounded-lg border-2 border-[#6d42b7]">Connect Wallet First!</span>
                 </div>
               )
             }

@@ -42,7 +42,7 @@ const PreviewPart = ({ orderClickHandle, stripeRef, amount, payMethod, orderedDa
         </span>
         <div className="flex flex-col space-y-5 mb-5 w-full justify-center items-center">
           {ordered_products?.orderedProducts.map((item, i) => {
-            return <div className="w-fit flex items-center flex-wrap flex-row-reverse relative">
+            return <div key={i} className="w-fit flex items-center flex-wrap flex-row-reverse relative">
               <PreviewCard info={item} key={i} index={i} onChangeItemInfo={(v) => {
                 let arr = [];
                 let dis = 0;

@@ -5,16 +5,17 @@ const Footer = () => {
     <div className="w-full bottom-0 border-none bg-[#120728]">
       <div className="w-[80%] mx-auto text-start text-white flex flex-col py-10">
         <div className="flex-col mb-10">
-          <div className=" flex w-full justify-between">
-            <div className=" w-2/5 flex flex-col">
+          <div className=" flex flex-wrap w-full justify-between items-center">
+            <div className="w-2/5  flex flex-col">
               <span className=" text-4xl">Newsletter and Offers</span>
               <span className=" text-xs text-gray-400">
                 We're all about physical art - for digital art's sake. If you
                 are too, sign up for our latest news and offers.
               </span>
             </div>
-            <div className=" w-1/3">
-              <div></div>
+            <div className=" md:w-1/3 sm:w-1/2 flex">
+              <input className="p-3 bg-[#27144E] text-white rounded-l-md" placeholder="Enter Your mail"/>
+              <div className="p-3 bg-[#D3B789] text-black hover:bg-[#8d7a5d] cursor-pointer rounded-r-md">Join Us</div>
             </div>
           </div>
           <div
@@ -74,15 +75,7 @@ const Footer = () => {
                 className="w-4 h-4 text-white"
               />
             </div>
-          </div>
-          <div className="sm:w-1/4 w-3/4">
-            <span className=" text-sm">Navigation</span>
-            <div className="flex space-x-2 text-xs text-gray-300 flex-wrap font-mono">
-              <span>Home</span>
-              <span>Service</span>
-              <span>Process</span>
-              <span>Placeholder</span>
-            </div>
+
           </div>
         </div>
       </div>

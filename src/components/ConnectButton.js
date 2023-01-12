@@ -38,25 +38,25 @@ const ConnectButton = () => {
   // if(!price_eth.isLoading) console.log(price_eth.data,window?.ethereum)
 
   useEffect(() => {
-    if(is_Connected) {
+    if (is_Connected) {
       axios
-      .post(`${process.env.REACT_APP_BACKEND_URL}/api/user/`, {
-        wallet_address: connected_account,
-      })
-      .then((res) => {
-        if (res.status === 200) {
-          setUser(res?.data?.data);
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+        .post(`${process.env.REACT_APP_BACKEND_URL}/api/user/`, {
+          wallet_address: connected_account,
+        })
+        .then((res) => {
+          if (res.status === 200) {
+            setUser(res?.data?.data);
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [connected_account, is_Connected]);
 
   window?.ethereum.on("accountsChanged", function () {
-    if(is_Connected)
+    if (is_Connected)
       connectWallet();
   });
 
@@ -76,10 +76,10 @@ const ConnectButton = () => {
     // console.log(process.env.REACT_APP_SHOULD_CONNECTED_CHAIN, NETWORKS[process.env.REACT_APP_SHOULD_CONNECTED_CHAIN].chainId !== connected_chain, '0x'+NETWORKS[process.env.REACT_APP_SHOULD_CONNECTED_CHAIN].chainId.toString(16))
     if (!is_Connected || account[0] !== connected_account) {
       // await window?.ethereum.send("eth_requestAccounts");
-      
+
       await window?.ethereum.request({
         method: "wallet_requestPermissions",
-        params: [{ eth_accounts: {}}]
+        params: [{ eth_accounts: {} }]
       });
       dispatch(setChain(Number(window?.ethereum?.networkVersion)));
       const accounts = await window?.ethereum.request({
@@ -99,11 +99,11 @@ const ConnectButton = () => {
           console.log(err);
         });
     }
-    if(NETWORKS[process.env.REACT_APP_SHOULD_CONNECTED_CHAIN].chainId !== connected_chain) {
+    if (NETWORKS[process.env.REACT_APP_SHOULD_CONNECTED_CHAIN].chainId !== connected_chain) {
       try {
         await window?.ethereum.request({
           method: 'wallet_switchEthereumChain',
-          params: [{ chainId: '0x'+NETWORKS[process.env.REACT_APP_SHOULD_CONNECTED_CHAIN].chainId.toString(16), }],
+          params: [{ chainId: '0x' + NETWORKS[process.env.REACT_APP_SHOULD_CONNECTED_CHAIN].chainId.toString(16), }],
         });
       } catch (switchError) {
         // This error code indicates that the chain has not been added to MetaMask.
@@ -113,7 +113,7 @@ const ConnectButton = () => {
               method: 'wallet_addEthereumChain',
               params: [
                 {
-                  chainId: '0x'+NETWORKS[process.env.REACT_APP_SHOULD_CONNECTED_CHAIN].chainId.toString(16),
+                  chainId: '0x' + NETWORKS[process.env.REACT_APP_SHOULD_CONNECTED_CHAIN].chainId.toString(16),
                   chainName: NETWORKS[process.env.REACT_APP_SHOULD_CONNECTED_CHAIN].name,
                   rpcUrls: [NETWORKS[process.env.REACT_APP_SHOULD_CONNECTED_CHAIN].rpcUrl],
                 },
@@ -123,7 +123,8 @@ const ConnectButton = () => {
             // handle "add" error
           }
         }
-    }}
+      }
+    }
   };
   // console.log(Object.keys(NETWORKS).find(x => {console.log(NETWORKS[x]); return NETWORKS[x]?.chainId === connected_chain}), 'sdfsdfsdfsfddddddd', connected_chain)
   const ordered_products = useSelector(orderedProducts);
@@ -158,7 +159,7 @@ const ConnectButton = () => {
             method: "eth_accounts",
           });
 
-          if (!is_Connected|| account[0] !== connected_account) {
+          if (!is_Connected || account[0] !== connected_account) {
             connectWallet();
           } else {
             navigate(
@@ -172,10 +173,10 @@ const ConnectButton = () => {
             );
           }
         }}
-        className={`cursor-pointer group text-sm bg-[#f5cf92] transition-all p-1 ${is_Connected?" rounded-full":' rounded-md'} border-2 hover:bg-green-900 border-purple-700`}
+        className={`cursor-pointer group text-sm bg-[#f5cf92] transition-all p-1 ${is_Connected ? " rounded-full" : ' rounded-md'} border-2 hover:bg-green-900 border-purple-700`}
       >
         {!is_Connected
-          ? <span className=" font-semibold text-black transition-all group-hover:text-white">{"     Connect Wallet    "}</span>:( user?.avatar ? (
+          ? <span className=" font-semibold text-black transition-all group-hover:text-white">{"     Connect Wallet    "}</span> : (user?.avatar ? (
             <img
               loading="lazy"
               src={
@@ -200,14 +201,15 @@ const ConnectButton = () => {
           //   connected_account.substring(
           //     connected_account.length - 4,
           //     connected_account.length
-            }
+        }
       </div>
 
       <span className=" inline-block w-7 ml-5 text-gray-300 relative mx-5 hover:text-gray-400 cursor-pointer"
-        onClick={() => {is_Connected?
-          navigate({
-            pathname: "/payment",
-          }):error('Connect Wallet First!')
+        onClick={() => {
+          is_Connected ?
+            navigate({
+              pathname: "/payment",
+            }) : error('Connect Wallet First!')
         }}
       >
         <svg
@@ -224,9 +226,15 @@ const ConnectButton = () => {
             d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z"
           />
         </svg>
-        <span style={{borderWidth: '5px', fontSize: '9px'}} className=" absolute text-center -top-2 px-1 w-fit h-6 bg-red-700 border border-[#221b33] rounded-full">{
-          (ordered_products?.orderedProducts)? ordered_products?.orderedProducts.length : 0
+        <span style={{ borderWidth: '5px', fontSize: '9px' }} className=" absolute text-center -top-2 px-1 w-fit h-6 bg-red-700 border border-[#221b33] rounded-full ">{
+          (ordered_products?.orderedProducts) ? ordered_products?.orderedProducts.length : 0
         }</span>
+        {((ordered_products?.orderedProducts) ? ordered_products?.orderedProducts.length : 0) > 0 ?
+          <span style={{ borderWidth: '5px', fontSize: '9px' }} class="absolute text-center -top-2 px-1 w-fit h-6 text-red-500 bg-red-500 border border-red-500 rounded-full animate-ping">
+            {
+              (ordered_products?.orderedProducts) ? ordered_products?.orderedProducts.length : 0
+            }
+          </span> : null}
       </span>
     </div>
   );

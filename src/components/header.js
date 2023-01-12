@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 import { main_routes } from "../App";
 // import { useCategory } from "../hooks/useCategory";
@@ -11,7 +11,7 @@ const Header = () => {
   const [sidevar, openSidevar] = useState(false);
   const location = useLocation();
   // const categories = useCategory();
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
   return (
     <div className=" fixed z-[1001] w-full top-0">
       <div className=" border-none bg-[#221b33] hd-nm border-theme-24 -mx-3 sm:-mx-8 px-3 sm:px-8 p-0">
@@ -28,7 +28,10 @@ const Header = () => {
                 loading="lazy"
                 href={process.env.PUBLIC_URL + "/img/logo.svg"}
                 alt="logo"
-                className=" w-12"
+                className=" w-12 cursor-pointer"
+                onClick={() => {
+                  navigate("/home")
+                }}
                 src={process.env.PUBLIC_URL + "/img/logo.svg"}
               />
             </div>
@@ -94,7 +97,35 @@ const Header = () => {
           className=" z-[100000] absolute w-full items-center shadow-lg bg-[#3c3c63] md:hidden"
           style={{ boxShadow: "rgb(18 20 32) 0px 0px 10px" }}
         >
-          <div className=" w-full border-b-2 border-[#93939330] mx-auto h-12 text-white flex px-5 items-center space-x-3">
+          {
+            main_routes.map((r, i) => (
+          <div className=" w-full border-b-2 border-[#93939330] mx-auto h-12 text-white flex px-5 items-center space-x-3"
+              key={i}
+              onClick={() => {
+                navigate(r.path)
+                openSidevar(false)
+              }}
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="feather feather-layers"
+            >
+              <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+              <polyline points="2 17 12 22 22 17"></polyline>
+              <polyline points="2 12 12 17 22 12"></polyline>
+            </svg>
+            <span>{r.title}</span>
+          </div>))
+          }
+          {/* <div className=" w-full border-b-2 border-[#93939330] mx-auto h-12 text-white flex px-5 items-center space-x-3">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="24"
@@ -152,7 +183,7 @@ const Header = () => {
               <line x1="6" y1="18" x2="6.01" y2="18"></line>
             </svg>
             <span>List</span>
-          </div>
+          </div> */}
         </div>
       ) : (
         <></>

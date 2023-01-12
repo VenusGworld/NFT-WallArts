@@ -433,7 +433,7 @@ const Payment = () => {
                   <div className=" w-[90%] sm:w-[45%] mb-5">
                     <RoundedPhoneNumberInput
                       label="Phone No."
-                      defaultValue={contactInfo.phoneNo.toString()}
+                      defaultValue={contactInfo.phoneNo !== undefined?contactInfo.phoneNo.toString():""}
                       onChangeHandle={(v) => {
                         setContactInfo({ ...contactInfo, phoneNo: v });
                       }}
