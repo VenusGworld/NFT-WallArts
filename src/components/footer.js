@@ -1,6 +1,27 @@
-import React from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 const Footer = () => {
+  useEffect(() => {
+    initialFetching();
+  }, [])
+  const [initialInfo, setInitialInfo] = useState({
+    is_payment_test: false,
+    is_banner_default: false,
+    banner: "",
+    twitter: "",
+    facebook: "",
+    instagram: "",
+    linkedin: "",
+    discord: ""
+  })
+  const initialFetching = async () => {
+    const result = await axios
+    .get(`${process.env.REACT_APP_BACKEND_URL}/api/setting/`)
+    setInitialInfo(result.data.data)
+  }
+  
   return (
     <div className="w-full bottom-0 border-none bg-[#120728]">
       <div className="w-[80%] mx-auto text-start text-white flex flex-col py-10">
@@ -40,41 +61,41 @@ const Footer = () => {
             </span>
           </div>
           <div className="sm:w-1/4 w-3/4 flex flex-wrap space-x-1">
-            <div className="bg-[#2e283d] border-[#442f7b] border rounded-full p-2 hover:bg-[#493f64] transition-all cursor-pointer">
+            <Link target="_blank" to={initialInfo?.twitter} className="bg-[#2e283d] border-[#442f7b] border rounded-full p-2 hover:bg-[#493f64] transition-all cursor-pointer">
               <img
                 src={process.env.PUBLIC_URL + "/img/twitter.svg"}
                 alt=""
                 className="w-4 h-4 text-white"
               />
-            </div>
-            <div className="bg-[#2e283d] border-[#442f7b] border rounded-full p-2 hover:bg-[#493f64] transition-all cursor-pointer">
+            </Link>
+            <Link target="_blank" to={initialInfo?.facebook} className="bg-[#2e283d] border-[#442f7b] border rounded-full p-2 hover:bg-[#493f64] transition-all cursor-pointer">
               <img
                 src={process.env.PUBLIC_URL + "/img/facebook.svg"}
                 alt=""
                 className="w-4 h-4 text-white"
               />
-            </div>
-            <div className="bg-[#2e283d] border-[#442f7b] border rounded-full p-2 hover:bg-[#493f64] transition-all cursor-pointer">
+            </Link>
+            <Link target="_blank" to={initialInfo?.instagram} className="bg-[#2e283d] border-[#442f7b] border rounded-full p-2 hover:bg-[#493f64] transition-all cursor-pointer">
               <img
                 src={process.env.PUBLIC_URL + "/img/instagram.svg"}
                 alt=""
                 className="w-4 h-4 text-white"
               />
-            </div>
-            <div className="bg-[#2e283d] border-[#442f7b] border rounded-full p-2 hover:bg-[#493f64] transition-all cursor-pointer">
+            </Link>
+            <Link target="_blank" to={initialInfo?.discord} className="bg-[#2e283d] border-[#442f7b] border rounded-full p-2 hover:bg-[#493f64] transition-all cursor-pointer">
               <img
                 src={process.env.PUBLIC_URL + "/img/discord.svg"}
                 alt=""
                 className="w-4 h-4 text-white"
               />
-            </div>
-            <div className="bg-[#2e283d] border-[#442f7b] border rounded-full p-2 hover:bg-[#493f64] transition-all cursor-pointer">
+            </Link>
+            <Link target="_blank" to={initialInfo?.linkedin} className="bg-[#2e283d] border-[#442f7b] border rounded-full p-2 hover:bg-[#493f64] transition-all cursor-pointer">
               <img
                 src={process.env.PUBLIC_URL + "/img/linkedin.svg"}
                 alt=""
                 className="w-4 h-4 text-white"
               />
-            </div>
+            </Link>
 
           </div>
         </div>

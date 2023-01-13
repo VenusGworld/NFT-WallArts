@@ -111,12 +111,6 @@ function App() {
     // await dispatch(initializeSelected());
   };
 
-  if (typeof window.ethereum === 'undefined')
-    return <div className="flex-col w-full h-screen bg-gradient-to-br text from-orange-400 to-zinc-600 flex justify-center items-center text-white">
-      <span>MetaMask Isn't installed at your Browser</span>
-      <a target="_blank" rel="noreferrer" href="https://metamask.io/download/" className=" text-blue-600 underline text-sm">Install Metamask from Here</a>
-    </div>
-
   return (
     <QueryClientProvider client={queryClient}>
       <ToastContainer />

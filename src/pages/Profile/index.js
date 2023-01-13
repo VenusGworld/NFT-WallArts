@@ -10,11 +10,12 @@ import { isConnected, connectedAccount } from "../../store/accountReducer";
 import axios from "axios";
 import { useSearchParams } from "react-router-dom";
 import ChooseAvatar from "./ChooseAvatar";
+import { useSetting } from "../../hooks/useSetting";
 
 const Profile = () => {
   const [searchParams] = useSearchParams();
 
-  const [filterExpanded, expandFilter] = useState(false);
+  const setting = useSetting();
   const [itemsExpanded, expandItems] = useState(true);
   const is_Connected = useSelector(isConnected);
   
@@ -82,12 +83,26 @@ const Profile = () => {
 
   return (
     <div className="h-full relative mt-20 bg-[#363F54]">
+      {setting.isFetched?setting.data?.is_banner_default?
       <img
         loading="lazy"
         src={process.env.PUBLIC_URL + "/img/img1 1.png"}
         alt="profile_banner"
         width="100%"
-      />
+      />:<img
+      loading="lazy"
+      src={process.env.REACT_APP_BACKEND_URL + "/images/banner/"+setting.data?.data?.banner}
+      className=" min-h-[100px]"
+      alt="profile_banner"
+      width="100%"
+    />:<img
+    loading="lazy"
+    src={process.env.PUBLIC_URL + "/img/img1 1.png"}
+    alt="profile_banner"
+    width="100%"
+  />
+      }
+      
       
       <div className=" p-20 flex flex-col justify-center items-center">
       

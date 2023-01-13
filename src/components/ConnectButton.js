@@ -36,7 +36,7 @@ const ConnectButton = () => {
     });
   };
   // if(!price_eth.isLoading) console.log(price_eth.data,window?.ethereum)
-
+  const ordered_products = useSelector(orderedProducts);
   useEffect(() => {
     if (is_Connected) {
       axios
@@ -54,7 +54,10 @@ const ConnectButton = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [connected_account, is_Connected]);
-
+  if (typeof window.ethereum === 'undefined') {
+    // error('Cannot find Wallet at Your Browser!')
+    return <></>
+  }
   window?.ethereum.on("accountsChanged", function () {
     if (is_Connected)
       connectWallet();
@@ -126,8 +129,9 @@ const ConnectButton = () => {
       }
     }
   };
+  
   // console.log(Object.keys(NETWORKS).find(x => {console.log(NETWORKS[x]); return NETWORKS[x]?.chainId === connected_chain}), 'sdfsdfsdfsfddddddd', connected_chain)
-  const ordered_products = useSelector(orderedProducts);
+  
   return (
     <div className="flex flex-row-reverse items-center">
       {/* {Object.keys(NETWORKS).map((oneKey, i) => {
@@ -155,23 +159,29 @@ const ConnectButton = () => {
       ) : null} */}
       <div
         onClick={async () => {
-          const account = await window?.ethereum.request({
-            method: "eth_accounts",
-          });
-
-          if (!is_Connected || account[0] !== connected_account) {
-            connectWallet();
-          } else {
-            navigate(
-              {
-                pathname: "/profile",
-                search: `?id=${"profile_section"}`,
-              },
-              {
-                replace: true,
-              }
-            );
+          if (typeof window.ethereum === 'undefined') {
+            error('Cannot find Wallet at Your Browser!')
           }
+          else {
+            const account = await window?.ethereum.request({
+              method: "eth_accounts",
+            });
+  
+            if (!is_Connected || account[0] !== connected_account) {
+              connectWallet();
+            } else {
+              navigate(
+                {
+                  pathname: "/profile",
+                  search: `?id=${"profile_section"}`,
+                },
+                {
+                  replace: true,
+                }
+              );
+            }
+          }
+          
         }}
         className={`cursor-pointer group text-sm bg-[#f5cf92] transition-all p-1 ${is_Connected ? " rounded-full" : ' rounded-md'} border-2 hover:bg-green-900 border-purple-700`}
       >
