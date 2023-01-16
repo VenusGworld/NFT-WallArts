@@ -401,18 +401,18 @@ const Payment = () => {
   return (
     <div className="w-full h-full mt-20 relative text-white">
       <div className="bg-[#363f54] w-full p-10 relative flex flex-col justify-start items-start">
-        <div className="xl:w-[80%] w-[90%] mx-auto flex md:flex-row flex-col">
-          <div className="flex justify-start items-start xl:w-3/5 w-full sm:pr-8 pr-0">
+        <div className="xl:w-[80%] w-full mx-auto flex md:flex-row flex-col md:space-y-0 space-y-5 max-w-[1400px]">
+          <div className="flex md:justify-start justify-center items-start xl:w-3/5 w-full sm:pr-8 pr-0">
             <div className="flex flex-col">
-              <span className="xl:text-5xl lg:text-3xl md:text-2xl text-lg font-bold inline-block my-7 text-start">
+              <span className="xl:text-5xl lg:text-3xl md:text-2xl text-lg font-bold inline-block sm:my-7 my-3 text-start">
                 Mailing Details
               </span>
               <div className="flex flex-col items-start">
-                <span className=" text-[#D3B789] my-8">
+                <span className=" text-[#D3B789] md:my-8 my-4">
                   1.Contact Information
                 </span>
-                <div className="flex sm:flex-row flex-col flex-wrap justify-between">
-                  <div className=" w-[90%] sm:w-[45%] mb-5">
+                <div className="flex sm:flex-row flex-col flex-wrap justify-between w-full">
+                  <div className=" w-full sm:w-[45%] md:mb-5 mb-2">
                     <RoundedTextInput
                       label="First Name"
                       defaultValue={contactInfo.firstName}
@@ -421,7 +421,7 @@ const Payment = () => {
                       }}
                     />
                   </div>
-                  <div className=" w-[90%] sm:w-[45%] mb-5">
+                  <div className=" w-full sm:w-[45%] md:mb-5 mb-2">
                     <RoundedTextInput
                       label="Last Name"
                       defaultValue={contactInfo.lastName}
@@ -430,7 +430,7 @@ const Payment = () => {
                       }}
                     />
                   </div>
-                  <div className=" w-[90%] sm:w-[45%] mb-5">
+                  <div className=" w-full sm:w-[45%] md:mb-5 mb-2">
                     <RoundedPhoneNumberInput
                       label="Phone No."
                       defaultValue={contactInfo.phoneNo !== undefined?contactInfo.phoneNo.toString():""}
@@ -439,7 +439,7 @@ const Payment = () => {
                       }}
                     />
                   </div>
-                  <div className=" w-[90%] sm:w-[45%] mb-5">
+                  <div className=" w-full sm:w-[45%] md:mb-5 mb-2">
                     <RoundedTextInput
                     defaultValue={contactInfo.email}
                       label="Email"
@@ -452,11 +452,11 @@ const Payment = () => {
                 </div>
               </div>
               <div className="flex flex-col items-start">
-                <span className=" text-[#D3B789] my-8">
+                <span className=" text-[#D3B789] md:my-8 my-4">
                   2. Delivery Address
                 </span>
-                <div className="flex sm:flex-row flex-col flex-wrap justify-between">
-                  <div className=" sm:w-[45%] w-[90%] mb-5">
+                <div className="flex sm:flex-row flex-col flex-wrap justify-between w-full">
+                  <div className=" sm:w-[45%] w-full md:mb-5 mb-2">
                     <RoundedTextInput
                     defaultValue={deliveryInfo.address}
                       label="Address"
@@ -465,7 +465,7 @@ const Payment = () => {
                       }}
                     />
                   </div>
-                  <div className=" w-[90%] sm:w-[45%] mb-5">
+                  <div className=" w-full sm:w-[45%] md:mb-5 mb-2">
                     <RoundedTextInput
                       label="Apt / Suite No."
                       defaultValue={deliveryInfo.apt_suiteNo}
@@ -474,7 +474,7 @@ const Payment = () => {
                       }}
                     />
                   </div>
-                  <div className=" w-[90%] sm:w-[45%] mb-5">
+                  <div className=" w-full sm:w-[45%] md:mb-5 mb-2">
                     <RoundedDropDownSelect
                       label="Country"
                       value={
@@ -505,7 +505,7 @@ const Payment = () => {
                       }}
                     />
                   </div>
-                  <div className=" w-[90%] sm:w-[45%] mb-5">
+                  <div className=" w-full sm:w-[45%] md:mb-5 mb-2">
                     <RoundedDropDownSelect
                       label="State"
                       value={
@@ -540,7 +540,7 @@ const Payment = () => {
                       }}
                     />
                   </div>
-                  <div className=" w-[90%] sm:w-[45%] mb-5">
+                  <div className=" w-full sm:w-[45%] md:mb-5 mb-2">
                     <RoundedDropDownSelect
                       label="City"
                       value={
@@ -574,7 +574,7 @@ const Payment = () => {
                       }}
                     />
                   </div>
-                  <div className=" w-[90%] sm:w-[45%] mb-5">
+                  <div className=" w-full sm:w-[45%] md:mb-5 mb-2">
                     <RoundedTextInput
                       label="Postal Code"
                       defaultValue={deliveryInfo.postalCode}
@@ -586,7 +586,7 @@ const Payment = () => {
                 </div>
               </div>
               <div className="flex flex-col items-start">
-                <span className=" text-[#D3B789] my-8">3. Payment Method</span>
+                <span className=" text-[#D3B789] md:my-8 my-4">3. Payment Method</span>
                 <div className=" relative w-full">
                   <PaymentMethodCard
                   defaultValue={paymentInfo.paymentMethod}
@@ -618,7 +618,7 @@ const Payment = () => {
                   className={`sm:flex-row flex-col flex-wrap justify-between ${!isSameAddress && !isCrypto ? " flex" : " hidden"
                     }`}
                 >
-                  <div className=" w-[90%] sm:w-[45%] mb-5">
+                  <div className=" w-full sm:w-[45%] md:mb-5 mb-2">
                     <RoundedTextInput
                       label="First Name"
                       defaultValue={paymentInfo.firstName}
@@ -627,7 +627,7 @@ const Payment = () => {
                       }}
                     />
                   </div>
-                  <div className=" w-[90%] sm:w-[45%] mb-5">
+                  <div className=" w-full sm:w-[45%] md:mb-5 mb-2">
                     <RoundedTextInput
                       label="Last Name"
                       defaultValue={paymentInfo.lastName}
@@ -636,7 +636,7 @@ const Payment = () => {
                       }}
                     />
                   </div>
-                  <div className=" w-[90%] sm:w-[45%] mb-5">
+                  <div className=" w-full sm:w-[45%] md:mb-5 mb-2">
                     <RoundedTextInput
                       label="Address"
                       defaultValue={paymentInfo.address}
@@ -645,7 +645,7 @@ const Payment = () => {
                       }}
                     />
                   </div>
-                  <div className=" w-[90%] sm:w-[45%] mb-5">
+                  <div className=" w-full sm:w-[45%] md:mb-5 mb-2">
                     <RoundedTextInput
                       label="Apt / Suite No."
                       defaultValue={paymentInfo.apt_suiteNo}
@@ -654,7 +654,7 @@ const Payment = () => {
                       }}
                     />
                   </div>
-                  <div className=" w-[90%] sm:w-[45%] mb-5">
+                  <div className=" w-full sm:w-[45%] md:mb-5 mb-2">
                     <RoundedDropDownSelect
                       label="Country"
                       value={
@@ -685,7 +685,7 @@ const Payment = () => {
                       }}
                     />
                   </div>
-                  <div className=" w-[90%] sm:w-[45%] mb-5">
+                  <div className=" w-full sm:w-[45%] md:mb-5 mb-2">
                     <RoundedDropDownSelect
                       label="State"
                       value={
@@ -720,7 +720,7 @@ const Payment = () => {
                       }}
                     />
                   </div>
-                  <div className=" w-[90%] sm:w-[45%] mb-5">
+                  <div className=" w-full sm:w-[45%] md:mb-5 mb-2">
                     <RoundedDropDownSelect
                       label="City"
                       value={
@@ -754,7 +754,7 @@ const Payment = () => {
                       }}
                     />
                   </div>
-                  <div className=" w-[90%] sm:w-[45%] mb-5">
+                  <div className=" w-full sm:w-[45%] md:mb-5 mb-2">
                     <RoundedTextInput
                       label="Postal Code"
                       defaultValue={paymentInfo.postalCode}

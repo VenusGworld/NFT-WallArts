@@ -96,18 +96,18 @@ const Preview = () => {
           </div>
         </div>
         <div className="bg-[#363f54] w-full p-10 relative flex flex-col justify-start items-start -mt-[8%]">
-          <div className="w-[80%] mx-auto">
+          <div className="md:w-[80%] w-[98%] mx-auto">
             <div className="flex flex-col justify-start items-start w-full">
               <div className="xl:text-5xl lg:text-3xl md:text-2xl text-lg font-bold inline-block my-5 h-full">
                 Preview
               </div>
-              <div className="flex items-start space-x-5 relative justify-center h-full w-full">
-                <div className="w-3/5 flex justify-center h-full relative border rounded-lg">
+              <div className="flex md:flex-row flex-col items-start md:space-x-5 md:space-y-0 space-y-3 relative justify-center h-full w-full">
+                <div className=" md:w-3/5 w-[95%] flex justify-center h-full relative border rounded-lg">
                   <img
                     loading="lazy"
                     src={selected_data?.nft_img}
                     alt=""
-                    className="w-full rounded-lg"
+                    className="w-full h-full rounded-lg"
                   />
                   {/* <img
                     loading="lazy"
@@ -116,7 +116,7 @@ const Preview = () => {
                     className="absolute bottom-5 right-3"
                   /> */}
                 </div>
-                <div className="w-2/5 bg-[#444E66] px-6 py-10 flex flex-col space-y-10">
+                <div className="md:w-2/5 w-[95%] bg-[#444E66] px-6 py-10 flex flex-col md:space-y-10 space-y-2 sm:space-y-5">
                   <div className="flex flex-col items-start space-y-2">
                     {Items?.data?.data ? 
                     <RoundedDropDownSelect
@@ -202,13 +202,13 @@ const Preview = () => {
 
                   <div className="flex flex-col items-start space-y-2">
                     <span className="text-[#818DA9]">Total Price</span>
-                    <div className="flex justify-between w-full">
-                      <span className=" text-white text-2xl">
+                    <div className="flex md:justify-between justify-center md:space-x-0 space-x-3 w-full flex-wrap max-w-lg mx-auto">
+                      <span className=" text-white sm:text-2xl text-lg">
                         {quantity} x {nftInfo?.price}
                         {nftInfo?.priceType === "eth" ? "ETH" : "$"}
                       </span>
                       <div className="flex flex-col justify-end">
-                        <span className=" text-[#D3B789] text-2xl">
+                        <span className=" text-[#D3B789] sm:text-2xl text-lg">
                           {nftInfo?.priceType === "eth"
                             ? Number(
                               quantity *
@@ -231,11 +231,11 @@ const Preview = () => {
                             ((100 - discount) / 100).toFixed(3)}{" "}
                           $ )
                         </span>
-                        <div>
+                        <div className="w-full">
                           {nftInfo?.isBulk ? (
                             <div className="flex flex-col">
                               {nftInfo?.bulk_pricing.map((p, i) => (
-                                <span key={i}>
+                                <span key={i} className="sm:text-sm md:text-base text-xs">
                                   +{p?.quantity}NFTs -{p?.discount}%
                                 </span>
                               ))}

@@ -20,16 +20,17 @@ const data = [
 
 const ProcessPart = () => {
   return (
-    <div className="flex sm:flex-row flex-col w-[80%] justify-center sm:justify-between">
-      <div className="sm:w-[42%] w-full">
+    <div className="relative flex md:flex-row flex-col w-[80%] justify-center sm:justify-between">
+      <div className="md:w-[42%] w-full">
         <img
           loading="lazy"
           src={process.env.PUBLIC_URL + "/img/home/home_3.png"}
           alt="profile_banner"
-          width="100%"
+          // width="100%"
+          className="w-full max-w-md"
         />
       </div>
-      <div className="sm:w-[52%] w-full text-start">
+      <div className="md:w-[52%] w-full text-start">
         <span className=" text-4xl font-bold text-start">Process</span>
         <div>
           {data.map((item, i) => (
@@ -55,7 +56,7 @@ const ProcessPart = () => {
                   alt="icon"
                   width="80px"
                 />
-                <div className="flex flex-col space-y-2 mb-10">
+                <div className="flex flex-col space-y-2 md:mb-10">
                   <span className=" text-lg">{item.title}</span>
                   <span className=" text-xs text-gray-400 leading-relaxed">{item.desc}</span>
                 </div>

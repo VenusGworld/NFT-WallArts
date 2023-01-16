@@ -73,18 +73,18 @@ const RoundedDropDownSelectSM = ({ list, onChangeHandle, label, value }) => {
   }, [expanded, word, list, currentIndex]);
   if (!list?.length || list?.length === 0) return <div
     ref={selectRef}
-    className={`relative flex flex-col justify-start items-start space-y-2 w-full cursor-pointer ${!expanded && "overflow-hidden"
+    className={`relative flex flex-col justify-start items-start sm:space-y-0 space-y-2  w-full cursor-pointer ${!expanded && "overflow-hidden"
       } transition-all`}
   ></div>
   return (
     <div
       ref={selectRef}
-      className={`relative flex flex-col justify-start items-start space-y-2 w-full cursor-pointer ${!expanded && "overflow-hidden"
+      className={`relative flex flex-col justify-start items-start sm:space-y-2 space-y-0 w-full cursor-pointer ${!expanded && "overflow-hidden"
         } transition-all`}
     >
-      <span className=" text-sm">{label}</span>
+      <span className="text-sm text-[#BFC8DD]">{label}</span>
       <div
-        className={`relative w-full cursor-pointer px-5 ${expanded ? " bg-[#57637C] overflow-hidden " : "  bg-[#4a5367] "
+        className={`relative w-full cursor-pointer px-5 py-1 ${expanded ? " bg-[#57637C] overflow-hidden " : "  bg-[#4a5367] "
           } border border-[#818895]`}
         ref={ref}
         onClick={() => {

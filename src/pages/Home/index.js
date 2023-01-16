@@ -29,9 +29,9 @@ const Home = () => {
           loading="lazy"
           src={process.env.PUBLIC_URL + "/img/home/home_1.png"}
           alt="profile_banner"
-          width="100%"
+          className="w-full min-h-[300px]"
         />
-        <div className=" absolute top-44 flex-col md:left-[15%] left-[5%] md:w-1/3 w-4/5 space-y-5">
+        <div className=" absolute md:top-44 sm:top-20 top-5 flex-col md:left-[15%] left-[5%] lg:w-1/3 w-4/5 md:space-y-5 space-y-1">
           <div className="relative w-28">
             <img
               loading="lazy"
@@ -43,7 +43,7 @@ const Home = () => {
               NFTs
             </span>
           </div>
-          <div className=" md:text-5xl text-xl text-start font-bold leading-loose">
+          <div className="xl:text-[70px] lg:text-[60px] md:text-5xl sm:text-4xl text-2xl text-start font-bold leading-loose">
             <span className="inline-block mb-7">Bring Your{" "}
               <span className="relative text-[#572dff] border border-[#572dff] rounded-md bg-[#b4acbc] z-10 px-1 pt-1">
                 NFT
@@ -52,9 +52,9 @@ const Home = () => {
                 </span>
               </span>{" "}
             </span>
-            <span>Artwork to Life</span>
+            <span>{"   "}Artwork to Life</span>
           </div>
-          <div className=" text-start sm:text-base text-xs">
+          <div className=" text-start sm:text-sm md:text-base lg:text-lg xl:text-2xl text-xs">
             Chances are if you're an <span>NFT art collector</span>, you've got
             some hidden masterpieces gathering dust in your crypto wallet.
           </div>
@@ -69,8 +69,8 @@ const Home = () => {
         </div>
         {/* body */}
 
-        <div className=" py-12 px-5 flex flex-col text-white items-center space-y-12">
-          <div ref={ref => { target_product = ref }} className='mb-10' />
+        <div className=" md:py-12 sm:py-6 py-2 px-5 flex flex-col text-white items-center md:space-y-12 sm:space-y-6 space-y-2 mx-auto max-w-[1600px]">
+          <div ref={ref => { target_product = ref }} className='md:mb-10 mb-5' />
           <div className="flex flex-col space-y-3 items-center mt-24">
             <div className="relative w-40 text-center text-black">
               <img
@@ -83,7 +83,7 @@ const Home = () => {
                 PRODUCTS
               </span>
             </div>
-            <span className=" text-4xl font-bold">Choose A Format For Your NFT Wall Art</span>
+            <span className=" md:text-4xl sm:text-3xl text-2xl font-bold">Choose A Format For Your NFT Wall Art</span>
             <span className=" text-xs font-thin text-gray-400">Breathe life into your digital artwork by choosing a format that suits your interior space.</span>
             <span className=" text-xs font-thin text-gray-400">Leave it to us - We'll upscale your NFT to bring you the finest quality print.</span>
           </div>

@@ -24,19 +24,19 @@ const Footer = () => {
   
   return (
     <div className="w-full bottom-0 border-none bg-[#120728]">
-      <div className="w-[80%] mx-auto text-start text-white flex flex-col py-10">
+      <div className="w-[80%] mx-auto text-start text-white flex flex-col py-10 max-w-[1200px]">
         <div className="flex-col mb-10">
           <div className=" flex flex-wrap w-full justify-between items-center">
-            <div className="w-2/5  flex flex-col">
+            <div className="md:w-2/5 w-full  flex flex-col">
               <span className=" text-4xl">Newsletter and Offers</span>
               <span className=" text-xs text-gray-400">
                 We're all about physical art - for digital art's sake. If you
                 are too, sign up for our latest news and offers.
               </span>
             </div>
-            <div className=" md:w-1/3 sm:w-1/2 flex">
-              <input className="p-3 bg-[#27144E] text-white rounded-l-md" placeholder="Enter Your mail"/>
-              <div className="p-3 bg-[#D3B789] text-black hover:bg-[#8d7a5d] cursor-pointer rounded-r-md">Join Us</div>
+            <div className=" md:w-1/3 sm:min-w-[300px] min-w-[100px] w-full flex ">
+              <input className="sm:p-3 p-2 bg-[#27144E] text-white rounded-l-md w-[70%]" placeholder="Enter Your mail"/>
+              <div className="sm:p-3 p-2 bg-[#D3B789] text-black hover:bg-[#8d7a5d] cursor-pointer rounded-r-md">Join Us</div>
             </div>
           </div>
           <div

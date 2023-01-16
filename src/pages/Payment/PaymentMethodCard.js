@@ -67,7 +67,7 @@ export default function PaymentMethodCard({ onChangeHandle, defaultValue }) {
         onChangeHandle(v.name);
       }}
     >
-      <div className="mt-4 flex flex-wrap sm:items-stretch sm:space-y-0 justify-between">
+      <div className="mt-4 flex flex-wrap sm:items-stretch sm:space-y-0 sm:justify-between justify-center">
         {mailingLists.map((mailingList) => (
           <RadioGroup.Option
             key={mailingList.id}
@@ -76,7 +76,7 @@ export default function PaymentMethodCard({ onChangeHandle, defaultValue }) {
               classNames(
                 checked ? "border-transparent" : "border-gray-300",
                 active ? "border-[#D3B789] ring-2 ring-[#D3B789]" : "",
-                "relative flex justify-center items-center cursor-pointer rounded-2xl border w-[80%] mb-2 sm:mb-0 bg-[#57637C] p-4 shadow-sm focus:outline-none sm:w-[18%]"
+                "sm:max-w-[250px] max-w-[100px] mx-2 min-w-[100px] relative flex justify-center items-center cursor-pointer rounded-2xl border w-[80%] mb-2 sm:mb-0 bg-[#57637C] p-4 shadow-sm focus:outline-none sm:w-[18%]"
               )
             }
           >

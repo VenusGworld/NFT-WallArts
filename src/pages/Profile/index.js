@@ -2,9 +2,8 @@ import React, { useEffect, useState } from "react";
 import { Alchemy, Network } from "alchemy-sdk";
 import { useSelector } from "react-redux";
 
-import { RoundedButtonMD, RoundedButtonSM } from "../../components/Input";
+import { RoundedButtonMD } from "../../components/Input";
 import ActivityPart from "./ActivityPart";
-import FilterPart from "./FilterPart";
 import ItemsPart from "./ItemsPart";
 import { isConnected, connectedAccount } from "../../store/accountReducer";
 import axios from "axios";
@@ -18,7 +17,7 @@ const Profile = () => {
   const setting = useSetting();
   const [itemsExpanded, expandItems] = useState(true);
   const is_Connected = useSelector(isConnected);
-  
+
   const [nfts, setNfts] = useState([]);
   const [user, setUser] = useState({});
   const [editableUserName, seteditableUserName] = useState(false);
@@ -26,7 +25,7 @@ const Profile = () => {
   const [editableBio, seteditableBio] = useState(false);
   const [bio, setBio] = useState("Add Your Bio");
 
-  
+
   // const [pageKey, setpageKey] = useState("");
   const connected_account = useSelector(connectedAccount);
   const config = {
@@ -37,12 +36,12 @@ const Profile = () => {
   const alchemy = new Alchemy(config);
 
   useEffect(() => {
-    if(searchParams.get('id')) {
-      if(searchParams.get('id') === 'profile_section' && itemsExpanded) {
+    if (searchParams.get('id')) {
+      if (searchParams.get('id') === 'profile_section' && itemsExpanded) {
         expandItems(false)
       }
       let releventDiv = document.getElementById(searchParams.get('id'));
-      releventDiv.scrollIntoView({behavior: "smooth"});
+      releventDiv.scrollIntoView({ behavior: "smooth" });
     }
 
     if (is_Connected) {
@@ -59,56 +58,55 @@ const Profile = () => {
     await axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/user/`, {
       wallet_address: connected_account
     })
-    // axios
-    //   .get(
-    //     `${process.env.REACT_APP_BACKEND_URL}/api/user/address/${connected_account}`
-    //   )
+      // axios
+      //   .get(
+      //     `${process.env.REACT_APP_BACKEND_URL}/api/user/address/${connected_account}`
+      //   )
       .then((res) => {
         // console.log("res", res);
         if (res.status === 200) {
           setUser(res?.data?.data);
         }
       })
-      .catch((err) => {});
+      .catch((err) => { });
   };
 
-  
+
 
   const fetchNFTs = async () => {
     const nfts = await alchemy.nft.getNftsForOwner(connected_account, {
     }); //'0x5bd0920af6dccae3d4d90c51d6fc7e34583f2314', connected_account);
-    console.log(nfts);
     setNfts(nfts.ownedNfts);
   };
 
   return (
     <div className="h-full relative mt-20 bg-[#363F54]">
-      {setting.isFetched?setting.data?.is_banner_default?
-      <img
+      {setting.isFetched ? setting.data?.is_banner_default ?
+        <img
+          loading="lazy"
+          src={process.env.PUBLIC_URL + "/img/img1 1.png"}
+          alt="profile_banner"
+          width="100%"
+        /> : <img
+          loading="lazy"
+          src={process.env.REACT_APP_BACKEND_URL + "/images/banner/" + setting.data?.data?.banner}
+          className=" min-h-[100px]"
+          alt="profile_banner"
+          width="100%"
+        /> : <img
         loading="lazy"
         src={process.env.PUBLIC_URL + "/img/img1 1.png"}
         alt="profile_banner"
         width="100%"
-      />:<img
-      loading="lazy"
-      src={process.env.REACT_APP_BACKEND_URL + "/images/banner/"+setting.data?.data?.banner}
-      className=" min-h-[100px]"
-      alt="profile_banner"
-      width="100%"
-    />:<img
-    loading="lazy"
-    src={process.env.PUBLIC_URL + "/img/img1 1.png"}
-    alt="profile_banner"
-    width="100%"
-  />
+      />
       }
-      
-      
-      <div className=" p-20 flex flex-col justify-center items-center">
-      
-        <div className="relative my-5">
-        <ChooseAvatar is_Connected={is_Connected} user={user}/>
-          <div className=" text-white text-4xl flex relative group items-center">
+
+
+      <div className=" sm:p-20 sm:pt-20 p-15 pt-10 flex flex-col justify-center items-center">
+
+        <div className="relative md:my-5 my-1">
+          <ChooseAvatar is_Connected={is_Connected} user={user} />
+          <div className=" text-white md:text-4xl sm:text-3xl text-2xl flex flex-col relative group items-center">
             <div className="absolute -top-8 hidden group-hover:flex left-1/2 -translate-x-1/2 p-1 bg-black transition-all rounded-lg">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -125,22 +123,22 @@ const Profile = () => {
                 />
               </svg>
             </div>
-            
+
             <input
-              className=" bg-[#363f54] overflow-x-auto w-fit text-center"
-              defaultValue={user.name ? user.name : user.wallet_address && user.wallet_address?.length>0?(user.wallet_address.substring(0, 5) +
-             "..." +
-             user.wallet_address.substring(
-               user.wallet_address.length - 4,
-               user.wallet_address.length)):""}
+              className=" bg-[#363f54] overflow-x-auto w-[80%] text-center"
+              defaultValue={user.name ? user.name : user.wallet_address && user.wallet_address?.length > 0 ? (user.wallet_address.substring(0, 5) +
+                "..." +
+                user.wallet_address.substring(
+                  user.wallet_address.length - 4,
+                  user.wallet_address.length)) : ""}
               onChange={(v) => {
                 if (
                   v?.target.value !==
-                  user.wallet_address && user.wallet_address?.length>0?((user.name ? user.name : user.wallet_address.substring(0, 5) +
-             "..." +
-             user.wallet_address.substring(
-               user.wallet_address.length - 4,
-               user.wallet_address.length))):""
+                    user.wallet_address && user.wallet_address?.length > 0 ? ((user.name ? user.name : user.wallet_address.substring(0, 5) +
+                      "..." +
+                      user.wallet_address.substring(
+                        user.wallet_address.length - 4,
+                        user.wallet_address.length))) : ""
                 ) {
                   seteditableUserName(true);
                   setUserName(v?.target.value);
@@ -166,7 +164,7 @@ const Profile = () => {
                         setUser(res?.data);
                       }
                     })
-                    .catch((err) => {});
+                    .catch((err) => { });
                 }}
               >
                 <svg
@@ -195,7 +193,7 @@ const Profile = () => {
             className=" absolute w-9 h-9 top-0 sm:-right-24 -right-10"
           /> */}
         </div>
-        <div className=" text-gray-400">
+        <div className=" text-gray-400 sm:text-base text-sm">
           Joined: {new Date(user?.date_joined).toLocaleString()}
         </div>
         <div className=" text-white text-4xl w-3/5 flex justify-center items-center relative group">
@@ -228,48 +226,48 @@ const Profile = () => {
               // console.log(editableBio);
             }}
             title='Bio'
-            value= {(user?.bio && user?.bio !== '' && !editableBio) ? user?.bio : bio}
+            value={(user?.bio && user?.bio !== '' && !editableBio) ? user?.bio : bio}
             defaultValue={user.bio}
           >
-          
+
             {/* {user.bio} */}
             {/* {(user?.bio && user?.bio !== '') ? user?.bio : "Add Your Bio"} */}
           </textarea>
           {editableBio ? (
-              <div
-                className=" p-2 rounded-full hover:bg-gray-400 ml-3 cursor-pointer hover:text-black transition-all flex justify-center items-center"
-                onClick={async () => {
-                  await axios
-                    .post(
-                      `${process.env.REACT_APP_BACKEND_URL}/api/user/update/${user?._id}`,
-                      { bio: bio }
-                    )
-                    .then((res) => {
-                      console.log("res", res);
-                      if (res.status === 201) {
-                        seteditableBio(false);
-                        setUser(res?.data);
-                      }
-                    })
-                    .catch((err) => {});
-                }}
+            <div
+              className=" p-2 rounded-full hover:bg-gray-400 ml-3 cursor-pointer hover:text-black transition-all flex justify-center items-center"
+              onClick={async () => {
+                await axios
+                  .post(
+                    `${process.env.REACT_APP_BACKEND_URL}/api/user/update/${user?._id}`,
+                    { bio: bio }
+                  )
+                  .then((res) => {
+                    console.log("res", res);
+                    if (res.status === 201) {
+                      seteditableBio(false);
+                      setUser(res?.data);
+                    }
+                  })
+                  .catch((err) => { });
+              }}
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+                className="w-6 h-6"
               >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth={1.5}
-                  stroke="currentColor"
-                  className="w-6 h-6"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M4.5 12.75l6 6 9-13.5"
-                  />
-                </svg>{" "}
-              </div>
-            ) : null}
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M4.5 12.75l6 6 9-13.5"
+                />
+              </svg>{" "}
+            </div>
+          ) : null}
         </div>
         {/* <div className=" w-fit bg-[#313949] flex text-white rounded-full md:px-16 py-2 px-10">
           <div className="flex flex-col flex-1 items-center justify-center">
@@ -292,7 +290,7 @@ const Profile = () => {
             <div className="text-gray-400">Total Volume</div>
           </div>
         </div> */}
-        <div className="relative my-10 flex space-x-5" id="profile_section">
+        <div className="relative sm:my-10 my-3 flex space-x-5" id="profile_section">
           <RoundedButtonMD
             text="NFTs"
             onButtonClick={() => {
@@ -328,7 +326,7 @@ const Profile = () => {
         </div>
         {/* {filterExpanded && <FilterPart />} */}
         {itemsExpanded && <ItemsPart Items={nfts} />}
-        {!itemsExpanded && <ActivityPart  />}
+        {!itemsExpanded && <ActivityPart />}
       </div>
     </div>
   );

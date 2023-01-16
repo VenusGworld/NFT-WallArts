@@ -54,11 +54,15 @@
 
 input.PhoneInputInput {
   background: #444e66;
-  padding: 12px 20px;
+  padding: 5px 8px;
   width: 100%;
   position: relative;
   border: 1px #818895 solid;
   border-radius: 9999px;
+}
+
+.PhoneInput {
+  width: 100%;
 }
 
 .PhoneInputCountrySelect {
@@ -82,5 +86,11 @@ input.PhoneInputInput {
   }
   to {
     transform: rotate(360deg);
+  }
+}
+
+@media screen and (min-width: 780px) {
+  input.PhoneInputInput {
+    padding: 16px 20px;
   }
 }

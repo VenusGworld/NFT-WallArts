@@ -28,7 +28,7 @@ const Category = () => {
           </div>
         </div>
         <div className="bg-[#363f54] w-full p-10 relative -mt-[8%]">
-          <div className=" flex flex-wrap justify-around items-baseline w-9/12 mx-auto -mt-[15%] lg:-mt-[10%]">
+          <div className=" flex flex-wrap justify-around items-baseline sm:w-9/12 sm:w-5/6 mx-auto -mt-[15%] lg:-mt-[10%]">
             {/* <div > */}
             {categories.isLoading && <div className=" h-96"></div>}
             {categories?.data?.data.map((info, i) => {

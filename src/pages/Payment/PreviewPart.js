@@ -21,25 +21,27 @@ const PreviewPart = ({ orderClickHandle, stripeRef, amount, payMethod, orderedDa
   return (
     <Board>
       <div className="flex flex-col sm:items-start items-center w-full">
-        <span className=" text-3xl mt-4">
-          Cart
-          <span className=" inline-block w-7 ml-5">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={2}
-              stroke="currentColor"
-              className="w-6 h-6"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z"
-              />
-            </svg>
+        <div className="w-full text-start">
+          <span className=" text-3xl sm:mt-4 mt-1">
+            Cart
+            <span className=" inline-block w-7 ml-5">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={2}
+                stroke="currentColor"
+                className="w-6 h-6"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z"
+                />
+              </svg>
+            </span>
           </span>
-        </span>
+        </div>
         <div className="flex flex-col space-y-5 mb-5 w-full justify-center items-center">
           {ordered_products?.orderedProducts.map((item, i) => {
             return <div key={i} className="w-fit flex items-center flex-wrap flex-row-reverse relative">
@@ -85,48 +87,48 @@ const PreviewPart = ({ orderClickHandle, stripeRef, amount, payMethod, orderedDa
                 })
 
                 dispatch(setCart(arr));
-              }} 
-              onChangeQuantity={(v) => {
-                let arr = [];
-                let dis = 0;
-                if (ordered_products?.orderedProducts[i]?.item_info?.isBulk) {
-                  let min = 100000;
-                  ordered_products?.orderedProducts[i]?.item_info?.bulk_pricing.forEach((b) => {
-                    if (
-                      Number(v) - b.quantity >= 0 &&
-                      min > Number(v) - b.quantity
-                    ) {
-                      min = Number(v) - b.quantity;
-                      dis = b.discount;
-                    }
-                  });
-                }
-                ordered_products?.orderedProducts.forEach((p, j) => {
-                  if (i !== j) arr.push(p)
-                  else {
-                    let a = {
-                      ...p,
-                      quantity:v,
-                      total_price_eth: p?.item_info?.priceType === "eth"
-                        ? Number(
-                          v *
-                          p?.item_info?.price *
-                          ((100 - dis) / 100)
-                        )
-                        : Number(
-                          v *
-                          p?.item_info?.price *
-                          ((100 - dis) / 100)
-                        ) / eth_price.data
-                    };
-                    arr.push(a)
-                  }
-                })
-                dispatch(setCart(arr));
               }}
+                onChangeQuantity={(v) => {
+                  let arr = [];
+                  let dis = 0;
+                  if (ordered_products?.orderedProducts[i]?.item_info?.isBulk) {
+                    let min = 100000;
+                    ordered_products?.orderedProducts[i]?.item_info?.bulk_pricing.forEach((b) => {
+                      if (
+                        Number(v) - b.quantity >= 0 &&
+                        min > Number(v) - b.quantity
+                      ) {
+                        min = Number(v) - b.quantity;
+                        dis = b.discount;
+                      }
+                    });
+                  }
+                  ordered_products?.orderedProducts.forEach((p, j) => {
+                    if (i !== j) arr.push(p)
+                    else {
+                      let a = {
+                        ...p,
+                        quantity: v,
+                        total_price_eth: p?.item_info?.priceType === "eth"
+                          ? Number(
+                            v *
+                            p?.item_info?.price *
+                            ((100 - dis) / 100)
+                          )
+                          : Number(
+                            v *
+                            p?.item_info?.price *
+                            ((100 - dis) / 100)
+                          ) / eth_price.data
+                      };
+                      arr.push(a)
+                    }
+                  })
+                  dispatch(setCart(arr));
+                }}
               />
               <div
-                className=" text-red-400 px-2 cursor-pointer hover:text-red-600 transition-all absolute bottom-2"
+                className="border rounded-full border-red-500 text-red-400 p-2 cursor-pointer hover:text-red-600 transition-all absolute -top-3 -right-3"
                 onClick={async () => {
                   if (window.confirm('Are you sure to remove this Product from Cart?')) {
                     let arr = []
@@ -165,7 +167,7 @@ const PreviewPart = ({ orderClickHandle, stripeRef, amount, payMethod, orderedDa
             </span>
           </div>
         </div>
-        <div className=" w-full flex space-x-1 items-center">
+        <div className=" w-full flex space-x-1 items-center sm:flex-row flex-col sm:space-y-0 space-y-2">
           <RoundedButtonMD
             text="Continue Shopping"
             onButtonClick={() => {

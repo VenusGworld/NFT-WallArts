@@ -192,7 +192,7 @@ const UploadPhoto = ({ is_Connected, user }) => {
   return (
     <div className="flex justify-center relative">
       <div
-        className="group rounded-full -mt-36 hover:brightness-50 transition-all cursor-pointer"
+        className="group rounded-full sm:-mt-36 -mt-20 hover:brightness-50 transition-all cursor-pointer md:w-40 md:h-40 sm:w-28 sm:h-28 w-20 h-20"
         onClick={() => {
           if (is_Connected) {
             imgButton.current.click();
@@ -212,7 +212,7 @@ const UploadPhoto = ({ is_Connected, user }) => {
           <img
             src={URL.createObjectURL(profileImage)}
             alt=""
-            className=" w-40 h-40 object-contain rounded-full"
+            className="  object-contain rounded-full"
           />
         ) : is_Connected && user?.avatar ? (
           <img
@@ -222,7 +222,7 @@ const UploadPhoto = ({ is_Connected, user }) => {
               `/images/avatars/${user?.avatar}`
             }
             alt=""
-            className=" w-40 h-40 rounded-full"
+            className="  rounded-full"
           />
         ) : (
           <img
@@ -231,7 +231,7 @@ const UploadPhoto = ({ is_Connected, user }) => {
               process.env.PUBLIC_URL + "/img/user.png"
             }
             alt=""
-            className=" w-40 h-40 rounded-full"
+            className="  rounded-full"
           />
         )}
         <div className=" absolute top-1/2 left-1/2 group-hover:block hidden -translate-x-1/2 -translate-y-1/2 z-[200]">

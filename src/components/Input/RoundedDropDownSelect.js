@@ -84,7 +84,7 @@ const RoundedDropDownSelect = ({ list, onChangeHandle, label, value }) => {
     >
       <span className=" text-sm">{label}</span>
       <div
-        className={`relative w-full rounded-full cursor-pointer px-7 py-4 ${expanded ? " bg-[#57637C] overflow-hidden " : "  bg-[#4a5367] "
+        className={`relative w-full rounded-full cursor-pointer md:px-5 md:py-4 px-2 py-1 ${expanded ? " bg-[#57637C] overflow-hidden " : "  bg-[#4a5367] "
           } border border-[#818895]`}
         ref={ref}
         onClick={() => {

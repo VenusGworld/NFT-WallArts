@@ -9,7 +9,7 @@ const RoundedButtonMD = ({ active, text, onButtonClick, icon, fullWidth, classNa
         active
           ? " bg-[#D3B789] text-[#313949]"
           : "bg-[#444E66] text-white border border-[#95a9d1]"
-      } rounded-full px-7 py-2 ${className?className:""}`}
+      } rounded-full md:px-7 md:py-2 px-3 py-1 sm:text-base text-sm ${className?className:""}`}
       onClick={onButtonClick}
     >
       <span>{text}

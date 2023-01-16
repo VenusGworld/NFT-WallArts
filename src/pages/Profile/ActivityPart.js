@@ -1,11 +1,10 @@
-import React, { useState } from "react";
+import React from "react";
 // import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 // import { Area, AreaChart, CartesianGrid, XAxis, YAxis } from "recharts";
 // import { Items } from '.';
 
 import Board from "../../components/Board";
-import { RoundedDropDownSelect } from "../../components/Input";
 import { useETHPrice } from "../../hooks/useEthPrice";
 import { useOrder } from "../../hooks/useOrder";
 import { useOrderStatus } from "../../hooks/useOrderStatus";
@@ -126,16 +125,18 @@ const ActivityPart = () => {
           </div>
         </div>
       </Board> */}
-      <div className=" my-32">
-        <div className="flex justify-center items-start  text-white px-11 py-2">
-          <div className=" flex justify-start w-3/12">Item</div>
-          <div className=" flex justify-center w-2/12">Price</div>
-          <div className=" flex justify-center w-1/12">Quantity</div>
-          <div className=" flex justify-center w-1/12">Size</div>
-          <div className=" flex justify-center w-3/12">Status</div>
-          <div className=" flex justify-center w-2/12">Time</div>
+      <div className="w-full">
+        <div className="w-full overflow-x-auto">
+          <div className="flex justify-center items-start  text-white px-11 py-2 min-w-[800px]">
+            <div className=" flex justify-start w-4/12">Item</div>
+            <div className=" flex justify-center w-2/12">Price</div>
+            <div className=" flex justify-center w-1/12">Quantity</div>
+            <div className=" flex justify-center w-1/12">Size</div>
+            <div className=" flex justify-center w-2/12">Status</div>
+            <div className=" flex justify-center w-2/12">Time</div>
+          </div>
         </div>
-        <div className="flex flex-col space-y-3 h-[500px] overflow-y-auto p-10 rounded-lg">
+        <div className="flex flex-col space-y-3 h-[500px] overflow-y-auto sm:p-10 p-5 rounded-lg ">
           {orders?.data?.data?.map((item, i) => {
             return (
               <Board key={i} onClick={() => {
@@ -144,8 +145,9 @@ const ActivityPart = () => {
                   search: `?order_id=${item._id}`,
                 });
               }}>
-                <div className="flex md:flex-row w-full text-xl flex-wrap cursor-pointer hover:px-0 px-3 transition-all">
-                  <div className=" flex justify-start items-center w-3/12">
+                <div className="w-full overflow-x-scroll">
+                <div className="flex min-w-[800px]  text-xl flex-wrap cursor-pointer hover:px-0 px-3 transition-all">
+                  <div className=" flex justify-start items-center w-4/12">
                     <img
                       loading="lazy"
                       src={item?.image_for_printing}
@@ -197,7 +199,7 @@ const ActivityPart = () => {
                       {item?.item_info?.width}X{item?.item_info?.height}cm
                     </span>
                   </div>
-                  <div className=" flex justify-center items-center w-3/12">
+                  <div className=" flex justify-center items-center w-2/12">
                     <span className=" w-full overflow-hidden text-ellipsis whitespace-nowrap">
                       {orderStatus.isLoading
                         ? []
@@ -229,6 +231,7 @@ const ActivityPart = () => {
                         ).toLocaleTimeString()}
                     </span>
                   </div>
+                </div>
                 </div>
               </Board>
             );

@@ -9,7 +9,7 @@ const RoundedTextInput = ({ placeholder, label, defaultValue, onChangeHandle, ty
   return (
     <div className="flex flex-col justify-start items-start space-y-2 w-full ]">
       <span className=" text-sm">{label}</span>
-      <div className="bg-[#444E66] px-5 py-4 rounded-full w-full relative inline-block border border-[#818895]">
+      <div className="bg-[#444E66] md:px-5 md:py-4 px-2 py-1 rounded-full w-full relative inline-block border border-[#818895]">
         <input
           placeholder={placeholder}
           defaultValue={value}

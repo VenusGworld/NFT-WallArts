@@ -15,7 +15,7 @@ const NumberInput = ({ list, onChangeHandle }) => {
     >
       <div className="flex">
         <input
-          className=" border-none w-auto bg-[#4a5367] text-white mr-2"
+          className=" border-none w-full bg-[#4a5367] text-white mr-2"
           value={number}
           onChange={(e) => {
             testAndPut(Number(e.target.value));

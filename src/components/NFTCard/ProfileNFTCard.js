@@ -1,12 +1,11 @@
-// import axios from "axios";
 // import React, { useEffect } from "react";
-import axios from "axios";
+// import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { setNFTData } from "../../store/selectedReducer";
 import { RoundedButtonBG } from "../Input";
-import { LazyLoadImage } from 'react-lazy-load-image-component';
+// import { LazyLoadImage } from 'react-lazy-load-image-component';
 import 'react-lazy-load-image-component/src/effects/blur.css';
 // import RoundedButtonBG from "../Input/RoundedButton_bg";
 
@@ -37,7 +36,7 @@ const ProfileNFTCard = ({ item }) => {
     const interval = setInterval(() => {
       setUrl(media[0]?.gateway)
     }, 100);
-  
+
     return () => {
       clearInterval(interval);
     };
@@ -45,25 +44,19 @@ const ProfileNFTCard = ({ item }) => {
 
   return (
     <div
-      className="md:w-[200px] sm:w-[200px] lg:w-[200px] 2xl:w-[400px] xl:w-[300px] w-[400px] md:h-[400px] sm:h-[400px] lg:h-[400px] 2xl:h-[800px] xl:h-[600px] h-[800px] shadow-2xl flex flex-col my-4 hover:scale-105 transition-all cursor-pointer"
+      className=" sm:w-[48%] md:w-[32%] lg:w-[24%] xl:w-[18%] w-full shadow-2xl flex flex-col justify-between my-4 mx-1 hover:scale-105 transition-all cursor-pointer"
     >
-      <div className="w-full md:h-[200px] sm:h-[200px] lg:h-[200px] 2xl:h-[400px] xl:h-[300px] h-[400px] overflow-hidden">
-        {/* <img
-          // loading="lazy"
-          src={media[0]?.gateway}
-          alt=""
-          className="w-full"
-        /> */}
-         <LazyLoadImage
+      <div className="overflow-hidden h-1/2 w-full">
+        <img
           alt={contract?.name}
           effect="blur"
-          className=" w-full h-full"
+          className="h-[100%] w-[100%]"
           // height={image.height}
           src={url} // use normal <img> attributes as props
-           />
+        />
       </div>
 
-      <div className="flex p-5 bg-white text-[#313949] justify-between w-full z-50 md:h-[200px] sm:h-[200px] lg:h-[200px] 2xl:h-[400px] xl:h-[300px] h-[400px]">
+      <div className="flex p-5 bg-white text-[#313949] justify-between w-full z-50 h-1/2 overflow-y-auto">
         <div className="flex flex-col justify-center text-sm w-full">
           <div className="flex justify-between">
             <div>Name</div>
@@ -83,11 +76,11 @@ const ProfileNFTCard = ({ item }) => {
             <span className="flex">{contract?.name ? contract?.name : (title ? title : '')}</span><span className="flex text-sm">{contract?.symbol}</span>
           </div>
           <div className="flex justify-between">
-            <div className="flex justify-center items-center space-x-2"><div className="">Total supply:</div>
+            <div className="flex justify-center items-center"><div className="">Total supply:</div>
               <div className="my-1 sm:text-base text-sm">
                 {contract?.totalSupply}
               </div></div>
-            <div className="flex justify-center items-center space-x-2"><div className="">Id:</div>
+            <div className="flex justify-center items-center"><div className="">Id:</div>
               <div className="my-1 sm:text-base text-sm">
                 {tokenId ? tokenId : ''}
               </div></div>
@@ -130,10 +123,8 @@ const ProfileNFTCard = ({ item }) => {
                 // {headers}
                 // )
                 // .then((res) => {
-                //   console.log('sssssssssssssssss', res)
                 // })
                 // .catch((err) => {
-                //   console.log('sdfsdfsdfsdfsdf', err);
                 // });
                 await dispatch(
                   setNFTData({

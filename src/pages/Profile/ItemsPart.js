@@ -31,8 +31,8 @@ const ItemsPart = ({ Items }) => {
       }
     }
     // calculate start and end item indexes
-    let startIndex = (currentPage - 1) * pageSize;
-    let endIndex = Math.min(startIndex + pageSize - 1, totalItems - 1);
+    // let startIndex = (currentPage - 1) * pageSize;
+    // let endIndex = Math.min(startIndex + pageSize - 1, totalItems - 1);
     // create an array of pages to ng-repeat in the pager control
     let pages = [...Array((endPage + 1) - startPage).keys()].map(i => startPage + i);
     // return an object with all pager properties required by the view
@@ -55,7 +55,7 @@ const ItemsPart = ({ Items }) => {
   }, [Items, selectedPage])
   return (
     <>
-      <div className="flex flex-wrap justify-between w-[90%]">
+      <div className="flex flex-wrap justify-between sm:w-[90%] w-[70%]">
         {getPager?.selectedItems.map((item, i) => (
           <ProfileNFTCard item={item} key={i} />
         ))}

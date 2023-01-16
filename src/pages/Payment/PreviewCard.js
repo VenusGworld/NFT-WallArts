@@ -38,7 +38,7 @@ const PreviewCard = ({ info, key, onChangeItemInfo, onChangeQuantity }) => {
   }, [info?.item_info, Items?.data?.data]);
 
   return (
-    <div className="flex sm:space-x-5 flex-col sm:flex-row w-full items-start">
+    <div className="flex sm:space-x-5 w-full items-start md:justify-center justify-between">
       <div className="rounded-2xl flex flex-col space-y-5 justify-center items-center w-28">
         <img
           src={image_for_printing}
@@ -49,10 +49,10 @@ const PreviewCard = ({ info, key, onChangeItemInfo, onChangeQuantity }) => {
       </div>
       <div className="flex flex-col w-[60%]">
         <div className="flex items-center">
-          <span className="flex text-xl text-start">{name_for_printing}</span>
+          <span className="flex sm:text-xl text-lg text-start">{name_for_printing}</span>
 
         </div>
-        <div className="flex justify-between w-full space-x-1">
+        <div className="flex justify-between sm:flex-row flex-col w-full space-x-1">
           <div className="flex flex-col items-start w-full">
             <span className="w-full">
               {Items?.data?.data ?
@@ -77,7 +77,7 @@ const PreviewCard = ({ info, key, onChangeItemInfo, onChangeQuantity }) => {
                 /> : null}
             </span>
           </div>
-          <div className="flex flex-col items-start">
+          <div className="flex flex-col items-start sm:space-y-2 space-y-0">
             <span className="text-sm text-[#BFC8DD]">Quantity</span>
             <NumberInputSM
               value = {quantity}

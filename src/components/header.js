@@ -16,13 +16,9 @@ const Header = () => {
     <div className=" fixed z-[1001] w-full top-0">
       <div className=" border-none bg-[#221b33] hd-nm border-theme-24 -mx-3 sm:-mx-8 px-3 sm:px-8 p-0">
         <div
-          className="flex items-center h-24 p-1 justify-between w-full px-10"
-          style={{
-            boxShadow: "0px 4px 6px #3e46725e",
-            // background: "linear-gradient(to right, #515874 0%, #363945 100%)",
-          }}
+          className="flex items-center h-24 p-1 justify-between w-full sm:px-10 px-2 max-w-[1200px] mx-auto"
         >
-          <div className="flex items-center w-full px-8 justify-around space-x-7">
+          <div className="flex items-center w-full sm:px-8 px-2 justify-around space-x-7">
             <div className="ml-10 flex-1">
               <img
                 loading="lazy"

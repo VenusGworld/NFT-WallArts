@@ -1,7 +1,6 @@
 import React from "react";
 
 const PreviewCard = ({ info, status, onClickHandle, isSelected }) => {
-  console.log('isSelected', isSelected)
   const { image_for_printing, name_for_printing, item_info, quantity } = info;
   return (
     <div className={`flex lg:space-x-5 flex-col lg:flex-row cursor-pointer w-full p-2 ${isSelected?" bg-gray-500": " "}`} onClick={onClickHandle}>

@@ -23,7 +23,7 @@ const CustomizedArtCard = ({ item }) => {
   const dispatch = useDispatch();
   return (
     <div
-      className="relative hover:scale-105 hover:drop-shadow-2xl transition-all md:w-[48%] xl:w-[30%] w-[90%] shadow-xl flex flex-col my-4 hover:shadow-2xl bg-[#454E61] p-3 cursor-pointer"
+      className="relative hover:scale-105 hover:drop-shadow-2xl transition-all sm:w-[45%] xl:w-[30%] w-[90%] shadow-xl flex flex-col my-4 hover:shadow-2xl bg-[#454E61] p-3 cursor-pointer mx-5 sm:mx-2"
       onClick={async () => {
         await dispatch(setItem(item))
         navigate({
@@ -36,24 +36,24 @@ const CustomizedArtCard = ({ item }) => {
           loading="lazy"
           src={process.env.PUBLIC_URL + "/img/image41.png"}
           alt=""
-          className="w-full h-[15vw]"
+          className="w-full h-[200px]"
         />
         <div
-          className={`absolute bg-white shadow-lg top-10 left-1/2 -translate-x-1/2 `}
+          className={`absolute bg-white shadow-gray-800 shadow-md border border-gray-500 top-10 left-1/2 -translate-x-1/2`}
           style={{
             width: width + "px",
             height: height + "px",
             backgroundImage: `url(${process.env.REACT_APP_BACKEND_URL}/images/${image})`,
             backgroundPosition: "center",
             backgroundRepeat: "no-repeat",
-            backgroundSize: "contain",
+            backgroundSize: "cover",
           }}
         >
-          <div className="absolute -top-1 w-full border-dotted border-t border-gray-700">
-            <div className="-mt-5 text-sm text-gray-700">{width} cm</div>
+          <div className="absolute -top-1 w-full border-dotted border-t border-gray-700 text-center">
+            <div className="-mt-5 text-sm text-gray-700 w-max text-center mx-auto">{width} cm</div>
           </div>
           <div className="absolute -right-1 h-full border-dotted border-r border-gray-700">
-            <div className="absolute -mr-5 text-sm text-gray-700 w-14 top-1/2 -translate-y-1/2">
+            <div className="absolute -mr-5 text-sm text-gray-700 w-14 top-1/2 -translate-y-1/2 h-max">
               {height} cm
             </div>
           </div>
