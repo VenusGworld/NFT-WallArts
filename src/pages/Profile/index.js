@@ -74,7 +74,7 @@ const Profile = () => {
 
 
   const fetchNFTs = async () => {
-    const nfts = await alchemy.nft.getNftsForOwner("0x5bd0920af6dccae3d4d90c51d6fc7e34583f2314", {
+    const nfts = await alchemy.nft.getNftsForOwner(connected_account, {
     }); //'0x5bd0920af6dccae3d4d90c51d6fc7e34583f2314', connected_account);
     setNfts(nfts.ownedNfts);
   };
