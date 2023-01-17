@@ -251,7 +251,7 @@ const UploadPhoto = ({ is_Connected, user }) => {
           </svg>
         </div>
       </div>
-      <form onSubmit={onSubmit} className={` absolute w-96 z-50 top-8 rounded-lg ${openPreview ? 'block' : 'hidden'}`}>
+      <form onSubmit={onSubmit} className={` absolute w-96 z-[1001] top-8 rounded-lg ${openPreview ? 'block' : 'hidden'}`}>
         <div className="relative">
           <span width="20" className='absolute right-4 hover:-rotate-90 transition-all cursor-pointer text-gray text-2xl' onClick={() => setOpenPreview(false)} >
             X

@@ -45,11 +45,12 @@ const PreviewCard = ({ info, key, onChangeItemInfo, onChangeQuantity }) => {
           alt=""
           className="w-full box-border flex justify-center items-center rounded-2xl"
         />
-        <CategoryItem id={item_info?.category_id} />
+
       </div>
       <div className="flex flex-col w-[60%]">
-        <div className="flex items-center">
-          <span className="flex sm:text-xl text-lg text-start">{name_for_printing}</span>
+        <div className="flex flex-col items-start">
+        <div className="flex items-center"><span className="text-sm text-[#BFC8DD]">Category: </span><CategoryItem id={item_info?.category_id} /></div>
+        <div className="flex items-center"><span className="text-sm text-[#BFC8DD]">Name: </span><span className="flex sm:text-xl text-lg text-start">{name_for_printing}</span></div>
 
         </div>
         <div className="flex justify-between sm:flex-row flex-col w-full space-x-1">
@@ -103,7 +104,7 @@ const PreviewCard = ({ info, key, onChangeItemInfo, onChangeQuantity }) => {
           </div>
         </div>
         {item_info?.selected_color?<div className="flex space-x-3 items-center">
-          <span className="text-sm text-[#BFC8DD]">Selected Colour</span>
+          <span className="text-sm text-[#BFC8DD]">Selected Colour:</span>
           {item_info?.color.map((colour, i) => {
             if(i === item_info?.selected_color) {return(
             <div
@@ -115,7 +116,7 @@ const PreviewCard = ({ info, key, onChangeItemInfo, onChangeQuantity }) => {
         </div>:null}
         
         <div className="flex space-x-3 items-center">
-          <span className="text-sm text-[#BFC8DD]">Price</span>
+          <span className="text-sm text-[#BFC8DD]">Price:</span>
           <span>{Number(total_price_eth).toFixed(3)} ETH</span>
         </div>
       </div>

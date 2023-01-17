@@ -24,24 +24,29 @@ const ProfileNFTCard = ({ item }) => {
     contract,
     // endsIn,
   } = item;
-  // console.log('item', item);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   // const headers = {
   //   'X-API-KEY':"381de08380ed44c393389a1485094324" //process.env.REACT_APP_OPENSEA_API_KEY
   // };
-  const [url, setUrl] = useState("")
+  const [url, setUrl] = useState(process.env.PUBLIC_URL + "/img/logo.svg")
+  const [error, setError] = useState(false)
   useEffect(() => {
-    setUrl("")
+    setUrl(process.env.PUBLIC_URL + "/img/logo.svg")
     const interval = setInterval(() => {
       setUrl(media[0]?.gateway)
-    }, 100);
-
+    }, 2000);
+    if(error) clearInterval(interval);
     return () => {
       clearInterval(interval);
     };
-  }, [media])
-
+  }, [media, error])
+  const errorHandle = () => {
+    if(url !== process.env.PUBLIC_URL + "/img/logo.svg") {
+      setUrl(process.env.PUBLIC_URL + "/img/logo.svg")
+      setError(true)
+    }
+  }
   return (
     <div
       className=" sm:w-[48%] md:w-[32%] lg:w-[24%] xl:w-[18%] w-full shadow-2xl flex flex-col justify-between my-4 mx-1 hover:scale-105 transition-all cursor-pointer"
@@ -52,10 +57,13 @@ const ProfileNFTCard = ({ item }) => {
           effect="blur"
           className="h-[100%] w-[100%]"
           // height={image.height}
-          src={url} // use normal <img> attributes as props
+          src={url !== undefined?url:errorHandle()}
+          onError={() => {
+            // currentTarget.src=process.env.PUBLIC_URL + "/img/logo.svg";
+            errorHandle()
+          }}
         />
       </div>
-
       <div className="flex p-5 bg-white text-[#313949] justify-between w-full z-50 h-1/2 overflow-y-auto">
         <div className="flex flex-col justify-center text-sm w-full">
           <div className="flex justify-between">
@@ -128,7 +136,7 @@ const ProfileNFTCard = ({ item }) => {
                 // });
                 await dispatch(
                   setNFTData({
-                    image: url,
+                    image: error?process.env.PUBLIC_URL + "/img/logo.svg":url,
                     title: contract?.name ? contract?.name : (title ? title : ''),
                     description,
                     contract: contract?.address,

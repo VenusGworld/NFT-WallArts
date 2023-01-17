@@ -19,16 +19,7 @@ const CategoryItem = ({ id }) => {
   if (isLoading) return <></>;
   return (
     <div className="relative flex justify-center items-center">
-      <span className="absolute -top-2 left-1/2 -translate-x-1/2 px-1 rounded-md bg-sky-400 text-white">{data?.data?.name}</span>
-      <div className=" w-16 h-16 border border-gray-400">
-        {data?.data?.image !== "" && data?.data?.image && (
-          <img
-            src={`${process.env.REACT_APP_BACKEND_URL}/images/${data?.data?.image}`}
-            alt=""
-            className="w-full h-full object-contain"
-          />
-        )}
-      </div>
+      <span className=" px-1 rounded-md bg-[#ffe564] text-sky-600">{data?.data?.name}</span>
     </div>
   );
 };
