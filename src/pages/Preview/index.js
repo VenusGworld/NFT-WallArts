@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useItem } from "../../hooks/useItem";
@@ -12,6 +12,7 @@ import {
 import { selectedData, setItem, setQuantity } from "../../store/selectedReducer";
 import { useETHPrice } from "../../hooks/useEthPrice";
 import { toast } from "react-toastify";
+import Three from "./PreviewImage";
 
 const Preview = () => {
   const [color, setColor] = useState(0);
@@ -77,8 +78,18 @@ const Preview = () => {
       progress: 0,
     });
   };
+  const container = useRef(null);
+  const [dimensions, setDimensions] = useState({ width:0, height: 0 });
+  useLayoutEffect(() => {
+    if (container.current) {
+      setDimensions({
+        width: container.current.offsetWidth,
+        height: container.current.offsetHeight
+      });
+    }
+  }, []);
   // if(selected_data?.item_data?.category_id) const items = useItemByCategory({ category_id: selected_data?.item_data?.category_id })
-  return (
+  return ( 
     <div>
       <div className={`w-full h-full mt-20 relative text-white`}>
         <div className="relative">
@@ -102,13 +113,14 @@ const Preview = () => {
                 Preview
               </div>
               <div className="flex md:flex-row flex-col items-start md:space-x-5 md:space-y-0 space-y-3 relative justify-center h-full w-full">
-                <div className=" md:w-3/5 w-[95%] flex justify-center h-full relative border rounded-lg">
-                  <img
+                <div className=" md:w-3/5 w-[95%] flex justify-center h-[500px] relative border rounded-lg" ref={container}>
+                   <img
                     loading="lazy"
                     src={selected_data?.nft_img}
                     alt=""
                     className="w-full h-full rounded-lg"
-                  />
+                  /> 
+                  {/* {dimensions.height>0 && dimensions.width>0?<Three img_url={selected_data?.nft_img} width={nftInfo?.width} height={nftInfo?.width} containerWidth={dimensions.width} containerHeight={dimensions.height}/>:null} */}
                   {/* <img
                     loading="lazy"
                     src={process.env.PUBLIC_URL + "/img/360-view1.svg"}

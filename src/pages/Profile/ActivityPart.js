@@ -145,7 +145,7 @@ const ActivityPart = () => {
                   search: `?order_id=${item._id}`,
                 });
               }}>
-                <div className="w-full overflow-x-scroll">
+                <div className="w-full overflow-x-auto">
                 <div className="flex min-w-[800px]  text-xl flex-wrap cursor-pointer hover:px-0 px-3 transition-all">
                   <div className=" flex justify-start items-center w-4/12">
                     <img

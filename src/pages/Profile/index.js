@@ -10,8 +10,9 @@ import axios from "axios";
 import { useSearchParams } from "react-router-dom";
 import ChooseAvatar from "./ChooseAvatar";
 import { useSetting } from "../../hooks/useSetting";
+import UploadBanner from "./ChooseBanner";
 
-const Profile = () => {
+const Profile = ({ onAvatarChanged }) => {
   const [searchParams] = useSearchParams();
 
   const setting = useSetting();
@@ -24,7 +25,7 @@ const Profile = () => {
   const [userName, setUserName] = useState("");
   const [editableBio, seteditableBio] = useState(false);
   const [bio, setBio] = useState("Add Your Bio");
-
+  const [availableEditProfile, setavailableEditProfile] = useState(false)
 
   // const [pageKey, setpageKey] = useState("");
   const connected_account = useSelector(connectedAccount);
@@ -65,6 +66,7 @@ const Profile = () => {
       .then((res) => {
         // console.log("res", res);
         if (res.status === 200) {
+          console.log(res.data.data)
           setUser(res?.data?.data);
         }
       })
@@ -78,36 +80,49 @@ const Profile = () => {
     }); //'0x5bd0920af6dccae3d4d90c51d6fc7e34583f2314', connected_account);
     setNfts(nfts.ownedNfts);
   };
-
+  console.log()
   return (
-    <div className="h-full relative mt-20 bg-[#363F54]">
-      {setting.isFetched ? setting.data?.is_banner_default ?
-        <img
-          loading="lazy"
-          src={process.env.PUBLIC_URL + "/img/img1 1.png"}
-          alt="profile_banner"
-          width="100%"
-        /> : <img
-          loading="lazy"
-          src={process.env.REACT_APP_BACKEND_URL + "/images/banner/" + setting.data?.data?.banner}
-          className=" min-h-[100px]"
-          alt="profile_banner"
-          width="100%"
-        /> : <img
-        loading="lazy"
-        src={process.env.PUBLIC_URL + "/img/img1 1.png"}
-        alt="profile_banner"
-        width="100%"
-      />
-      }
+    <div className="h-full relative mt-24 bg-[#363F54] w-full">
+      <div className="h-[150px] sm:h-[200px] md:h-[250px] lg:h-[250px] w-full relative " style={{
+        "backgroundImage":
+          user.has_custom_banner ?
+            "url(" + process.env.REACT_APP_BACKEND_URL + "/images/avatars/" + user?.banner + ")"
+            : (setting.isFetched ? (setting.data?.data?.is_banner_default ?
+              "url(" + process.env.PUBLIC_URL + "/img/img1 1.png)" :
+              "url(" + process.env.REACT_APP_BACKEND_URL + "/images/banner/" + setting.data?.data?.banner + ")") :
+              "url(" + process.env.PUBLIC_URL + "/img/img1 1.png)"),
+        "backgroundPosition": 'center',
+        "backgroundSize": 'cover',
+        "backgroundRepeat": 'no-repeat'
+      }}>
+        <div className="flex mt-5 ml-[70%] flex-wrap">
+          <UploadBanner is_Connected={is_Connected} user={user} onChanged={async () => {
+            await fetchUserDataByAddress()
+          }} />
+          <div className="flex justify-center relative mt-5 z-50">
+            <div
+              className="relative flex"
+              onClick={() => {
+                setavailableEditProfile(!availableEditProfile)
+              }}
+            >
+              <div className={`mt-5 text-xs inline-block cursor-pointer hover:opacity-75 rounded-md border opacity-50 ${availableEditProfile?"border-gray-100 text-gray-100 bg-gray-400 ":"border-gray-400 text-gray-400 bg-gray-600"} p-1`}>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4 inline-block">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125" />
+                </svg>
+                <span className="inline-block">Edit Profile</span>
+              </div>
+            </div></div>
+        </div>
+      </div>
 
-
-      <div className=" sm:p-20 sm:pt-20 p-15 pt-10 flex flex-col justify-center items-center">
-
-        <div className="relative md:my-5 my-1">
-          <ChooseAvatar is_Connected={is_Connected} user={user} />
-          <div className=" text-white md:text-4xl sm:text-3xl text-2xl flex flex-col relative group items-center">
-            <div className="absolute -top-8 hidden group-hover:flex left-1/2 -translate-x-1/2 p-1 bg-black transition-all rounded-lg">
+      <div className=" sm:p-20 sm:pt-20 p-15 pt-10 flex flex-col justify-center items-center w-full">
+        <div className="relative md:my-5 my-1 w-full">
+          <ChooseAvatar is_Connected={is_Connected} user={user} onChanged={() => {
+            onAvatarChanged()
+          }} availableChange={availableEditProfile} />
+          <div className=" text-white md:text-2xl sm:text-xl text-base flex flex-col relative group items-center">
+            {availableEditProfile?<div className="absolute -top-8 hidden group-hover:flex left-1/2 -translate-x-1/2 p-1 bg-black transition-all rounded-lg">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -122,67 +137,66 @@ const Profile = () => {
                   d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125"
                 />
               </svg>
+            </div>:null}
+            <div className="max:w-[80%] relative">
+              <input
+                className=" bg-[#363f54] overflow-x-auto w-[90%] text-center"
+                defaultValue={user.name ? user.name : user.wallet_address && user.wallet_address?.length > 0 ? user.wallet_address : ""}
+                disabled={!availableEditProfile}
+                onChange={(v) => {
+                  if (
+                    v?.target.value !==
+                      user.wallet_address && user.wallet_address?.length > 0 ? ((user.name ? user.name : user.wallet_address.substring(0, 5) +
+                        "..." +
+                        user.wallet_address.substring(
+                          user.wallet_address.length - 4,
+                          user.wallet_address.length))) : ""
+                  ) {
+                    seteditableUserName(true);
+                    setUserName(v?.target.value);
+                  } else seteditableUserName(false);
+                }}
+              />
+
+              {editableUserName && availableEditProfile ? (
+                <div
+                  className="absolute -right-10 top-1/2 -translate-y-1/2 p-2 rounded-full border border-gray-500 hover:bg-gray-400 ml-3 cursor-pointer hover:text-black transition-all flex justify-center items-center"
+                  onClick={async () => {
+                    let formData = new FormData();
+                    formData.append("name", userName);
+                    await axios
+                      .post(
+                        `${process.env.REACT_APP_BACKEND_URL}/api/user/update/${user?._id}`,
+                        { name: userName }
+                      )
+                      .then((res) => {
+                        console.log("res", res);
+                        if (res.status === 201) {
+                          seteditableUserName(false);
+                          setUser(res?.data);
+                        }
+                      })
+                      .catch((err) => { });
+                  }}
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth={1.5}
+                    stroke="currentColor"
+                    className="w-6 h-6"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M4.5 12.75l6 6 9-13.5"
+                    />
+                  </svg>{" "}
+                </div>
+              ) : null}
             </div>
 
-            <input
-              className=" bg-[#363f54] overflow-x-auto w-[80%] text-center"
-              defaultValue={user.name ? user.name : user.wallet_address && user.wallet_address?.length > 0 ? (user.wallet_address.substring(0, 5) +
-                "..." +
-                user.wallet_address.substring(
-                  user.wallet_address.length - 4,
-                  user.wallet_address.length)) : ""}
-              onChange={(v) => {
-                if (
-                  v?.target.value !==
-                    user.wallet_address && user.wallet_address?.length > 0 ? ((user.name ? user.name : user.wallet_address.substring(0, 5) +
-                      "..." +
-                      user.wallet_address.substring(
-                        user.wallet_address.length - 4,
-                        user.wallet_address.length))) : ""
-                ) {
-                  seteditableUserName(true);
-                  setUserName(v?.target.value);
-                } else seteditableUserName(false);
-              }}
-            />
-
-            {editableUserName ? (
-              <div
-                className=" p-2 rounded-full hover:bg-gray-400 ml-3 cursor-pointer hover:text-black transition-all flex justify-center items-center"
-                onClick={async () => {
-                  let formData = new FormData();
-                  formData.append("name", userName);
-                  await axios
-                    .post(
-                      `${process.env.REACT_APP_BACKEND_URL}/api/user/update/${user?._id}`,
-                      { name: userName }
-                    )
-                    .then((res) => {
-                      console.log("res", res);
-                      if (res.status === 201) {
-                        seteditableUserName(false);
-                        setUser(res?.data);
-                      }
-                    })
-                    .catch((err) => { });
-                }}
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth={1.5}
-                  stroke="currentColor"
-                  className="w-6 h-6"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M4.5 12.75l6 6 9-13.5"
-                  />
-                </svg>{" "}
-              </div>
-            ) : null}
           </div>
           {/* <img
             loading="lazy"
@@ -197,7 +211,7 @@ const Profile = () => {
           Joined: {new Date(user?.date_joined).toLocaleString()}
         </div>
         <div className=" text-white text-4xl w-3/5 flex justify-center items-center relative group">
-          <div className="absolute -top-8 hidden group-hover:flex left-1/2 -translate-x-1/2 p-1 bg-black transition-all rounded-lg">
+        {availableEditProfile?<div className="absolute -top-8 hidden group-hover:flex left-1/2 -translate-x-1/2 p-1 bg-black transition-all rounded-lg">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -212,10 +226,11 @@ const Profile = () => {
                 d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125"
               />
             </svg>
-          </div>
+          </div>:null}
           <textarea
             style={{ resize: "none" }}
             className="bg-[#363f54] h-12 w-full text-center my-1 text-gray-400 text-sm break-words"
+            disabled={!availableEditProfile}
             onChange={(v) => {
               if (
                 v?.target.value !== user.bio
@@ -227,13 +242,13 @@ const Profile = () => {
             }}
             title='Bio'
             value={(user?.bio && user?.bio !== '' && !editableBio) ? user?.bio : bio}
-            defaultValue={user.bio}
+          // defaultValue={user.bio}
           >
 
             {/* {user.bio} */}
             {/* {(user?.bio && user?.bio !== '') ? user?.bio : "Add Your Bio"} */}
           </textarea>
-          {editableBio ? (
+          {editableBio && availableEditProfile ? (
             <div
               className=" p-2 rounded-full hover:bg-gray-400 ml-3 cursor-pointer hover:text-black transition-all flex justify-center items-center"
               onClick={async () => {

@@ -107,7 +107,7 @@ function centerAspectCrop(
 
 
 
-const UploadPhoto = ({ is_Connected, user, onChanged, availableChange }) => {
+const UploadBanner = ({ is_Connected, user, onChanged }) => {
   const createButtonRef = useRef(null)
   // const dispatch = useAppDispatch();
   // const setOpen = () => {
@@ -118,7 +118,7 @@ const UploadPhoto = ({ is_Connected, user, onChanged, availableChange }) => {
   const imgRef = useRef(null)
   const [crop, setCrop] = useState(centerAspectCrop(100, 100, 1))
   const [completedCrop, setCompletedCrop] = useState();
-  const [profileImage, setProfileImage] = useState("");
+  // const [profileImage, setProfileImage] = useState("");
   const [openPreview, setOpenPreview] = useState(false)
 
   function onSelectFile(e) {
@@ -169,10 +169,10 @@ const UploadPhoto = ({ is_Connected, user, onChanged, availableChange }) => {
       const imageFile = new File([imageBlob], imageName, { type: 'image/jpg' });
       const formData = new FormData();
       formData.append('image', imageFile);
-      await setProfileImage(imageFile);
+      // await setProfileImage(imageFile);
       await axios
         .post(
-          `${process.env.REACT_APP_BACKEND_URL}/api/user/avatar/${user?._id}`,
+          `${process.env.REACT_APP_BACKEND_URL}/api/user/banner/${user?._id}`,
           formData
         )
         .then((res) => {
@@ -189,66 +189,22 @@ const UploadPhoto = ({ is_Connected, user, onChanged, availableChange }) => {
   const imgButton = useRef(null);
 
   return (
-    <div className="flex justify-center relative">
+    <div className="flex justify-center relative mt-5 mr-2">
       <div
-        className={`group rounded-full sm:-mt-36 -mt-20 ${availableChange?"hover:brightness-50  cursor-pointer":" "} transition-all md:w-40 md:h-40 sm:w-28 sm:h-28 w-20 h-20`}
+        className="relative flex"
         onClick={() => {
-          if (is_Connected && availableChange) {
+          if (is_Connected) {
             imgButton.current.click();
             setOpenPreview(true);
           }
         }}
       >
-        {/* <input
-            className=" hidden"
-            type="file"
-            accept=".png, .jpg, .jpeg"
-            name="image"
-            onChange={handleImage}
-            ref={imgButton}
-          /> */}
-        {profileImage !== "" && profileImage ? (
-          <img
-            src={URL.createObjectURL(profileImage)}
-            alt=""
-            className="  object-contain rounded-full"
-          />
-        ) : is_Connected && user?.avatar ? (
-          <img
-            loading="lazy"
-            src={
-              process.env.REACT_APP_BACKEND_URL +
-              `/images/avatars/${user?.avatar}`
-            }
-            alt=""
-            className=" w-full h-full rounded-full"
-          />
-        ) : (
-          <img
-            loading="lazy"
-            src={
-              process.env.PUBLIC_URL + "/img/user.png"
-            }
-            alt=""
-            className="  rounded-full"
-          />
-        )}
-        {availableChange?<div className=" absolute top-1/2 left-1/2 group-hover:block hidden -translate-x-1/2 -translate-y-1/2 z-[200]">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth={1.5}
-            stroke="currentColor"
-            className="w-6 h-6"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125"
-            />
+        <div className="mt-5 text-xs inline-block cursor-pointer hover:opacity-75 rounded-md border bg-gray-600 opacity-50 border-gray-400 text-gray-400 p-1">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4 inline-block">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
           </svg>
-        </div>:null}
+          <span className="inline-block">Edit Cover Photo</span>
+        </div>
       </div>
       <form onSubmit={onSubmit} className={` absolute w-96 z-[1001] top-8 rounded-lg ${openPreview ? 'block' : 'hidden'}`}>
         <div className="relative">
@@ -256,10 +212,8 @@ const UploadPhoto = ({ is_Connected, user, onChanged, availableChange }) => {
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
               <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
             </svg>
-
           </span>
         </div>
-
         <div className="bg-white px-4 pb-4 sm:px-6 sm:pb-4 py-5">
           <div>
             <div className="Crop-Controls mt-6 mb-4">
@@ -270,7 +224,7 @@ const UploadPhoto = ({ is_Connected, user, onChanged, availableChange }) => {
                 crop={crop}
                 onChange={(_, percentCrop) => setCrop(percentCrop)}
                 onComplete={(c) => setCompletedCrop(c)}
-                aspect={1}
+              // aspect={1}
               >
                 <img
                   ref={imgRef}
@@ -286,7 +240,7 @@ const UploadPhoto = ({ is_Connected, user, onChanged, availableChange }) => {
               {Boolean(completedCrop) && (
                 <canvas
                   ref={previewCanvasRef}
-                  className=" w-32 h-32 rounded-full"
+                  className=" max-h-[50px] max-w-[150px]"
                   style={{
                     border: '1px solid black',
                     objectFit: 'contain',
@@ -323,4 +277,4 @@ function dataURItoBlob(croppedImage) {
   return new Blob([int8Array], { type: 'image/png' });
 }
 
-export default UploadPhoto;
+export default UploadBanner;

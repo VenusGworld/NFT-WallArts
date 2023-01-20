@@ -6,7 +6,7 @@ const CategoryCard = ({ img, name, desc, id }) => {
   const navigate = useNavigate();
   return (
     <div
-      className="w-[98%] sm:w-[48%] shadow-2xl flex flex-col sm:my-8 my-3 cursor-pointer hover:scale-105 hover:drop-shadow-2xl transition-all"
+      className="w-[98%] sm:w-[49%] shadow-2xl flex flex-col lg:my-3 md:my-2 sm:my-1 my-1 cursor-pointer hover:scale-105 hover:drop-shadow-2xl transition-all"
       onClick={() => {
         // navigate("/customizedArt");
         navigate({

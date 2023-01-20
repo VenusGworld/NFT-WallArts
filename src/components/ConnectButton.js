@@ -15,7 +15,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { orderedProducts } from "../store/cartReducer";
 
-const ConnectButton = () => {
+const ConnectButton = ({avatarReload}) => {
   const is_Connected = useSelector(isConnected);
   const connected_chain = useSelector(connectedChain);
   const connected_account = useSelector(connectedAccount);
@@ -39,7 +39,12 @@ const ConnectButton = () => {
   const ordered_products = useSelector(orderedProducts);
   useEffect(() => {
     if (is_Connected) {
-      axios
+      fetchUser()
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [connected_account, is_Connected, avatarReload]);
+  const fetchUser = async () => {
+    await axios
         .post(`${process.env.REACT_APP_BACKEND_URL}/api/user/`, {
           wallet_address: connected_account,
         })
@@ -51,9 +56,7 @@ const ConnectButton = () => {
         .catch((err) => {
           console.log(err);
         });
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [connected_account, is_Connected]);
+  }
   if (typeof window.ethereum === 'undefined') {
     // error('Cannot find Wallet at Your Browser!')
     return <></>

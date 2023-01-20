@@ -49,8 +49,8 @@ const PreviewCard = ({ info, key, onChangeItemInfo, onChangeQuantity }) => {
       </div>
       <div className="flex flex-col w-[60%]">
         <div className="flex flex-col items-start">
-        <div className="flex items-start"><span className="text-sm text-[#BFC8DD] mt-1">Category: </span><CategoryItem id={item_info?.category_id} /></div>
-        <div className="flex items-start"><span className="text-sm text-[#BFC8DD] mt-1">Name: </span><span className="flex sm:text-xl text-lg text-start">{name_for_printing}</span></div>
+        <div className="flex items-start"><CategoryItem id={item_info?.category_id} /></div>
+        <div className="flex items-start"><span className="flex sm:text-xl text-lg text-start">{name_for_printing}</span></div>
 
         </div>
         <div className="flex justify-between sm:flex-row flex-col w-full space-x-1">

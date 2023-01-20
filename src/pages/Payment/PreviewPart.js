@@ -128,7 +128,7 @@ const PreviewPart = ({ orderClickHandle, stripeRef, amount, payMethod, orderedDa
                 }}
               />
               <div
-                className="border rounded-full border-red-500 text-red-400 p-2 cursor-pointer hover:text-red-600 transition-all absolute -top-3 -right-3"
+                className="border rounded-full border-red-500 text-red-400 p-1 cursor-pointer hover:text-red-600 transition-all absolute top-3 right-0"
                 onClick={async () => {
                   if (window.confirm('Are you sure to remove this Product from Cart?')) {
                     let arr = []
@@ -145,7 +145,7 @@ const PreviewPart = ({ orderClickHandle, stripeRef, amount, payMethod, orderedDa
                   viewBox="0 0 24 24"
                   strokeWidth={1.5}
                   stroke="currentColor"
-                  className="w-8 h-8 flex items-end justify-end"
+                  className="w-5 h-5 flex items-end justify-end"
                 >
                   <path
                     strokeLinecap="round"

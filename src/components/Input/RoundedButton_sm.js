@@ -7,7 +7,7 @@ const RoundedButtonSM = ({ active, text, onButtonClick, icon }) => {
         active
           ? " bg-[#D3B789] text-[#313949]"
           : "bg-[#444E66] text-white border border-[#3d4f73]"
-      } rounded-full p-2 w-10 h-10`}
+      } rounded-full p-[4px] w-[30px] h-[30px] text-sm`}
       onClick={onButtonClick}
     >
       {text}

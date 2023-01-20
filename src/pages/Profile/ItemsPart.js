@@ -55,12 +55,12 @@ const ItemsPart = ({ Items }) => {
   }, [Items, selectedPage])
   return (
     <>
-      <div className="flex flex-wrap justify-between sm:w-[90%] w-[70%]">
+      <div className="flex flex-wrap justify-start sm:w-[90%] w-[70%]">
         {getPager?.selectedItems.map((item, i) => (
           <ProfileNFTCard item={item} key={i} />
         ))}
       </div>
-      <div className="flex space-x-1 my-3 items-center justify-center">
+      <div className="flex space-x-1 my-3 items-center justify-center flex-wrap text-sm">
         {selectedPage !== 0 && getPager?.pages.length>0?<div
           className=" text-[#D3B789] mx-3 cursor-pointer"
           onClick={() => {
@@ -81,7 +81,7 @@ const ItemsPart = ({ Items }) => {
         ))}
         {selectedPage !== getPager?.pages.length-1 && getPager?.pages.length>0?
         <div
-          className=" text-[#D3B789] mx-3 cursor-pointer"
+          className=" text-[#D3B789] mx-3 cursor-pointer text-sm"
           onClick={() => {selectPage(selectedPage + 1);}}
         >
           Next

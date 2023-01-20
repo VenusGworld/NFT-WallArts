@@ -36,39 +36,64 @@ const ProfileNFTCard = ({ item }) => {
     const interval = setInterval(() => {
       setUrl(media[0]?.gateway)
     }, 2000);
-    if(error) clearInterval(interval);
+    if (error) clearInterval(interval);
     return () => {
       clearInterval(interval);
     };
   }, [media, error])
   const errorHandle = () => {
-    if(url !== process.env.PUBLIC_URL + "/img/logo.svg") {
+    if (url !== process.env.PUBLIC_URL + "/img/logo.svg") {
       setUrl(process.env.PUBLIC_URL + "/img/logo.svg")
       setError(true)
     }
   }
+  // async function download(url) {
+  //   const a = document.createElement("a");
+  //   a.href = await toDataURL(url);
+  //   a.download = "myImage.png";
+  //   document.body.appendChild(a);
+  //   a.click();
+  //   document.body.removeChild(a);
+  // }
+
+  // function toDataURL(url) {
+  //   return fetch(url)
+  //     .then((response) => {
+  //       return response.blob();
+  //     })
+  //     .then((blob) => {
+  //       return URL.createObjectURL(blob);
+  //     });
+  // }
+
+  // useEffect(() => {
+  //   download(media[0]?.gateway)
+  // }, [])
   return (
     <div
-      className=" sm:w-[48%] md:w-[32%] lg:w-[24%] xl:w-[18%] w-full shadow-2xl flex flex-col justify-between my-4 mx-1 hover:scale-105 transition-all cursor-pointer"
+      className=" sm:w-[48%] md:w-[32%] lg:w-[24%] xl:w-[24%] w-full shadow-2xl flex flex-col justify-between hover:scale-105 transition-all cursor-pointer
+      mx-0 sm:mx-[4px] md:mx-[3px] lg:mx-[4px] my-[3px] sm:my-[4px] md:my-[5px] lg:my-[6px]
+      "
     >
-      <div className="overflow-hidden h-1/2 w-full">
+      <div className="overflow-hidden h-[300px] sm:h-[300px] md:h-[300px] lg:h-[300px] w-full">
         <img
           alt={contract?.name}
           effect="blur"
           className="h-[100%] w-[100%]"
           // height={image.height}
-          src={url !== undefined?url:errorHandle()}
+          src={url !== undefined ? url : errorHandle()}
           onError={() => {
             // currentTarget.src=process.env.PUBLIC_URL + "/img/logo.svg";
             errorHandle()
           }}
         />
       </div>
-      <div className="flex p-5 bg-white text-[#313949] justify-between w-full z-50 h-1/2 overflow-y-auto">
-        <div className="flex flex-col justify-center text-sm w-full">
-          <div className="flex justify-between">
-            <div>Name</div>
-            {/* <div className="flex items-center">
+      <div className="flex px-5 py-2 bg-white text-[#313949] justify-around  w-full z-50 h-[200px] sm:h-[200px] md:h-[200px] lg:h-[200px] ">
+        <div className="flex flex-col justify-between text-sm w-full h-full">
+          <div className="h-70% overflow-y-auto">
+            <div className="flex justify-between">
+              <div>Name</div>
+              {/* <div className="flex items-center">
               <img
                 loading="lazy"
                 src={
@@ -79,20 +104,22 @@ const ProfileNFTCard = ({ item }) => {
               />
               <div className=" inline-block">{like}</div>
             </div> */}
+            </div>
+            <div className="my-1 flex flex-col justify-start sm:text-base md:text-lg xl:text-xl text-sm font-bold text-start">
+              <span className="flex">{contract?.name ? contract?.name : (title ? title : '')}</span><span className="flex text-sm">{contract?.symbol}</span>
+            </div>
+            <div className="flex justify-between">
+              <div className="flex justify-center items-center"><div className="">Total supply:</div>
+                <div className="my-1 sm:text-base text-sm">
+                  {contract?.totalSupply}
+                </div></div>
+              <div className="flex justify-center items-center"><div className="">Id:</div>
+                <div className="my-1 sm:text-base text-sm">
+                  {tokenId ? tokenId : ''}
+                </div></div>
+            </div>
           </div>
-          <div className="my-1 flex flex-col justify-start sm:text-xl text-base font-bold break-words text-start">
-            <span className="flex">{contract?.name ? contract?.name : (title ? title : '')}</span><span className="flex text-sm">{contract?.symbol}</span>
-          </div>
-          <div className="flex justify-between">
-            <div className="flex justify-center items-center"><div className="">Total supply:</div>
-              <div className="my-1 sm:text-base text-sm">
-                {contract?.totalSupply}
-              </div></div>
-            <div className="flex justify-center items-center"><div className="">Id:</div>
-              <div className="my-1 sm:text-base text-sm">
-                {tokenId ? tokenId : ''}
-              </div></div>
-          </div>
+
           {/* <div className="flex justify-between">
             <div>Description</div>
           </div>
@@ -136,7 +163,7 @@ const ProfileNFTCard = ({ item }) => {
                 // });
                 await dispatch(
                   setNFTData({
-                    image: error?process.env.PUBLIC_URL + "/img/logo.svg":url,
+                    image: error ? process.env.PUBLIC_URL + "/img/logo.svg" : url,
                     title: contract?.name ? contract?.name : (title ? title : ''),
                     description,
                     contract: contract?.address,

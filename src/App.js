@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Route, Routes, Navigate } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -110,12 +110,12 @@ function App() {
     // await dispatch(initializeCart());
     // await dispatch(initializeSelected());
   };
-
+  const [avatarReload, setAvatar] = useState(0)
   return (
     <QueryClientProvider client={queryClient}>
       <ToastContainer />
       <div className="App">
-        <Header />
+        <Header avatarReload = {avatarReload} />
         <ScrollToTop />
         {/* <div className=" p-3 bg-gray-600 rounded-md text-white absolute top-4 inline-block w-fit right-0 z-50">
           Wallet Address: {connected_account?connected_account:'Not Connected!'}
@@ -145,7 +145,9 @@ function App() {
           })}
           <Route key="profile" path="/profile" element={
               is_Connected ? (
-                <Profile />
+                <Profile onAvatarChanged={() =>{
+                  setAvatar(avatarReload+1)
+                }} />
               ) : (
                 <div className=" flex justify-center items-center text-white text-2xl py-40 bg-slate-700 ">
                   <span className="p-5 rounded-lg border-2 border-[#6d42b7] ">Connect Wallet First!</span>

@@ -7,7 +7,7 @@ import ConnectButton from "./ConnectButton";
 // import { RoundedButtonMD, RoundedButtonSM, SearchBar } from "./Input";
 // import DropDownNavButton from "./Input/DropDownNavButton";
 
-const Header = () => {
+const Header = ({avatarReload}) => {
   const [sidevar, openSidevar] = useState(false);
   const location = useLocation();
   // const categories = useCategory();
@@ -60,7 +60,7 @@ const Header = () => {
                 <p className=" inline-block text-white">EN</p>
               </div> */}
             <div className=" flex justify-center flex-1">
-              <ConnectButton/>
+              <ConnectButton avatarReload={avatarReload}/>
             </div>
             <div className="flex justify-center items-center">
               <span
