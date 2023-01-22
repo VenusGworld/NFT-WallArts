@@ -20,7 +20,7 @@ let renderer, scene, camera;
 
 let spotLight1, spotLight2, spotLight3, lightHelper1, lightHelper2, lightHelper3;
 const Three = ({img_url, width, height, containerWidth, containerHeight}) => {
-  console.log(img_url, width, height)
+  // console.log(img_url, width, height)
   function init() {
 
     renderer = new WebGLRenderer({ antialias: true });

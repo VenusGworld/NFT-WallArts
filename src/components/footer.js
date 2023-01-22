@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const Footer = () => {
   useEffect(() => {
@@ -18,10 +19,32 @@ const Footer = () => {
   })
   const initialFetching = async () => {
     const result = await axios
-    .get(`${process.env.REACT_APP_BACKEND_URL}/api/setting/`)
+      .get(`${process.env.REACT_APP_BACKEND_URL}/api/setting/`)
     setInitialInfo(result.data.data)
   }
-  
+  const success = (text) => {
+    toast.info(text, {
+      position: "top-right",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: 0,
+    });
+  };
+  const error = (text) => {
+    toast.error(text, {
+      position: "top-right",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: 0,
+    });
+  };
+  const [email, setEmail] = useState('')
   return (
     <div className="w-full bottom-0 border-none bg-[#120728]">
       <div className="w-[80%] mx-auto text-start text-white flex flex-col py-10 max-w-[1200px]">
@@ -35,8 +58,28 @@ const Footer = () => {
               </span>
             </div>
             <div className=" md:w-1/3 sm:min-w-[300px] min-w-[100px] w-full flex ">
-              <input className="sm:p-3 p-2 bg-[#27144E] text-white rounded-l-md w-[70%]" placeholder="Enter Your mail"/>
-              <div className="sm:p-3 p-2 bg-[#D3B789] text-black hover:bg-[#8d7a5d] cursor-pointer rounded-r-md">Join Us</div>
+              <input className="sm:p-3 p-2 bg-[#27144E] text-white rounded-l-md w-[70%]" placeholder="Enter Your mail"
+                onChange={(e) => {
+
+                  setEmail(e.target.value)
+                }}
+                value={email}
+              />
+              <div className="sm:p-3 p-2 bg-[#D3B789] text-black hover:bg-[#8d7a5d] cursor-pointer rounded-r-md"
+                onClick={async () => {
+                  if (/\S+@\S+\.\S+/.test(email))
+                    axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/email/`, {
+                      email: email
+                    }).then(res => {
+                      // console.log(res)
+                      if(res.status === 201) {
+                        setEmail("");
+                        success(res.data?.message)
+                      }
+                    })
+                  else error("Your Email is Invalid")
+                }}
+              >Join Us</div>
             </div>
           </div>
           <div

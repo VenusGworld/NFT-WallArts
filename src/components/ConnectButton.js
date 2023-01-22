@@ -243,7 +243,7 @@ const ConnectButton = ({avatarReload}) => {
           (ordered_products?.orderedProducts) ? ordered_products?.orderedProducts.length : 0
         }</span>
         {((ordered_products?.orderedProducts) ? ordered_products?.orderedProducts.length : 0) > 0 ?
-          <span style={{ borderWidth: '5px', fontSize: '9px' }} class="absolute text-center -top-2 px-1 w-fit h-6 text-red-500 bg-red-500 border border-red-500 rounded-full animate-ping">
+          <span style={{ borderWidth: '5px', fontSize: '9px' }} className="absolute text-center -top-2 px-1 w-fit h-6 text-red-500 bg-red-500 border border-red-500 rounded-full animate-ping">
             {
               (ordered_products?.orderedProducts) ? ordered_products?.orderedProducts.length : 0
             }
