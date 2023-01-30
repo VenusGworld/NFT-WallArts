@@ -91,8 +91,8 @@ const Profile = ({ onAvatarChanged }) => {
               "url(" + process.env.PUBLIC_URL + "/img/img1 1.png)" :
               "url(" + process.env.REACT_APP_BACKEND_URL + "/images/banner/" + setting.data?.data?.banner + ")") :
               "url(" + process.env.PUBLIC_URL + "/img/img1 1.png)"),
-        "backgroundPosition": 'center',
-        "backgroundSize": 'cover',
+        "backgroundPosition": 'top center',
+        "backgroundSize": 'contain',
         "backgroundRepeat": 'no-repeat'
       }}>
         <div className="flex mt-5 ml-[70%] flex-wrap">
@@ -106,7 +106,7 @@ const Profile = ({ onAvatarChanged }) => {
                 setavailableEditProfile(!availableEditProfile)
               }}
             >
-              <div className={`mt-5 text-xs inline-block cursor-pointer hover:opacity-75 rounded-md border opacity-50 ${availableEditProfile?"border-gray-100 text-gray-100 bg-gray-400 opacity-75 ":"border-gray-400 text-gray-400 bg-gray-600"} p-1`}>
+              <div className={`mt-5 text-xs inline-block cursor-pointer hover:opacity-75 rounded-md border opacity-50 ${availableEditProfile ? "border-gray-100 text-gray-100 bg-gray-400 opacity-75 " : "border-gray-400 text-gray-400 bg-gray-600"} p-1`}>
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4 inline-block">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125" />
                 </svg>
@@ -122,7 +122,8 @@ const Profile = ({ onAvatarChanged }) => {
             onAvatarChanged()
           }} availableChange={availableEditProfile} />
           <div className=" text-white md:text-2xl sm:text-xl text-base flex flex-col relative group items-center">
-            {availableEditProfile?<div className="absolute -top-8 hidden group-hover:flex left-1/2 -translate-x-1/2 p-1 bg-black transition-all rounded-lg">
+            {availableEditProfile ? <div className={`absolute text-black top-1/2 flex xl:left-[35%] md:left-[25%] -translate-y-1/2 sm:left-[20%] left-[10%] -translate-x-1/2 p-1 transition-all rounded-lg`}
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -137,10 +138,10 @@ const Profile = ({ onAvatarChanged }) => {
                   d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125"
                 />
               </svg>
-            </div>:null}
+            </div> : null}
             <div className="max:w-[80%] relative">
               <input
-                className=" bg-[#363f54] overflow-x-auto w-[90%] text-center"
+                className={` bg-[#363f54] overflow-x-auto w-[90%] text-center ${availableEditProfile? "border rounded-md":""}`}
                 defaultValue={user.name ? user.name : user.wallet_address && user.wallet_address?.length > 0 ? user.wallet_address : ""}
                 disabled={!availableEditProfile}
                 onChange={(v) => {
@@ -160,7 +161,7 @@ const Profile = ({ onAvatarChanged }) => {
 
               {editableUserName && availableEditProfile ? (
                 <div
-                  className="absolute -right-10 top-1/2 -translate-y-1/2 p-2 rounded-full border border-gray-500 hover:bg-gray-400 ml-3 cursor-pointer hover:text-black transition-all flex justify-center items-center"
+                  className="absolute -right-20 top-1/2 -translate-y-1/2 p-2 rounded-full text-sm border border-gray-500 hover:bg-gray-400 ml-3 cursor-pointer hover:text-black transition-all flex justify-center items-center"
                   onClick={async () => {
                     let formData = new FormData();
                     formData.append("name", userName);
@@ -179,20 +180,7 @@ const Profile = ({ onAvatarChanged }) => {
                       .catch((err) => { });
                   }}
                 >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    strokeWidth={1.5}
-                    stroke="currentColor"
-                    className="w-6 h-6"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M4.5 12.75l6 6 9-13.5"
-                    />
-                  </svg>{" "}
+                  Save
                 </div>
               ) : null}
             </div>
@@ -210,8 +198,8 @@ const Profile = ({ onAvatarChanged }) => {
         <div className=" text-gray-400 sm:text-base text-sm">
           Joined: {new Date(user?.date_joined).toLocaleString()}
         </div>
-        <div className=" text-white text-4xl w-3/5 flex justify-center items-center relative group">
-        {availableEditProfile?<div className="absolute -top-8 hidden group-hover:flex left-1/2 -translate-x-1/2 p-1 bg-black transition-all rounded-lg">
+        <div className=" text-white text-4xl w-3/5 flex justify-center items-center group relative">
+          {availableEditProfile ? <div className="text-black absolute top-1/2 -translate-y-1/2 flex  -left-5 -translate-x-1/2 p-1 transition-all rounded-lg">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -226,10 +214,10 @@ const Profile = ({ onAvatarChanged }) => {
                 d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125"
               />
             </svg>
-          </div>:null}
+          </div> : null}
           <textarea
             style={{ resize: "none" }}
-            className="bg-[#363f54] h-12 w-full text-center my-1 text-gray-400 text-sm break-words"
+            className={`bg-[#363f54] h-12 w-full text-center my-1 text-gray-400 text-sm break-words ${availableEditProfile? "border rounded-md":""}`}
             disabled={!availableEditProfile}
             onChange={(v) => {
               if (
@@ -250,7 +238,7 @@ const Profile = ({ onAvatarChanged }) => {
           </textarea>
           {editableBio && availableEditProfile ? (
             <div
-              className=" p-2 rounded-full hover:bg-gray-400 ml-3 cursor-pointer hover:text-black transition-all flex justify-center items-center"
+              className="absolute -right-20 top-1/2 -translate-y-1/2 p-2 rounded-full border border-gray-500 hover:bg-gray-400 ml-3 text-sm cursor-pointer hover:text-black transition-all flex justify-center items-center"
               onClick={async () => {
                 await axios
                   .post(
@@ -267,20 +255,7 @@ const Profile = ({ onAvatarChanged }) => {
                   .catch((err) => { });
               }}
             >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={1.5}
-                stroke="currentColor"
-                className="w-6 h-6"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M4.5 12.75l6 6 9-13.5"
-                />
-              </svg>{" "}
+              Save
             </div>
           ) : null}
         </div>

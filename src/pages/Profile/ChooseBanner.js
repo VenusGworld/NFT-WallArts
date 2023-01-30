@@ -206,15 +206,15 @@ const UploadBanner = ({ is_Connected, user, onChanged }) => {
           <span className="inline-block">Edit Cover Photo</span>
         </div>
       </div>
-      <form onSubmit={onSubmit} className={` absolute w-96 z-[1001] top-8 rounded-lg ${openPreview ? 'block' : 'hidden'}`}>
+      <form onSubmit={onSubmit} className={` absolute w-96 z-[1001] border-4 border-gray-400 top-8 rounded-lg ${openPreview ? 'block' : 'hidden'}`}>
         <div className="relative">
-          <span width="20" className='absolute right-4 hover:-rotate-90 transition-all cursor-pointer text-gray text-2xl' onClick={() => setOpenPreview(false)} >
+          <span width="20" className='absolute text-white right-4 hover:-rotate-90 transition-all cursor-pointer text-gray text-2xl' onClick={() => setOpenPreview(false)} >
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
               <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
             </svg>
           </span>
         </div>
-        <div className="bg-white px-4 pb-4 sm:px-6 sm:pb-4 py-5">
+        <div className="bg-[#363f54] px-4 pb-4 sm:px-6 sm:pb-4 py-5">
           <div>
             <div className="Crop-Controls mt-6 mb-4">
               <input type="file" accept="image/*" onChange={onSelectFile} ref={imgButton} className='hidden' />
@@ -235,7 +235,7 @@ const UploadBanner = ({ is_Connected, user, onChanged }) => {
                 />
               </ReactCrop>
             )}
-            <div className=" text-gray-600 flex items-center justify-center">
+            <div className=" text-gray-100 flex items-center justify-center">
               <p className=" mr-3 text-lg">Preview</p>
               {Boolean(completedCrop) && (
                 <canvas
@@ -252,10 +252,10 @@ const UploadBanner = ({ is_Connected, user, onChanged }) => {
             </div>
           </div>
         </div>
-        <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+        <div className="bg-[#363f54] px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
           <button
             type="submit"
-            className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-green-600 text-base font-medium text-white hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 sm:ml-3 sm:text-sm"
+            className="w-full justify-center rounded-md border border-transparent shadow-sm px-4 py-2 text-base font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 hover:bg-opacity-70 transition-all   cursor-pointer inline-block  bg-[#D3B789] text-[#313949]  sm:ml-3 sm:text-sm"
             ref={createButtonRef}
           >
             Save

@@ -163,7 +163,11 @@ const PreviewPart = ({ orderClickHandle, stripeRef, amount, payMethod, orderedDa
               {Number(temp).toFixed(3)} ETH
             </span>
             <span className=" text-sm">
-              {Number(temp * eth_price.data).toFixed(1)} $
+              {(eth_price.isLoading || isNaN(eth_price.data)) ? <div className="w-5 h-5">
+                <img src={process.env.PUBLIC_URL + "/img/loading.gif"} alt="loading" />
+              </div> :
+                <span>{Number(temp * eth_price.data).toFixed(1)} $</span>
+              }
             </span>
           </div>
         </div>

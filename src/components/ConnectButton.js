@@ -176,7 +176,6 @@ const ConnectButton = ({avatarReload}) => {
               navigate(
                 {
                   pathname: "/profile",
-                  search: `?id=${"profile_section"}`,
                 },
                 {
                   replace: true,

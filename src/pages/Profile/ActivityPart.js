@@ -146,64 +146,67 @@ const ActivityPart = () => {
                 });
               }}>
                 <div className="w-full overflow-x-auto">
-                <div className="flex min-w-[800px]  text-xl flex-wrap cursor-pointer hover:px-0 px-3 transition-all">
-                  <div className=" flex justify-start items-center w-4/12">
-                    <img
-                      loading="lazy"
-                      src={item?.image_for_printing}
-                      alt=""
-                      className="w-16 h-16 rounded-full"
-                    />
-                    <div className=" ml-3 overflow-x-auto">{item?.name_for_printing}</div>
-                  </div>
-                  <div className=" flex justify-center w-2/12 flex-col items-center">
-                    <div className="flex flex-col justify-end">
-                      <div className="flex justify-end text-2xl">
-                        <img
-                          loading="lazy"
-                          src={
-                            process.env.PUBLIC_URL + "/img/eth_icon.svg"
-                          }
-                          alt=""
-                          className=" inline-block w-7 h-7"
-                        />
-                        {item?.item_info?.priceType === "eth"
-                          ? Number(
+                  <div className="flex min-w-[800px]  text-xl flex-wrap cursor-pointer hover:px-0 px-3 transition-all">
+                    <div className=" flex justify-start items-center w-4/12">
+                      <img
+                        loading="lazy"
+                        src={item?.image_for_printing}
+                        alt=""
+                        className="w-16 h-16 rounded-full"
+                      />
+                      <div className=" ml-3 overflow-x-auto">{item?.name_for_printing}</div>
+                    </div>
+                    <div className=" flex justify-center w-2/12 flex-col items-center">
+                      <div className="flex flex-col justify-end">
+                        <div className="flex justify-end text-2xl">
+                          <img
+                            loading="lazy"
+                            src={
+                              process.env.PUBLIC_URL + "/img/eth_icon.svg"
+                            }
+                            alt=""
+                            className=" inline-block w-7 h-7"
+                          />
+                          {item?.item_info?.priceType === "eth"
+                            ? Number(
                               item?.quantity * item?.item_info?.price
                               // * ((100 - discount) / 100)
                             ).toFixed(3) + "ETH"
-                          : null}
-                      </div>
-                      <div className=" text-[#b6b3e0] text-lg">
-                        ${
-                          item?.item_info?.priceType === "eth"
-                            ? (
-                                item?.quantity *
-                                item?.item_info?.price *
-                                eth_price.data
-                              )
-                                // * ((100 - discount) / 100)
+                            : null}
+                        </div>
+                        {(eth_price.isLoading || isNaN(eth_price.data)) ? <div className="w-5 h-5">
+                          <img src={process.env.PUBLIC_URL + "/img/loading.gif"} alt="loading" />
+                        </div> :
+                          <div className=" text-[#b6b3e0] text-lg">
+                            ${
+                              item?.item_info?.priceType === "eth"
+                                ? (
+                                  item?.quantity *
+                                  item?.item_info?.price *
+                                  eth_price.data
+                                )
+                                  // * ((100 - discount) / 100)
 
-                                .toFixed(3)
-                            : item?.quantity * item?.item_info?.price
-                          // ((100 - discount) / 100).toFixed(3)}{" "}
-                        }
+                                  .toFixed(3)
+                                : item?.quantity * item?.item_info?.price
+                              // ((100 - discount) / 100).toFixed(3)}{" "}
+                            }
+                          </div>}
                       </div>
                     </div>
-                  </div>
-                  <div className=" flex justify-center items-center w-1/12">
-                    {item.quantity}
-                  </div>
-                  <div className=" flex justify-center items-center w-1/12">
-                    <span className="w-16 whitespace-nowrap">
-                      {item?.item_info?.width}X{item?.item_info?.height}cm
-                    </span>
-                  </div>
-                  <div className=" flex justify-center items-center w-2/12">
-                    <span className=" w-full overflow-hidden text-ellipsis whitespace-nowrap">
-                      {orderStatus.isLoading
-                        ? []
-                        : orderStatus?.data?.data
+                    <div className=" flex justify-center items-center w-1/12">
+                      {item.quantity}
+                    </div>
+                    <div className=" flex justify-center items-center w-1/12">
+                      <span className="w-16 whitespace-nowrap">
+                        {item?.item_info?.width}X{item?.item_info?.height}cm
+                      </span>
+                    </div>
+                    <div className=" flex justify-center items-center w-2/12">
+                      <span className=" w-full overflow-hidden text-ellipsis whitespace-nowrap">
+                        {orderStatus.isLoading
+                          ? []
+                          : orderStatus?.data?.data
                             .filter(
                               (status) =>
                                 status._id ===
@@ -214,24 +217,24 @@ const ActivityPart = () => {
                             .map((status, i) => (
                               <span key={i}>{status?.name}</span>
                             ))}
-                    </span>
-                  </div>
-                  <div className=" flex justify-center items-center w-2/12">
-                    <span>
-                      {new Date(
-                        item?.order_statuses[
-                          item?.order_statuses?.length - 1
-                        ]?.ordered_time
-                      ).toLocaleDateString() +
-                        " " +
-                        new Date(
+                      </span>
+                    </div>
+                    <div className=" flex justify-center items-center w-2/12">
+                      <span>
+                        {new Date(
                           item?.order_statuses[
                             item?.order_statuses?.length - 1
                           ]?.ordered_time
-                        ).toLocaleTimeString()}
-                    </span>
+                        ).toLocaleDateString() +
+                          " " +
+                          new Date(
+                            item?.order_statuses[
+                              item?.order_statuses?.length - 1
+                            ]?.ordered_time
+                          ).toLocaleTimeString()}
+                      </span>
+                    </div>
                   </div>
-                </div>
                 </div>
               </Board>
             );

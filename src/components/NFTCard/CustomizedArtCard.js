@@ -91,14 +91,18 @@ const CustomizedArtCard = ({ item }) => {
           )}
         </div>
         <div className="flex justify-between items-center">
-          {priceType === 'eth'?(<><div className=" text-[#818DA9] text-sm">Price in ETH</div>
-          <div className="flex flex-col items-end">
-            <div className=" text-lg font-bold">{price} ETH</div>
-            <div className=" text-sm">( {Number(price * eth_price.data).toFixed(3)} $ )</div>
-          </div></>):(<><div className=" text-[#818DA9] text-sm">Price in USD</div>
-          <div className="flex flex-col items-end">
-            <div className=" text-lg font-bold">{price} $</div>
-          </div></>)}
+          {priceType === 'eth' ? (<><div className=" text-[#818DA9] text-sm">Price in ETH</div>
+            <div className="flex flex-col items-end">
+              <div className=" text-lg font-bold">{price} ETH</div>
+              
+              {(eth_price.isLoading || isNaN(eth_price.data)) ? <div className="w-5 h-5">
+                <img src={process.env.PUBLIC_URL + "/img/loading.gif"} alt="loading"/>
+              </div> :
+                <div className=" text-sm">( {Number(price * eth_price.data).toFixed(3)} $ )</div>}
+            </div></>) : (<><div className=" text-[#818DA9] text-sm">Price in USD</div>
+              <div className="flex flex-col items-end">
+                <div className=" text-lg font-bold">{price} $</div>
+              </div></>)}
         </div>
       </div>
     </div>

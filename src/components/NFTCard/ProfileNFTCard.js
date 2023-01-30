@@ -29,10 +29,10 @@ const ProfileNFTCard = ({ item }) => {
   // const headers = {
   //   'X-API-KEY':"381de08380ed44c393389a1485094324" //process.env.REACT_APP_OPENSEA_API_KEY
   // };
-  const [url, setUrl] = useState(process.env.PUBLIC_URL + "/img/logo.svg")
+  const [url, setUrl] = useState(process.env.PUBLIC_URL + "/img/logo.png")
   const [error, setError] = useState(false)
   useEffect(() => {
-    setUrl(process.env.PUBLIC_URL + "/img/logo.svg")
+    setUrl(process.env.PUBLIC_URL + "/img/logo.png")
     const interval = setInterval(() => {
       setUrl(media[0]?.gateway)
     }, 2000);
@@ -42,8 +42,8 @@ const ProfileNFTCard = ({ item }) => {
     };
   }, [media, error])
   const errorHandle = () => {
-    if (url !== process.env.PUBLIC_URL + "/img/logo.svg") {
-      setUrl(process.env.PUBLIC_URL + "/img/logo.svg")
+    if (url !== process.env.PUBLIC_URL + "/img/logo.png") {
+      setUrl(process.env.PUBLIC_URL + "/img/logo.png")
       setError(true)
     }
   }
@@ -71,15 +71,15 @@ const ProfileNFTCard = ({ item }) => {
   // }, [])
   return (
     <div
-      className=" sm:w-[48%] md:w-[32%] lg:w-[24%] xl:w-[24%] w-full shadow-2xl flex flex-col justify-between hover:scale-105 transition-all cursor-pointer
+      className=" sm:w-[48%] md:w-[32%] lg:w-[32%] xl:w-[32%] w-full shadow-2xl flex flex-col justify-between hover:scale-105 transition-all cursor-pointer
       mx-0 sm:mx-[4px] md:mx-[3px] lg:mx-[4px] my-[3px] sm:my-[4px] md:my-[5px] lg:my-[6px]
       "
     >
-      <div className="overflow-hidden h-[300px] sm:h-[300px] md:h-[300px] lg:h-[300px] w-full">
+      <div className="overflow-hidden h-[300px] sm:h-[300px] md:h-[300px] lg:h-[400px] w-full">
         <img
           alt={contract?.name}
           effect="blur"
-          className="h-[100%] w-[100%]"
+          className={`h-[100%] w-[100%] mx-auto `}
           // height={image.height}
           src={url !== undefined ? url : errorHandle()}
           onError={() => {

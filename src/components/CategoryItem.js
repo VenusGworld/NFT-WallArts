@@ -19,7 +19,7 @@ const CategoryItem = ({ id }) => {
   if (isLoading) return <></>;
   return (
     <div className="relative flex justify-center items-center">
-      <span className=" text-[#ffbf1e] text-xl font-semibold">{data?.data?.name}</span>
+      <span className=" text-[#D3B789] flex sm:text-xl text-lg text-start">{data?.data?.name}</span>
     </div>
   );
 };

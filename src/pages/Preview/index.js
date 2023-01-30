@@ -79,7 +79,7 @@ const Preview = () => {
     });
   };
   const container = useRef(null);
-  const [dimensions, setDimensions] = useState({ width:0, height: 0 });
+  const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
   useLayoutEffect(() => {
     if (container.current) {
       setDimensions({
@@ -89,7 +89,7 @@ const Preview = () => {
     }
   }, []);
   // if(selected_data?.item_data?.category_id) const items = useItemByCategory({ category_id: selected_data?.item_data?.category_id })
-  return ( 
+  return (
     <div>
       <div className={`w-full h-full mt-20 relative text-white`}>
         <div className="relative">
@@ -113,13 +113,13 @@ const Preview = () => {
                 Preview
               </div>
               <div className="flex md:flex-row flex-col items-start md:space-x-5 md:space-y-0 space-y-3 relative justify-center h-full w-full">
-                <div className=" md:w-3/5 w-[95%] flex justify-center h-[500px] relative border rounded-lg" ref={container}>
-                   <img
+                <div className=" md:w-3/5 w-[95%] flex justify-center relative border rounded-lg" ref={container}>
+                  <img
                     loading="lazy"
                     src={selected_data?.nft_img}
                     alt=""
-                    className="w-full h-full rounded-lg"
-                  /> 
+                    className="w-full rounded-lg"
+                  />
                   {/* {dimensions.height>0 && dimensions.width>0?<Three img_url={selected_data?.nft_img} width={nftInfo?.width} height={nftInfo?.width} containerWidth={dimensions.width} containerHeight={dimensions.height}/>:null} */}
                   {/* <img
                     loading="lazy"
@@ -130,65 +130,65 @@ const Preview = () => {
                 </div>
                 <div className="md:w-2/5 w-[95%] bg-[#444E66] px-6 py-10 flex flex-col md:space-y-10 space-y-2 sm:space-y-5">
                   <div className="flex flex-col items-start space-y-2">
-                    {Items?.data?.data ? 
-                    <RoundedDropDownSelect
-                      label="Frame Size"
-                      value={
-                        ListItems?.findIndex(
-                          (x) => x._id === selected_data?.item_data?._id
-                        ) > 0
-                          ? ListItems?.findIndex(
+                    {Items?.data?.data ?
+                      <RoundedDropDownSelect
+                        label="Frame Size"
+                        value={
+                          ListItems?.findIndex(
                             (x) => x._id === selected_data?.item_data?._id
-                          )
-                          : 0
-                      }
-                      list={ListItems}
-                      onChangeHandle={async (v) => {
-                        if (selected_data?.item_data?._id !== v) {
-                          setnftInfo(Items?.data?.data[Items?.data?.data?.findIndex((x) => x._id === v)])
-                          await dispatch(setItem(Items?.data?.data[Items?.data?.data?.findIndex((x) => x._id === v)]))
-                          setColor(0);
+                          ) > 0
+                            ? ListItems?.findIndex(
+                              (x) => x._id === selected_data?.item_data?._id
+                            )
+                            : 0
+                        }
+                        list={ListItems}
+                        onChangeHandle={async (v) => {
+                          if (selected_data?.item_data?._id !== v) {
+                            setnftInfo(Items?.data?.data[Items?.data?.data?.findIndex((x) => x._id === v)])
+                            await dispatch(setItem(Items?.data?.data[Items?.data?.data?.findIndex((x) => x._id === v)]))
+                            setColor(0);
+                          }
+
+                        }}
+                      /> : <></>}
+                  </div>
+                  {selected_data?.item_data?.isColor ?
+                    <div className="flex flex-col items-start space-y-2">
+                      <span className="text-[#818DA9]">Colour</span>
+                      <div className="flex items-center space-x-3">
+                        {
+                          selected_data?.item_data?.isColor ?
+                            selected_data?.item_data?.color?.map((c, index) => {
+                              return <div
+                                key={index}
+                                className={`relative p-3 rounded-full border ${color === index
+                                  ? " border-green-500 "
+                                  : " border-gray-400 "
+                                  } cursor-pointer inline-block`}
+                                onClick={() => {
+                                  setColor(index)
+                                }}
+                                style={{
+                                  backgroundColor: c
+                                }}
+                              >
+                                {color === index && (
+                                  <img
+                                    loading="lazy"
+                                    src={
+                                      process.env.PUBLIC_URL + "/img/check-green.svg"
+                                    }
+                                    alt="check"
+                                    className="w-2 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
+                                  />
+                                )}
+                              </div>
+                            }) : null
                         }
 
-                      }}
-                    /> : <></>}
-                  </div>
-                  {selected_data?.item_data?.isColor?
-                  <div className="flex flex-col items-start space-y-2">
-                    <span className="text-[#818DA9]">Colour</span>
-                    <div className="flex items-center space-x-3">
-                      {
-                        selected_data?.item_data?.isColor ?
-                          selected_data?.item_data?.color?.map((c, index) => {
-                            return <div
-                              key={index}
-                              className={`relative p-3 rounded-full border ${color === index
-                                ? " border-green-500 "
-                                : " border-gray-400 "
-                                } cursor-pointer inline-block`}
-                              onClick={() => {
-                                setColor(index)
-                              }}
-                              style={{
-                                backgroundColor: c
-                              }}
-                            >
-                              {color === index && (
-                                <img
-                                  loading="lazy"
-                                  src={
-                                    process.env.PUBLIC_URL + "/img/check-green.svg"
-                                  }
-                                  alt="check"
-                                  className="w-2 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
-                                />
-                              )}
-                            </div>
-                          }) : null
-                      }
-
-                    </div>
-                  </div>:null}
+                      </div>
+                    </div> : null}
                   <div className="flex flex-col items-start space-y-2">
                     <span className="text-[#818DA9]">Quantity</span>
                     <NumberInput
@@ -215,11 +215,25 @@ const Preview = () => {
                   <div className="flex flex-col items-start space-y-2">
                     <span className="text-[#818DA9]">Total Price</span>
                     <div className="flex md:justify-between justify-center md:space-x-0 space-x-3 w-full flex-wrap max-w-lg mx-auto">
-                      <span className=" text-white sm:text-2xl text-lg">
-                        {quantity} x {nftInfo?.price}
-                        {nftInfo?.priceType === "eth" ? "ETH" : "$"}
-                      </span>
-                      <div className="flex flex-col justify-end">
+                      <div>
+                        <span className=" text-white sm:text-2xl text-lg">
+                          {quantity} x {nftInfo?.price}
+                          {nftInfo?.priceType === "eth" ? "ETH" : "$"}
+                        </span>
+                        <div className="w-full">
+                          {nftInfo?.isBulk ? (
+                            <div className="flex flex-col">
+                              {nftInfo?.bulk_pricing.map((p, i) => (
+                                <span key={i} className="sm:text-sm md:text-base text-xs">
+                                  {100 - p?.discount}% for {p?.quantity} or more
+                                </span>
+                              ))}
+                            </div>
+                          ) : null}
+                        </div>
+                      </div>
+
+                      <div className="flex flex-col justify-start">
                         <span className=" text-[#D3B789] sm:text-2xl text-lg">
                           {nftInfo?.priceType === "eth"
                             ? Number(
@@ -229,9 +243,11 @@ const Preview = () => {
                             ).toFixed(3) + "ETH"
                             : null}
                         </span>
-                        <span className=" text-white text-sm">
-                          ({" "}
-                          {nftInfo?.priceType === "eth"
+
+                        {(eth_price.isLoading || isNaN(eth_price.data)) ? <div className="w-5 h-5">
+                          <img src={process.env.PUBLIC_URL + "/img/loading.gif"} alt="loading" />
+                        </div> :
+                          <span className=" text-white text-sm">{nftInfo?.priceType === "eth"
                             ? (
                               quantity *
                               nftInfo?.price *
@@ -241,29 +257,17 @@ const Preview = () => {
                             : quantity *
                             nftInfo?.price *
                             ((100 - discount) / 100).toFixed(3)}{" "}
-                          $ )
-                        </span>
-                        <div className="w-full">
-                          {nftInfo?.isBulk ? (
-                            <div className="flex flex-col">
-                              {nftInfo?.bulk_pricing.map((p, i) => (
-                                <span key={i} className="sm:text-sm md:text-base text-xs">
-                                  +{p?.quantity}NFTs -{p?.discount}%
-                                </span>
-                              ))}
-                            </div>
-                          ) : null}
-                        </div>
+                            $</span>}
                       </div>
                     </div>
                   </div>
                   <div className="flex flex-col items-start space-y-2 w-full">
                     <RoundedButtonMD
-                      text="Adding Cart"
+                      text="Add Cart"
                       onButtonClick={async () => {
                         let obj = {
                           ...selected_data?.item_data,
-                          selected_color: selected_data?.item_data?.isColor?color:null
+                          selected_color: selected_data?.item_data?.isColor ? color : null
                         };
                         await dispatch(setItem(obj))
                         await dispatch(setQuantity(quantity))
